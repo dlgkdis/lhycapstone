@@ -12,14 +12,20 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
+        android:id="@+id/navigation_calendar"
         android:name="com.example.test2.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_calendar"
         tools:layout="@layout/fragment_calendar" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
+        android:id="@+id/navigation_diary"
         android:name="com.example.test2.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:label="@string/title_diary"
         tools:layout="@layout/fragment_diary" />
+
+    <fragment
+        android:id="@+id/navigation_tema"
+        android:name="com.example.test2.ui.notifications.NotificationsFragment"
+        android:label="@string/title_tema"
+        tools:layout="@layout/fragment_tema" />
 </navigation>
