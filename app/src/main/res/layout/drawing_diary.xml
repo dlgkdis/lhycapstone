@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="173dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="64dp"
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:text="2024.10.24 10:40PM"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/diary_drawing"
+        android:gravity="center"
+        android:text="그림일기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.374"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/diary_text"
+        android:gravity="center"
+        android:text="일기작성"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.769"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"/>
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="250dp"
+        android:layout_height="5dp"
+        android:background="@drawable/dashed_line"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.691" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="250dp"
+        android:layout_height="5dp"
+        android:background="@drawable/dashed_line"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.717" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="250dp"
+        android:layout_height="5dp"
+        android:background="@drawable/dashed_line"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.745" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="250dp"
+        android:layout_height="5dp"
+        android:background="@drawable/dashed_line"
+        android:layerType="software"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.771" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="112dp"
+        android:text="등록"
+        app:layout_constraintHorizontal_bias="0.839"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="#d9d9d9"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"/>
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/weather"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="206dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
