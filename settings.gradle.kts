@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "lhycapstone"
+rootProject.name = "test2"
 include(":app")
  

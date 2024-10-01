@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.lhycapstone"
+    namespace = "com.example.test2"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.lhycapstone"
+        applicationId = "com.example.test2"
         minSdk = 30
         targetSdk = 34
         versionCode = 1

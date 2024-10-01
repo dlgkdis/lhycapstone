@@ -1,6 +1,7 @@
 <resources>
-    <string name="app_name">lhycapstone</string>
+    <string name="app_name">test2</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_calendar">calendar</string>
+    <string name="title_diary">diary</string>
+    <string name="title_tema">tema</string>
 </resources>
