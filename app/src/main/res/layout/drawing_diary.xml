@@ -111,16 +111,19 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:backgroundTint="#d9d9d9"
         android:textColor="@color/black"
-        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"/>
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:background="@drawable/radish_button" android:backgroundTint="#d9d9d9"/>
 
     <ImageView
         android:id="@+id/imageView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/weather"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="206dp" />
+        android:layout_marginTop="216dp"
+        app:layout_constraintHorizontal_bias="0.788"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/weather" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
