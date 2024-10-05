@@ -10,30 +10,17 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
         android:text="일정추가"
         android:textColor="@color/black"
-        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:textStyle="bold"
         android:textSize="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.092" />
-
-    <View
-        android:id="@+id/view"
-        android:layout_width="300dp"
-        android:layout_height="5dp"
-        android:background="@drawable/dashed_line"
-        android:layerType="software"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.163" />
+        app:layout_constraintVertical_bias="0.125" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -214,6 +201,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left" />
+
+    <ImageView
+        android:id="@+id/imageView23"
+        android:layout_width="306dp"
+        android:layout_height="21dp"
+        android:layout_marginTop="132dp"
+        app:layout_constraintHorizontal_bias="0.571"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dotted_line_horizontal" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

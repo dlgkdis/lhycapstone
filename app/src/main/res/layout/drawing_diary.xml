@@ -55,13 +55,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="112dp"
         android:text="등록"
+        android:textSize="35dp"
         app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:textColor="@color/black"
         android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
-        android:background="@drawable/radish_button" android:backgroundTint="#d9d9d9"/>
+        android:background="@drawable/radish_button"/>
 
     <ImageView
         android:id="@+id/imageView5"
@@ -103,5 +104,17 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dotted_line_horizontal" />
+
+    <ImageButton
+        android:id="@+id/imageButton64"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintHorizontal_bias="0.115"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_left" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
