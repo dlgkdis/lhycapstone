@@ -1,28 +1,26 @@
-package com.example.test2.ui.notifications;
+package com.example.test2.ui.main;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
-
+// 필요에 따라 임포트 추가
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.test2.databinding.FragmentDiaryBinding;
+import com.example.test2.databinding.FragmentMainBinding;
 
-public class NotificationsFragment extends Fragment {
+public class MainFragment extends Fragment {
 
-    private FragmentDiaryBinding binding;
+    private FragmentMainBinding binding;
 
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        NotificationsViewModel notificationsViewModel =
-                new ViewModelProvider(this).get(NotificationsViewModel.class);
-
-        binding = FragmentDiaryBinding.inflate(inflater, container, false);
+        binding = FragmentMainBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+
+        // 필요한 초기화 작업 수행
 
         return root;
     }

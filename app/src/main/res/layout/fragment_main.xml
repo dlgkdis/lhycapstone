@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="?attr/actionBarSize">
+
+        <!-- 기존 UI 요소들을 여기에 붙여넣습니다 -->
+
+        <ImageButton
+            android:id="@+id/imageButton60"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="store"
+            app:layout_constraintHorizontal_bias="0.182"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/store" />
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="487dp"
+            android:layout_height="465dp"
+            android:layout_marginTop="152dp"
+            android:src="@drawable/main_myroom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <ImageButton
+            android:id="@+id/imageButton4"
+            android:layout_width="117dp"
+            android:layout_height="93dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="타코야키(상점)"
+            app:srcCompat="@drawable/taco3"
+            tools:ignore="MissingConstraints"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginLeft="288dp" />
+
+        <ImageButton
+            android:id="@+id/imageButton62"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="reward"
+            app:layout_constraintHorizontal_bias="0.459"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/reward" />
+
+        <ImageButton
+            android:id="@+id/imageButton65"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="bell"
+            app:layout_constraintHorizontal_bias="0.044"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bell" />
+
+        <ImageButton
+            android:id="@+id/imageButton63"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="32dp"
+            android:backgroundTint="@color/white"
+            android:contentDescription="person"
+            app:layout_constraintHorizontal_bias="0.321"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/person_main" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
