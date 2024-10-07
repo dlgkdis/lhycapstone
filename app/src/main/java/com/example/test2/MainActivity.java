@@ -15,24 +15,40 @@ import com.example.test2.databinding.ActivityMainBinding;
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
+    private AppBarConfiguration appBarConfiguration;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        // Data Binding을 사용하여 레이아웃 설정
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        BottomNavigationView navView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
-        AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.navigation_home, R.id.navigation_calendar, R.id.navigation_diary)
+        // BottomNavigationView 설정
+        BottomNavigationView navView = binding.navView;
+
+        // AppBarConfiguration 설정
+        appBarConfiguration = new AppBarConfiguration.Builder(
+                R.id.navigation_main,    // 수정된 부분
+                R.id.navigation_calendar,
+                R.id.navigation_diary,
+                R.id.navigation_tema)    // 추가된 부분
                 .build();
 
+        // NavController 설정
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+
+        // ActionBar와 NavController 연결 (필요에 따라)
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
-        NavigationUI.setupWithNavController(binding.navView, navController);
+
+        // BottomNavigationView와 NavController 연결
+        NavigationUI.setupWithNavController(navView, navController);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_activity_main);
+        return NavigationUI.navigateUp(navController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 }
-
