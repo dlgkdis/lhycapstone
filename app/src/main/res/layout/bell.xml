@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/arrow_left"
+        android:id="@+id/imageButton56"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:backgroundTint="@color/white"
+        android:contentDescription="뒤로가기"
+        android:layout_marginTop="64dp"
+        app:layout_constraintHorizontal_bias="0.044" />
+
+    <TextView
+        android:text="출석보상으로 타코야키 1개 지급 되었습니다."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumfont"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textView28"
+        android:layout_marginTop="164dp"
+        app:layout_constraintHorizontal_bias="0.49" />
+
+    <ImageView
+        android:layout_width="356dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/dotted_line_horizontal"
+        android:id="@+id/imageView26"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="200dp"
+        app:layout_constraintHorizontal_bias="0.49" />
+
+    <ImageView
+        android:layout_width="356dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/dotted_line_horizontal"
+        android:id="@+id/imageView27"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="268dp"
+        app:layout_constraintHorizontal_bias="0.49" />
+
+    <ImageView
+        android:layout_width="356dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/dotted_line_horizontal"
+        android:id="@+id/imageView28"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="380dp"
+        app:layout_constraintHorizontal_bias="0.49" />
+
+    <ImageView
+        android:layout_width="356dp"
+        android:layout_height="36dp"
+        app:srcCompat="@drawable/dotted_line_gray"
+        android:id="@+id/imageView29"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="540dp"
+        app:layout_constraintHorizontal_bias="0.49" />
+
+    <TextView
+        android:text="상대방이 책장 오브제를 구매했습니다."
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/nanumfont"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textView29"
+        android:layout_marginTop="236dp"
+        app:layout_constraintHorizontal_bias="0.333" />
+
+    <TextView
+        android:text="하루일기 작성으로 타코야키 2알 지급되었습니다."
+        android:layout_width="373dp"
+        android:layout_height="79dp"
+        android:fontFamily="@font/nanumfont"
+        android:textSize="30dp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textView30"
+        android:layout_marginTop="304dp"
+        app:layout_constraintHorizontal_bias="0.75" />
+
+    <TextView
+        android:text="하루일기를 작성해 기록을 남기고 타코야키를
+           받아보세요! "
+        android:layout_width="373dp"
+        android:layout_height="79dp"
+        android:fontFamily="@font/nanumfont"
+        android:textSize="30dp"
+        android:textColor="#6E6D6D"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/textView31"
+        android:layout_marginTop="464dp"
+        app:layout_constraintHorizontal_bias="0.71" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
