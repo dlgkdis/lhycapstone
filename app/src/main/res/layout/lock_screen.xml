@@ -164,7 +164,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="172dp"
-        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:fontFamily="@font/nanumfont"
         android:text="비밀번호 입력"
         android:textColor="@color/black"
         android:textSize="35dp"
@@ -175,22 +175,9 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton48"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="taco"
-        app:layout_constraintHorizontal_bias="0.28"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/taco1" />
-
-    <ImageButton
         android:id="@+id/imageButton49"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="216dp"
         android:backgroundTint="@color/white"
         android:contentDescription="taco"
@@ -201,9 +188,35 @@
         app:srcCompat="@drawable/taco1" />
 
     <ImageButton
+        android:id="@+id/imageButton51"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="216dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="taco"
+        app:layout_constraintHorizontal_bias="0.293"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/taco1" />
+
+    <ImageButton
+        android:id="@+id/imageButton48"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="212dp"
+        android:backgroundTint="@color/white"
+        android:contentDescription="taco"
+        app:layout_constraintHorizontal_bias="0.725"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/taco1" />
+
+    <ImageButton
         android:id="@+id/imageButton50"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="216dp"
         android:backgroundTint="@color/white"
         android:contentDescription="taco"
@@ -213,17 +226,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/taco1" />
 
-    <ImageButton
-        android:id="@+id/imageButton51"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="taco"
-        app:layout_constraintHorizontal_bias="0.733"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/taco1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

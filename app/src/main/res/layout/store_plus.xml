@@ -9,7 +9,7 @@
         android:id="@+id/textView24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:fontFamily="@font/nanumfont"
         android:text="STORE"
         android:textColor="@color/black"
         android:textSize="40dp"

@@ -176,8 +176,8 @@
 
     <ImageButton
         android:id="@+id/imageButton52"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="212dp"
         android:backgroundTint="@color/white"
         android:contentDescription="octopus"
@@ -189,8 +189,8 @@
 
     <ImageButton
         android:id="@+id/imageButton53"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="212dp"
         android:backgroundTint="@color/white"
         android:contentDescription="octopus"
@@ -202,8 +202,8 @@
 
     <ImageButton
         android:id="@+id/imageButton54"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="212dp"
         android:backgroundTint="@color/white"
         android:contentDescription="octopus"
@@ -215,8 +215,8 @@
 
     <ImageButton
         android:id="@+id/imageButton55"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="212dp"
         android:backgroundTint="@color/white"
         android:contentDescription="octopus"

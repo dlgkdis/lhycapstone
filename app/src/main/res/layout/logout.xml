@@ -21,7 +21,7 @@
         android:layout_width="297dp"
         android:layout_height="74dp"
         android:backgroundTint="#FACA96"
-        android:fontFamily="@font/nanumBbangGuNiMamSonGeurSsi"
+        android:fontFamily="@font/nanumfont"
         android:text="상대방과 연결끊기"
         android:textColor="@color/black"
         android:textSize="25dp"
