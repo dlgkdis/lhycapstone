@@ -14,7 +14,7 @@ import com.example.test2.databinding.FragmentCalendarBinding;
 
 public class DashboardFragment extends Fragment {
 
-    private FragmentCalendarBinding;
+    private FragmentCalendarBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

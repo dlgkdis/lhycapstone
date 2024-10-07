@@ -45,12 +45,11 @@
         android:fontFamily="@font/nanumfont"
         android:text="OCTOBER"
         android:textColor="@color/black"
-        android:textSize="45dp"
+        android:textSize="45sp"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/textView10"
@@ -60,7 +59,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="SUN"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.025"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -74,7 +73,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="MON"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -88,7 +87,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="TUE"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.336"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -102,7 +101,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="WEN"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -116,7 +115,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="THU"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.665"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -130,7 +129,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="FRI"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.809"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -144,7 +143,7 @@
         android:fontFamily="@font/nanumfont"
         android:text="SAT"
         android:textColor="@color/black"
-        android:textSize="40dp"
+        android:textSize="40sp"
         app:layout_constraintHorizontal_bias="0.956"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -193,76 +192,5 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dotted_line_horizontal" />
-
-    <TextView
-        android:id="@+id/textView27"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="284dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="6    7    8    9    10    11    12"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintHorizontal_bias="0.38"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView26"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="216dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="1    2    3    4    5"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintHorizontal_bias="0.886"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView28"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="340dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="13    14    15    16    17    18    19"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintHorizontal_bias="0.695"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView29"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="404dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="20   21   22   23   24    25    26"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintHorizontal_bias="0.421"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView30"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="480dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="27    28    29    30    31"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        app:layout_constraintHorizontal_bias="0.136"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
