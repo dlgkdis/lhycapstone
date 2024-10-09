@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:paddingTop="?attr/actionBarSize">
 
-        <!-- 기존 UI 요소들을 여기에 붙여넣습니다 -->
+
 
         <ImageButton
             android:id="@+id/imageButton60"
@@ -28,13 +28,11 @@
             android:id="@+id/imageView"
             android:layout_width="487dp"
             android:layout_height="465dp"
-            android:layout_marginTop="152dp"
             android:src="@drawable/main_myroom"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            android:layout_marginBottom="104dp" />
 
         <ImageButton
             android:id="@+id/imageButton4"

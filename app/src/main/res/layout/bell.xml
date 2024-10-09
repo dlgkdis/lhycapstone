@@ -40,9 +40,9 @@
         android:id="@+id/imageView26"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="200dp"
-        app:layout_constraintHorizontal_bias="0.49" />
+        android:layout_marginTop="1dp"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintTop_toBottomOf="@+id/textView28" />
 
     <ImageView
         android:layout_width="356dp"
@@ -51,9 +51,9 @@
         android:id="@+id/imageView27"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="268dp"
-        app:layout_constraintHorizontal_bias="0.49" />
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintTop_toBottomOf="@+id/textView29" />
 
     <ImageView
         android:layout_width="356dp"
@@ -74,7 +74,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="540dp"
+        android:layout_marginTop="268dp"
         app:layout_constraintHorizontal_bias="0.49" />
 
     <TextView
@@ -87,10 +87,10 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         android:id="@+id/textView29"
-        android:layout_marginTop="236dp"
-        app:layout_constraintHorizontal_bias="0.333" />
+        android:layout_marginTop="4dp"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintTop_toBottomOf="@+id/imageView26" />
 
     <TextView
         android:text="하루일기 작성으로 타코야키 2알 지급되었습니다."
