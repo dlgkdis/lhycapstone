@@ -7,8 +7,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="?attr/actionBarSize">
-
+        android:paddingTop="10dp">
 
 
         <ImageButton
@@ -18,11 +17,10 @@
             android:layout_marginTop="32dp"
             android:backgroundTint="@color/white"
             android:contentDescription="store"
-            app:layout_constraintHorizontal_bias="0.182"
-            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/store" />
+            app:srcCompat="@drawable/store"
+            app:layout_constraintStart_toEndOf="@+id/imageButton65" />
 
         <ImageView
             android:id="@+id/imageView"
@@ -32,7 +30,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginBottom="104dp" />
+            app:layout_constraintTop_toBottomOf="@+id/imageButton62"
+            app:layout_constraintVertical_bias="0.327" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -44,7 +43,8 @@
             tools:ignore="MissingConstraints"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="288dp" />
+            android:layout_marginLeft="268dp"
+            android:layout_marginTop="24dp" />
 
         <ImageButton
             android:id="@+id/imageButton62"

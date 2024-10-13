@@ -22,6 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Bell" />
+        <activity android:name=".Store"/>
+        <activity android:name=".Person"/>
+        <activity android:name=".Reward"/>
     </application>
+
+
 
 </manifest>
