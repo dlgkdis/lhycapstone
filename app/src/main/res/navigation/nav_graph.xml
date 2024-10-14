@@ -9,7 +9,7 @@
     <fragment
         android:id="@+id/navigation_main"
         android:name="com.example.test2.ui.main.MainFragment"
-        android:label="Main"
+        android:label="마이룸"
         tools:layout="@layout/fragment_main" />
 
 
@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_tema"
-        android:name="com.example.test2.ui.notifications.NotificationsFragment"
+        android:name="com.example.test2.ui.tema.TemaFragment"
         android:label="@string/title_tema"
         tools:layout="@layout/fragment_tema" />
 </navigation>
