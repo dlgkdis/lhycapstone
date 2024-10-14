@@ -56,7 +56,6 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="284dp"
             app:layout_constraintHorizontal_bias="0.596"
-            app:layout_constraintZIndex="4"
             android:elevation="4dp" />
 
         <ImageView
@@ -68,8 +67,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="124dp"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintZIndex="1" />
+            app:layout_constraintHorizontal_bias="0.49" />
 
         <ImageButton
             android:id="@+id/imageButton60"
