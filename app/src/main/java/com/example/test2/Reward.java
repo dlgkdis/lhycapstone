@@ -13,7 +13,7 @@ public class Reward extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.rewardpage);
 
-        // imageButton56 (뒤로가기 버튼) 클릭 이벤트 처리
+        // imageButton66 (뒤로가기 버튼) 클릭 이벤트 처리
         ImageButton backButton = findViewById(R.id.imageButton66);
 
 // setOnClickListener 메서드를 통해 클릭 이벤트 처리

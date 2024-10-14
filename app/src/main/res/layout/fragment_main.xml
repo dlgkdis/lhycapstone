@@ -10,6 +10,67 @@
         android:paddingTop="10dp">
 
 
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myroom_cushion"
+            android:id="@+id/imageView41"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="444dp"
+            android:elevation="4dp"
+            app:layout_constraintHorizontal_bias="0.361" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myroom_table"
+            android:id="@+id/imageView19"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="352dp"
+            android:elevation="4dp"
+            app:layout_constraintHorizontal_bias="0.197" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myroom_window"
+            android:id="@+id/imageView18"
+            android:elevation="4dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="192dp"
+            app:layout_constraintHorizontal_bias="0.758" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myroom_bed"
+            android:id="@+id/imageView17"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="284dp"
+            app:layout_constraintHorizontal_bias="0.596"
+            app:layout_constraintZIndex="4"
+            android:elevation="4dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/myroom_basic"
+            android:id="@+id/imageView"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="124dp"
+            app:layout_constraintHorizontal_bias="0.49"
+            app:layout_constraintZIndex="1" />
+
         <ImageButton
             android:id="@+id/imageButton60"
             android:layout_width="50dp"
@@ -21,17 +82,6 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/store"
             app:layout_constraintStart_toEndOf="@+id/imageButton65" />
-
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="487dp"
-            android:layout_height="465dp"
-            android:src="@drawable/main_myroom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton62"
-            app:layout_constraintVertical_bias="0.327" />
 
         <ImageButton
             android:id="@+id/imageButton4"
@@ -86,4 +136,5 @@
             app:srcCompat="@drawable/person_main" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>
