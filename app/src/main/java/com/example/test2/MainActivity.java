@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
         // BottomNavigationView와 NavController 연결
         NavigationUI.setupWithNavController(navView, navController);
 
-
         // ImageButton 찾기 (id가 bell인 이미지 버튼)
         ImageButton imageButton = findViewById(R.id.imageButton65);
 
