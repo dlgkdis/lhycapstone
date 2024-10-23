@@ -1,3 +1,4 @@
+package com.example.test2;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -5,8 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.test2.MainActivity;
 
 public class TemaActivity extends AppCompatActivity {  // AppCompatActivity 상속
 

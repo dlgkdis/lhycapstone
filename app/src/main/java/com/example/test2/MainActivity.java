@@ -15,9 +15,6 @@ import com.example.test2.databinding.ActivityMainBinding;
 import android.content.Intent; // Intent 클래스 import
 import android.view.View;      // View 클래스 import
 import android.widget.ImageButton;
-import android.content.Intent; // Intent 클래스 import
-import android.view.View;      // View 클래스 import
-import android.widget.ImageButton;
 import android.widget.ImageView; // ImageView 추가
 
 public class MainActivity extends AppCompatActivity {
