@@ -73,7 +73,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object1" />
+        app:srcCompat="@drawable/shop1" />
 
     <ImageButton
         android:id="@+id/imageButton9"
@@ -86,7 +86,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object2" />
+        app:srcCompat="@drawable/shop2" />
 
     <ImageButton
         android:id="@+id/imageButton10"
@@ -99,7 +99,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object3" />
+        app:srcCompat="@drawable/shop3" />
 
     <ImageButton
         android:id="@+id/imageButton11"
@@ -112,7 +112,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object4"
+        app:srcCompat="@drawable/shop4"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <ImageButton
@@ -126,7 +126,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object5" />
+        app:srcCompat="@drawable/shop5" />
 
     <ImageButton
         android:id="@+id/imageButton13"
@@ -139,7 +139,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object6" />
+        app:srcCompat="@drawable/shop6" />
 
     <ImageButton
         android:id="@+id/imageButton14"
@@ -152,7 +152,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object7" />
+        app:srcCompat="@drawable/shop7" />
 
     <ImageButton
         android:id="@+id/imageButton15"
@@ -165,7 +165,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object8" />
+        app:srcCompat="@drawable/shop8" />
 
     <ImageButton
         android:id="@+id/imageButton16"
@@ -178,7 +178,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object9" />
+        app:srcCompat="@drawable/shop9" />
 
     <ImageButton
         android:id="@+id/imageButton17"
@@ -191,7 +191,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object10" />
+        app:srcCompat="@drawable/shop10" />
 
     <ImageButton
         android:id="@+id/imageButton18"
@@ -204,7 +204,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object11" />
+        app:srcCompat="@drawable/shop11" />
 
     <ImageButton
         android:id="@+id/imageButton19"
@@ -217,6 +217,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object12" />
+        app:srcCompat="@drawable/shop12" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

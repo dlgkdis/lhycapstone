@@ -53,7 +53,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object1" />
+        app:srcCompat="@drawable/shop1" />
 
     <ImageButton
         android:id="@+id/imageButton20"
@@ -66,7 +66,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object2" />
+        app:srcCompat="@drawable/shop2" />
 
     <ImageButton
         android:id="@+id/imageButton21"
@@ -79,7 +79,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object3" />
+        app:srcCompat="@drawable/shop3" />
 
     <ImageButton
         android:id="@+id/imageButton22"
@@ -92,7 +92,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object4" />
+        app:srcCompat="@drawable/shop4" />
 
     <ImageButton
         android:id="@+id/imageButton23"
@@ -105,7 +105,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object5" />
+        app:srcCompat="@drawable/shop5" />
 
     <ImageButton
         android:id="@+id/imageButton24"
@@ -118,7 +118,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object6" />
+        app:srcCompat="@drawable/shop6" />
 
     <ImageButton
         android:id="@+id/imageButton25"
@@ -131,7 +131,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object7" />
+        app:srcCompat="@drawable/shop7" />
 
     <ImageButton
         android:id="@+id/imageButton26"
@@ -143,7 +143,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object8"
+        app:srcCompat="@drawable/shop8"
         android:backgroundTint="@color/white" />
 
     <ImageButton
@@ -156,7 +156,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object9"
+        app:srcCompat="@drawable/shop9"
         android:backgroundTint="@color/white"/>
 
     <ImageButton
@@ -169,7 +169,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object10"
+        app:srcCompat="@drawable/shop10"
         android:backgroundTint="@color/white"/>
 
     <ImageButton
@@ -183,7 +183,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object11" />
+        app:srcCompat="@drawable/shop11" />
 
     <ImageButton
         android:id="@+id/imageButton30"
@@ -195,7 +195,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object12"
+        app:srcCompat="@drawable/shop12"
         android:backgroundTint="@color/white"/>
 
     <ImageButton
@@ -209,7 +209,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object13" />
+        app:srcCompat="@drawable/shop13" />
 
     <ImageButton
         android:id="@+id/imageButton32"
@@ -222,7 +222,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object14" />
+        app:srcCompat="@drawable/shop14" />
 
 
     <ImageButton
@@ -236,7 +236,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object15" />
+        app:srcCompat="@drawable/shop15" />
 
     <ImageButton
         android:id="@+id/imageButton35"
@@ -249,7 +249,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/object16" />
+        app:srcCompat="@drawable/shop16" />
 
     <ImageButton
         android:id="@+id/imageButton36"
