@@ -1,48 +1,71 @@
 package com.example.test2.ui.tema;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.example.test2.R;
+import com.example.test2.databinding.FragmentTemaBinding;
 
 public class TemaFragment extends Fragment {
 
+    public interface OnThemeSelectedListener {
+        void onThemeSelected(String theme);
+    }
+
+    private OnThemeSelectedListener themeSelectedListener;
+    private FragmentTemaBinding binding;
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        if (context instanceof OnThemeSelectedListener) {
+            themeSelectedListener = (OnThemeSelectedListener) context;
+        } else {
+            throw new ClassCastException(context.toString() + " must implement OnThemeSelectedListener");
+        }
+    }
+
+    @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_tema, container, false);
+        binding = FragmentTemaBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // 여기서 뷰와 상호작용을 할 수 있습니다.
-        // 예를 들어, ImageButton 클릭 이벤트 설정:
-        view.findViewById(R.id.imageButton).setOnClickListener(v -> {
-            // "테마_홈" 버튼 클릭 시 처리할 동작
+        // 각 테마 버튼에 클릭 리스너 설정
+        binding.btnTemaHome.setOnClickListener(v -> {
+            if (themeSelectedListener != null) themeSelectedListener.onThemeSelected("tema_home");
         });
 
-        view.findViewById(R.id.imageButton2).setOnClickListener(v -> {
-            // "테마_비행기" 버튼 클릭 시 처리할 동작
+        binding.btnTemaAirport.setOnClickListener(v -> {
+            if (themeSelectedListener != null) themeSelectedListener.onThemeSelected("tema_airport");
         });
 
-        view.findViewById(R.id.imageButton3).setOnClickListener(v -> {
-            // "테마_잠수함" 버튼 클릭 시 처리할 동작
+        binding.btnTemaSubmarine.setOnClickListener(v -> {
+            if (themeSelectedListener != null) themeSelectedListener.onThemeSelected("tema_submarine");
         });
 
-        view.findViewById(R.id.imageButton5).setOnClickListener(v -> {
-            // "테마_로켓" 버튼 클릭 시 처리할 동작
+        binding.btnTemaRocket.setOnClickListener(v -> {
+            if (themeSelectedListener != null) themeSelectedListener.onThemeSelected("tema_rocket");
         });
 
-        view.findViewById(R.id.imageButton6).setOnClickListener(v -> {
-            // "테마_섬" 버튼 클릭 시 처리할 동작
+        binding.btnTemaIsland.setOnClickListener(v -> {
+            if (themeSelectedListener != null) themeSelectedListener.onThemeSelected("tema_island");
         });
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null; // 메모리 누수 방지
     }
 }
