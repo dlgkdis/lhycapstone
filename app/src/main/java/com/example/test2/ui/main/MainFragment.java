@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.test2.CalendarAdd;
 import com.example.test2.R;
 import com.example.test2.Store;
 import com.example.test2.Person;
@@ -53,6 +55,7 @@ public class MainFragment extends Fragment {
         binding.btnProfile.setOnClickListener(v -> startActivity(new Intent(getActivity(), Person.class)));
         binding.btnReward.setOnClickListener(v -> startActivity(new Intent(getActivity(), Reward.class)));
         binding.btnBell.setOnClickListener(v -> startActivity(new Intent(getActivity(), Bell.class)));
+        binding.btnBell.setOnClickListener(v -> startActivity(new Intent(getActivity(), CalendarAdd.class)));
     }
 
     // 배경 이미지를 변경하는 메서드

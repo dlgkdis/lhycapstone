@@ -1,33 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:startDestination="@id/navigation_main"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    >
+    app:startDestination="@id/navigation_main">
 
+    <!-- Main Fragment -->
     <fragment
         android:id="@+id/navigation_main"
         android:name="com.example.test2.ui.main.MainFragment"
         android:label="마이룸"
         tools:layout="@layout/fragment_main" />
 
-
+    <!-- Calendar Fragment -->
     <fragment
         android:id="@+id/navigation_calendar"
         android:name="com.example.test2.ui.dashboard.DashboardFragment"
         android:label="@string/title_calendar"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_dashboard">
 
+        <!-- Action to ScheduleAddFragment -->
+        <action
+            android:id="@+id/action_dashboard_to_scheduleAdd"
+            app:destination="@id/scheduleAddFragment" />
+    </fragment>
+
+    <!-- Diary Fragment -->
     <fragment
         android:id="@+id/navigation_diary"
         android:name="com.example.test2.ui.notifications.NotificationsFragment"
         android:label="@string/title_diary"
         tools:layout="@layout/fragment_diary" />
 
+    <!-- Tema Fragment -->
     <fragment
         android:id="@+id/navigation_tema"
         android:name="com.example.test2.ui.tema.TemaFragment"
         android:label="@string/title_tema"
         tools:layout="@layout/fragment_tema" />
+
+    <!-- Schedule Add Fragment -->
+    <fragment
+        android:id="@+id/scheduleAddFragment"
+        android:name="com.example.test2.ui.dashboard.ScheduleAddFragment"
+        android:label="일정 추가"
+        tools:layout="@layout/calendar_add" />
+
 </navigation>

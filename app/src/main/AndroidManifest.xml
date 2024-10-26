@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.test2">
 
     <application
         android:allowBackup="true"
@@ -25,6 +26,7 @@
         <activity android:name=".Store" android:label="" />
         <activity android:name=".Person" android:label="" />
         <activity android:name=".Reward" android:label="" />
+
     </application>
 
 
