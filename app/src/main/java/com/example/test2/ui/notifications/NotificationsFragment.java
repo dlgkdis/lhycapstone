@@ -1,6 +1,9 @@
 package com.example.test2.ui.notifications;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -8,10 +11,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
-import androidx.navigation.Navigation;
+
 import androidx.annotation.NonNull;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 
 import com.example.test2.R;
 import com.example.test2.databinding.FragmentDiaryBinding;
@@ -19,41 +23,47 @@ import com.example.test2.databinding.FragmentDiaryBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import android.graphics.Typeface;
-import androidx.core.content.res.ResourcesCompat;
+
 public class NotificationsFragment extends Fragment {
 
     private FragmentDiaryBinding binding;
     private Calendar calendar;
     private TextView monthText;
     private GridLayout calendarGrid;
+    private SharedPreferences sharedPreferences;
+    private TextView selectedDayView;
+    private int selectedDay;  // 사용자가 선택한 날짜 저장
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDiaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        // 일기작성 버튼 클릭 리스너 설정
-        binding.button14.setOnClickListener(v ->
-                Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment)
-        );
+        sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
 
+        binding.button14.setOnClickListener(v -> {
+            saveSelectedDateToPreferences();  // 일기 작성 화면으로 날짜 전달
+            Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment);
+        });
 
         calendar = Calendar.getInstance();
         monthText = binding.monthText;
         calendarGrid = binding.calendarGrid;
 
-        updateMonthText();  // 현재 월 표시
-        updateCalendar();   // 캘린더 업데이트
+        Typeface customFont = ResourcesCompat.getFont(getContext(), R.font.nanumfont);
+        monthText.setTypeface(customFont, Typeface.BOLD);
+        monthText.setTextSize(30);
 
-        // 이전 달로 이동 버튼 클릭 리스너
+        setWeekdayFonts(customFont);
+        updateMonthText();
+        updateCalendar();
+
         binding.prevMonthButton.setOnClickListener(v -> {
             calendar.add(Calendar.MONTH, -1);
             updateMonthText();
             updateCalendar();
         });
 
-        // 다음 달로 이동 버튼 클릭 리스너
         binding.nextMonthButton.setOnClickListener(v -> {
             calendar.add(Calendar.MONTH, 1);
             updateMonthText();
@@ -61,6 +71,16 @@ public class NotificationsFragment extends Fragment {
         });
 
         return root;
+    }
+
+    private void setWeekdayFonts(Typeface customFont) {
+        binding.sunText.setTypeface(customFont, Typeface.BOLD);
+        binding.monText.setTypeface(customFont, Typeface.BOLD);
+        binding.tueText.setTypeface(customFont, Typeface.BOLD);
+        binding.wedText.setTypeface(customFont, Typeface.BOLD);
+        binding.thuText.setTypeface(customFont, Typeface.BOLD);
+        binding.friText.setTypeface(customFont, Typeface.BOLD);
+        binding.satText.setTypeface(customFont, Typeface.BOLD);
     }
 
     private void updateMonthText() {
@@ -90,25 +110,20 @@ public class NotificationsFragment extends Fragment {
 
         Typeface customFont = ResourcesCompat.getFont(getContext(), R.font.nanumfont);
 
-        // 날짜 채우기
         for (int day = 1; day <= daysInMonth; day++) {
+            final int currentDay = day;
+
             TextView dayView = new TextView(getContext());
             dayView.setText(String.valueOf(day));
             dayView.setGravity(Gravity.CENTER);
             dayView.setTextSize(30);
             dayView.setPadding(8, 8, 8, 8);
-
             dayView.setTypeface(customFont);
 
-            // 주말 색상 설정
             int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
-            if (dayOfWeek == 0) { // 일요일
-                dayView.setTextColor(Color.RED);
-            } else if (dayOfWeek == 6) { // 토요일
-                dayView.setTextColor(Color.BLUE);
-            } else {
-                dayView.setTextColor(Color.BLACK);
-            }
+            dayView.setTextColor(dayOfWeek == 0 ? Color.RED : (dayOfWeek == 6 ? Color.BLUE : Color.BLACK));
+
+            dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
 
             calendarGrid.addView(dayView, new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
@@ -116,6 +131,33 @@ public class NotificationsFragment extends Fragment {
             ));
             tempCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+    }
+
+    private void onDaySelected(TextView dayView, int day) {
+        if (selectedDayView != null) selectedDayView.setTextColor(Color.BLACK);
+        dayView.setTextColor(Color.RED);
+        selectedDayView = dayView;
+        selectedDay = day;
+
+        String selectedDateKey = getSelectedDateKey(day);
+        displayDiaryContent(selectedDateKey);
+    }
+
+    private String getSelectedDateKey(int day) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
+        Calendar selectedCalendar = (Calendar) calendar.clone();
+        selectedCalendar.set(Calendar.DAY_OF_MONTH, day);
+        return "diary_content_" + dateFormat.format(selectedCalendar.getTime());
+    }
+
+    private void displayDiaryContent(String dateKey) {
+        String diaryContent = sharedPreferences.getString(dateKey, "작성된 일기가 없습니다.");
+        binding.diaryContentBox.setText(diaryContent);
+    }
+
+    private void saveSelectedDateToPreferences() {
+        String selectedDateKey = getSelectedDateKey(selectedDay);
+        sharedPreferences.edit().putString("selected_date_key", selectedDateKey).apply();
     }
 
     @Override

@@ -39,8 +39,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/button14"
-        tools:layout_editor_absoluteX="0dp"
-        android:layout_marginTop="136dp">
+        tools:layout_editor_absoluteX="75dp"
+        android:layout_marginTop="156dp">
 
         <!-- 월 텍스트 및 버튼 -->
         <TextView
@@ -83,8 +83,8 @@
             app:layout_constraintTop_toBottomOf="@id/monthText"
             android:layout_marginTop="16dp">
 
-            <!-- 요일 이름들 -->
             <TextView
+                android:id="@+id/sunText"
                 android:text="일"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -94,6 +94,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/monText"
                 android:text="월"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -103,6 +104,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/tueText"
                 android:text="화"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -112,6 +114,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/wedText"
                 android:text="수"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -121,6 +124,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/thuText"
                 android:text="목"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -130,6 +134,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/friText"
                 android:text="금"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -139,6 +144,7 @@
                 android:textColor="@color/black" />
 
             <TextView
+                android:id="@+id/satText"
                 android:text="토"
                 android:gravity="center"
                 android:textSize="16sp"
@@ -157,6 +163,25 @@
             android:padding="8dp"
             app:layout_constraintTop_toBottomOf="@id/weekDays"
             android:layout_marginTop="8dp"></GridLayout>
+
+        <TextView
+            android:id="@+id/diaryContentBox"
+            android:layout_width="378dp"
+            android:layout_height="133dp"
+            android:background="@drawable/box_background"
+            android:padding="16dp"
+            android:text="작성된 일기가 여기에 표시됩니다."
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:gravity="center_vertical|start"
+            android:fontFamily="@font/nanumfont"
+            tools:text="여기에 일기가 표시됩니다."
+            tools:layout_editor_absoluteX="21dp"
+            app:layout_constraintTop_toBottomOf="@+id/calendarGrid"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

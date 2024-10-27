@@ -48,14 +48,74 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:fontFamily="@font/nanumfont"
-            android:layout_gravity="center" /> <!-- 중앙 정렬 -->
+            android:layout_gravity="center" />
 
-        <ImageView
-            android:id="@+id/imageView5"
+        <!-- ImageButton 3개 -->
+        <ImageButton
+            android:id="@+id/imageButton3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/weather" />
+            app:srcCompat="@drawable/sun"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="해"/>
+
+        <!-- imageButton3 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot3"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="4dp"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/cloud"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="58dp"
+            android:contentDescription="구름"/>
+
+        <!-- imageButton 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="54dp"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rain"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="108dp"
+            android:contentDescription="비"/>
+
+        <!-- imageButton2 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="104dp"
+            android:visibility="invisible" />
+
     </FrameLayout>
+
 
     <EditText
         android:id="@+id/diaryEditText"
@@ -73,10 +133,13 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginBottom="100dp" />
+        android:layout_marginBottom="100dp"
+        android:layout_marginTop="36dp"
+        app:layout_constraintTop_toBottomOf="@+id/drawingFrame"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
-        android:id="@+id/button10"
+        android:id="@+id/registerButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="등록"
@@ -84,15 +147,12 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="@font/nanumfont"
-        app:layout_constraintHorizontal_bias="0.894"
+        app:layout_constraintHorizontal_bias="0.839"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:backgroundTint="#d9d9d9"
-        android:layout_marginTop="9dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@+id/textView8" />
-
-
-
 
     <ImageButton
         android:id="@+id/imageButton64"
@@ -106,5 +166,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left"
         android:contentDescription="뒤로가기" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

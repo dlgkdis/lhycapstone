@@ -66,4 +66,20 @@
         android:id="@+id/action_diaryWriteFragment_to_NotificationsFragment"
         app:destination="@id/notificationsFragment" />
 
+    <fragment
+        android:id="@+id/DiaryWriteFragment"
+        android:name="com.example.test2.ui.notifications.DiaryWriteFragment"
+        android:label="Diary Write"
+        tools:layout="@layout/drawing_diary">
+        <action
+            android:id="@+id/action_diaryWriteFragment_to_diarySubmitFragment"
+            app:destination="@id/diarySubmitFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/diarySubmitFragment"
+        android:name="com.example.test2.ui.notifications.DiaryEndDialogFragment"
+        android:label="Diary Submit"
+        tools:layout="@layout/diary_end" />
+
 </navigation>
