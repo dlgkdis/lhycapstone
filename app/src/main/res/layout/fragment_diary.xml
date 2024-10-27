@@ -22,6 +22,7 @@
         android:layout_marginRight="16dp" />
 
     <!-- 축소된 커스텀 캘린더 추가 -->
+
     <ImageButton
         android:id="@+id/imageButton80"
         android:layout_width="50dp"
@@ -39,8 +40,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toBottomOf="@+id/button14"
-        tools:layout_editor_absoluteX="75dp"
-        android:layout_marginTop="156dp">
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginTop="120dp">
 
         <!-- 월 텍스트 및 버튼 -->
         <TextView
@@ -181,7 +182,7 @@
             app:layout_constraintTop_toBottomOf="@+id/calendarGrid"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

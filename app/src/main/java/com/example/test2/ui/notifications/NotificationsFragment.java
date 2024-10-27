@@ -120,8 +120,8 @@ public class NotificationsFragment extends Fragment {
             dayView.setPadding(8, 8, 8, 8);
             dayView.setTypeface(customFont);
 
-            int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
-            dayView.setTextColor(dayOfWeek == 0 ? Color.RED : (dayOfWeek == 6 ? Color.BLUE : Color.BLACK));
+            // 모든 날짜 텍스트 색상 블랙으로 설정
+            dayView.setTextColor(Color.BLACK);
 
             dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
 
@@ -131,6 +131,7 @@ public class NotificationsFragment extends Fragment {
             ));
             tempCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+
     }
 
     private void onDaySelected(TextView dayView, int day) {

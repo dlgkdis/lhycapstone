@@ -4,4 +4,5 @@
     <string name="title_calendar">캘린더</string>
     <string name="title_diary">다이어리</string>
     <string name="title_tema">테마</string>
+    <string name="default_web_client_id">YOUR_WEB_CLIENT_ID</string>
 </resources>
