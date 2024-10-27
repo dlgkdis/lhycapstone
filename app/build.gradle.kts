@@ -45,7 +45,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.appcompat:appcompat:1.4.1") // AppCompat
     implementation("com.google.android.material:material:1.5.0") // Material Components
-    implementation("androidx.constraintlayout:constraintlayout:2.1.3") // ConstraintLayout 추가
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // ConstraintLayout 추가
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1") // LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1") // ViewModel
     implementation("androidx.navigation:navigation-fragment-ktx:2.4.1") // Navigation Fragment
