@@ -6,6 +6,17 @@
         <item name="android:background">?android:attr/windowBackground</item>
     </style>
 
+    <!-- Custom DatePickerDialog 스타일 -->
+    <style name="CustomDatePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <!-- 다이얼로그 상단 배경 색상 설정 -->
+        <item name="colorPrimary">#3D3D3D</item>
+        <!-- 선택된 날짜의 동그라미 색상 설정 -->
+        <item name="colorAccent">#3D3D3D</item>
+        <item name="android:datePickerStyle">@style/CustomDatePicker</item>
+    </style>
 
+    <!-- DatePicker 자체 스타일 -->
+    <style name="CustomDatePicker" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">#3D3D3D</item>
+    </style>
 </resources>
-

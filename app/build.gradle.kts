@@ -44,7 +44,7 @@ dependencies {
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("androidx.appcompat:appcompat:1.4.1") // AppCompat
-    implementation("com.google.android.material:material:1.5.0") // Material Components
+    implementation("com.google.android.material:material:1.8.0") // Material Components
     implementation("androidx.constraintlayout:constraintlayout:2.1.4") // ConstraintLayout 추가
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1") // LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1") // ViewModel
@@ -52,5 +52,9 @@ dependencies {
     implementation("androidx.navigation:navigation-ui-ktx:2.4.1") // Navigation UI
     testImplementation("junit:junit:4.13.2") // JUnit
     androidTestImplementation("androidx.test.ext:junit:1.1.3") // Android JUnit
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0") // Espresso
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
+
+
+
 }
+

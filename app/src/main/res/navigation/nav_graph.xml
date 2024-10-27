@@ -46,4 +46,24 @@
         android:label="일정 추가"
         tools:layout="@layout/calendar_add" />
 
+    <fragment
+        android:id="@+id/diaryWriteFragment"
+        android:name="com.example.test2.ui.notifications.DiaryWriteFragment"
+        android:label="Diary Write"
+        tools:layout="@layout/drawing_diary" /> <!-- XML 레이아웃 파일의 이름 -->
+
+    <action
+        android:id="@+id/action_notificationsFragment_to_diaryWriteFragment"
+        app:destination="@id/diaryWriteFragment" />
+
+    <fragment
+        android:id="@+id/notificationsFragment"
+        android:name="com.example.test2.ui.notifications.NotificationsFragment"
+        android:label="NotificationsFragment"
+        tools:layout="@layout/fragment_diary" />
+
+    <action
+        android:id="@+id/action_diaryWriteFragment_to_NotificationsFragment"
+        app:destination="@id/notificationsFragment" />
+
 </navigation>

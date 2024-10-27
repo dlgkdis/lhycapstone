@@ -7,150 +7,6 @@
     tools:context=".ui.notifications.NotificationsFragment">
 
     <Button
-        android:id="@+id/button38"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="25"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.814" />
-
-    <Button
-        android:id="@+id/button39"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="26"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.975" />
-
-    <Button
-        android:id="@+id/button32"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="19"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.975" />
-
-    <Button
-        android:id="@+id/button30"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="17"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.65" />
-
-    <Button
-        android:id="@+id/button31"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="18"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.814" />
-
-    <Button
-        android:id="@+id/button25"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="12"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="252dp"
-        app:layout_constraintHorizontal_bias="0.975" />
-
-    <Button
-        android:id="@+id/button22"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="9"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="252dp"
-        app:layout_constraintHorizontal_bias="0.487" />
-
-    <Button
-        android:id="@+id/button21"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="8"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="252dp"
-        app:layout_constraintHorizontal_bias="0.324" />
-
-    <Button
-        android:id="@+id/button18"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="5"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="204dp"
-        app:layout_constraintHorizontal_bias="0.977" />
-
-    <Button
         android:id="@+id/button14"
         android:layout_width="92dp"
         android:layout_height="48dp"
@@ -162,14 +18,15 @@
         android:textStyle="bold"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="104dp"
-        android:layout_marginRight="24dp" />
+        android:layout_marginTop="52dp"
+        android:layout_marginRight="16dp" />
 
+    <!-- 축소된 커스텀 캘린더 추가 -->
     <ImageButton
         android:id="@+id/imageButton80"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="52dp"
         android:backgroundTint="@color/white"
         android:contentDescription="bell"
         app:layout_constraintHorizontal_bias="0.044"
@@ -178,482 +35,128 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/bell" />
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/button14"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginTop="136dp">
 
-    <TextView
-        android:id="@+id/textView17"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="2024.10.24"
-        android:textColor="@color/black"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.498" />
+        <!-- 월 텍스트 및 버튼 -->
+        <TextView
+            android:id="@+id/monthText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="OCTOBER"
+            android:textSize="24sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="16dp" />
 
-    <TextView
-        android:layout_width="400dp"
-        android:layout_height="300dp"
-        android:background="@drawable/diary_drawing"
-        android:fontFamily="@font/nanumfont"
-        android:gravity="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.215"
-        app:layout_constraintTop_toBottomOf="@+id/textView17"
-        android:id="@+id/textView19" />
+        <Button
+            android:id="@+id/prevMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&lt;"
+            android:background="@android:color/transparent"
+            app:layout_constraintEnd_toStartOf="@id/monthText"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:layout_width="350dp"
-        android:layout_height="180dp"
-        android:background="@drawable/diary_drawing"
-        android:fontFamily="@font/nanumfont"
-        android:gravity="center"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.898" />
+        <Button
+            android:id="@+id/nextMonthButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="&gt;"
+            android:background="@android:color/transparent"
+            app:layout_constraintStart_toEndOf="@id/monthText"
+            app:layout_constraintTop_toTopOf="parent" />
 
+        <!-- 요일 GridLayout 설정 -->
+        <GridLayout
+            android:id="@+id/weekDays"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="7"
+            app:layout_constraintTop_toBottomOf="@id/monthText"
+            android:layout_marginTop="16dp">
 
-    <TextView
-        android:id="@+id/textView18"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="528dp"
-        android:fontFamily="@font/nanumfont"
-        android:gravity="center"
-        android:text="목\n24\n10:40PM"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        app:layout_constraintHorizontal_bias="0.164"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+            <!-- 요일 이름들 -->
+            <TextView
+                android:text="일"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
+            <TextView
+                android:text="월"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
-    <ImageView
-        android:id="@+id/imageView11"
-        android:layout_width="244dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="528dp"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dotted_line_horizontal" />
+            <TextView
+                android:text="화"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
-    <ImageView
-        android:id="@+id/imageView13"
-        android:layout_width="244dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="564dp"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dotted_line_horizontal" />
+            <TextView
+                android:text="수"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
-    <ImageView
-        android:id="@+id/imageView14"
-        android:layout_width="244dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="612dp"
-        app:layout_constraintHorizontal_bias="0.814"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dotted_line_horizontal" />
+            <TextView
+                android:text="목"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="FRI"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView6"
-        app:layout_constraintRight_toLeftOf="@+id/textView8"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
+            <TextView
+                android:text="금"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="MON"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/textView4"
-        app:layout_constraintTop_toTopOf="@+id/textView19"
-        android:layout_marginTop="4dp" />
+            <TextView
+                android:text="토"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:textColor="@color/black" />
+        </GridLayout>
 
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="TUE"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView3"
-        app:layout_constraintRight_toLeftOf="@+id/textView5"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
-
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="WEN"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView4"
-        app:layout_constraintRight_toLeftOf="@+id/textView6"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="THU"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView5"
-        app:layout_constraintRight_toLeftOf="@+id/textView7"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="SUN"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView8"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="SAT"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        app:layout_constraintWidth_percent="0.142"
-        app:layout_constraintLeft_toRightOf="@+id/textView7"
-        app:layout_constraintRight_toLeftOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="164dp" />
-
-    <ImageView
-        android:src="@drawable/dotted_line_horizontal"
-        android:layout_width="400dp"
-        android:layout_height="30dp"
-        android:id="@+id/imageView16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="192dp"
-        app:layout_constraintHorizontal_bias="0.181" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="3"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="204dp"
-        app:layout_constraintHorizontal_bias="0.65" />
-
-    <Button
-        android:id="@+id/button17"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="4"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="204dp"
-        app:layout_constraintHorizontal_bias="0.814" />
-
-    <Button
-        android:id="@+id/button15"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="2"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="204dp"
-        app:layout_constraintHorizontal_bias="0.487" />
-
-    <Button
-        android:id="@+id/button16"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="1"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="204dp"
-        app:layout_constraintHorizontal_bias="0.326" />
-
-    <Button
-        android:id="@+id/button19"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="6"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="288dp"
-        app:layout_constraintHorizontal_bias="0.016" />
-
-    <Button
-        android:id="@+id/button20"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="7"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="300dp"
-        app:layout_constraintHorizontal_bias="0.163" />
-
-    <Button
-        android:id="@+id/button24"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="11"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="252dp"
-        app:layout_constraintHorizontal_bias="0.814" />
-
-    <Button
-        android:id="@+id/button26"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="13"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.016" />
-
-    <Button
-        android:id="@+id/button33"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="20"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.0" />
-
-    <Button
-        android:id="@+id/button34"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="21"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.16" />
-
-    <Button
-        android:id="@+id/button35"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="22"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.326" />
-
-    <Button
-        android:id="@+id/button36"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="23"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.487" />
-
-    <Button
-        android:id="@+id/button37"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="24"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="404dp"
-        app:layout_constraintHorizontal_bias="0.65" />
-
-    <Button
-        android:id="@+id/button27"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="14"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.16" />
-
-    <Button
-        android:id="@+id/button28"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="15"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.324" />
-
-    <Button
-        android:id="@+id/button29"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="16"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="352dp"
-        app:layout_constraintHorizontal_bias="0.49" />
-
-    <Button
-        android:id="@+id/button23"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:text="10"
-        android:background="@android:color/transparent"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="252dp"
-        app:layout_constraintHorizontal_bias="0.65" />
-
+        <!-- 날짜를 표시할 GridLayout -->
+        <GridLayout
+            android:id="@+id/calendarGrid"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="7"
+            android:padding="8dp"
+            app:layout_constraintTop_toBottomOf="@id/weekDays"
+            android:layout_marginTop="8dp"></GridLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
