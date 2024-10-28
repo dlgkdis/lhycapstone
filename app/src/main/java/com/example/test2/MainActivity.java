@@ -1,5 +1,7 @@
 package com.example.test2;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -20,6 +22,17 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // 앱의 SharedPreferences에서 비밀번호 설정 여부를 확인합니다.
+        SharedPreferences sharedPreferences = getSharedPreferences("PasswordPrefs", MODE_PRIVATE);
+        String storedPassword = sharedPreferences.getString("user_password", "");
+
+        // 비밀번호가 설정되지 않았다면 LoginActivity로 이동합니다.
+        if (storedPassword.isEmpty()) {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+            return;
+        }
 
         // Data Binding을 사용하여 레이아웃 설정
         binding = ActivityMainBinding.inflate(getLayoutInflater());

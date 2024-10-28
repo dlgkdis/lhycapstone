@@ -49,7 +49,7 @@
         android:id="@+id/imageView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/taco3"
+        app:srcCompat="@drawable/taco_0"
         app:layout_constraintTop_toBottomOf="@id/textView24"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="32dp"

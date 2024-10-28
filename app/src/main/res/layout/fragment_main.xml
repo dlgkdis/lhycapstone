@@ -91,7 +91,7 @@
             android:layout_height="93dp"
             android:backgroundTint="@color/white"
             android:contentDescription="타코야키(상점)"
-            app:srcCompat="@drawable/taco3"
+            app:srcCompat="@drawable/taco_0"
             tools:ignore="MissingConstraints"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
