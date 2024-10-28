@@ -23,13 +23,22 @@ public class Person extends AppCompatActivity {
             }
         });
 
-        // 로그인 버튼 (imageButton59) 클릭 시 LoginActivity로 이동
-        ImageButton loginButton = findViewById(R.id.imageButton59);
+        // 로그인 버튼 클릭 시 LoginActivity로 이동
+        ImageButton loginButton = findViewById(R.id.LoginButton1);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Person.this, LoginActivity.class);
                 startActivity(intent);  // LoginActivity 시작
+            }
+        });
+
+        ImageButton passwordButton = findViewById(R.id.pwsettingButton);
+        passwordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Person.this, PasswordSettingActivity.class);
+                startActivity(intent);
             }
         });
     }

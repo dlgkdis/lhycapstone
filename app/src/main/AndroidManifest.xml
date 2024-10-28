@@ -14,19 +14,8 @@
         android:theme="@style/Theme.MyApp"
         tools:targetApi="31">
 
-        <!-- 첫 번째 LoginActivity 선언만 남김 -->
-        <activity android:name=".LoginActivity"
+        <activity android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"
-            android:label="">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -37,8 +26,9 @@
         <activity android:name=".Store" android:label="" />
         <activity android:name=".Person" android:label="" />
         <activity android:name=".Reward" android:label="" />
-        <activity android:name=".StorePlus"></activity>
-        <activity android:name=".PasswordSettingActivity" />
+        <activity android:name=".StorePlus" android:label=""/>
+        <activity android:name=".PasswordSettingActivity" android:label="" />
+        <activity android:name=".LockScreenActivity" android:label=""/>
 
     </application>
 

@@ -3,7 +3,6 @@ package com.example.test2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,24 +17,16 @@ public class LockScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // 비밀번호가 설정되어 있는지 확인
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
-        storedPassword = sharedPreferences.getString("password", "");
-
-        if (storedPassword.isEmpty()) {
-            // 비밀번호가 설정되지 않은 경우 PasswordSettingActivity로 이동
-            startActivity(new Intent(this, PasswordSettingActivity.class));
-            finish();
-            return;
-        }
-
         setContentView(R.layout.lock_screen);  // 비밀번호가 설정된 경우 lock_screen.xml 표시
+
+        // 비밀번호를 불러옴
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
+        storedPassword = sharedPreferences.getString("password", "");
 
         // taco 이미지 버튼 배열 초기화
         tacoButtons = new ImageButton[] {
-                findViewById(R.id.imageButton49),
                 findViewById(R.id.imageButton51),
+                findViewById(R.id.imageButton49),
                 findViewById(R.id.imageButton50),
                 findViewById(R.id.imageButton48)
         };
@@ -44,27 +35,32 @@ public class LockScreenActivity extends AppCompatActivity {
     }
 
     private void setupPasswordButtons() {
-        findViewById(R.id.imageButton37).setOnClickListener(v -> onNumberButtonClicked(1));
-        findViewById(R.id.imageButton38).setOnClickListener(v -> onNumberButtonClicked(2));
-        findViewById(R.id.imageButton39).setOnClickListener(v -> onNumberButtonClicked(3));
-        findViewById(R.id.imageButton40).setOnClickListener(v -> onNumberButtonClicked(4));
-        findViewById(R.id.imageButton41).setOnClickListener(v -> onNumberButtonClicked(5));
-        findViewById(R.id.imageButton42).setOnClickListener(v -> onNumberButtonClicked(6));
-        findViewById(R.id.imageButton43).setOnClickListener(v -> onNumberButtonClicked(7));
-        findViewById(R.id.imageButton44).setOnClickListener(v -> onNumberButtonClicked(8));
-        findViewById(R.id.imageButton45).setOnClickListener(v -> onNumberButtonClicked(9));
-        findViewById(R.id.imageButton46).setOnClickListener(v -> onNumberButtonClicked(0));
+        findViewById(R.id.password1).setOnClickListener(v -> onNumberButtonClicked(1));
+        findViewById(R.id.password2).setOnClickListener(v -> onNumberButtonClicked(2));
+        findViewById(R.id.password3).setOnClickListener(v -> onNumberButtonClicked(3));
+        findViewById(R.id.password4).setOnClickListener(v -> onNumberButtonClicked(4));
+        findViewById(R.id.password5).setOnClickListener(v -> onNumberButtonClicked(5));
+        findViewById(R.id.password6).setOnClickListener(v -> onNumberButtonClicked(6));
+        findViewById(R.id.password7).setOnClickListener(v -> onNumberButtonClicked(7));
+        findViewById(R.id.password8).setOnClickListener(v -> onNumberButtonClicked(8));
+        findViewById(R.id.password9).setOnClickListener(v -> onNumberButtonClicked(9));
+        findViewById(R.id.password0).setOnClickListener(v -> onNumberButtonClicked(0));
 
-        findViewById(R.id.imageButton47).setOnClickListener(v -> onBackButtonClicked()); // 뒤로가기 버튼
+        findViewById(R.id.passwordback).setOnClickListener(v -> onBackButtonClicked()); // 뒤로가기 버튼
     }
 
     private void onNumberButtonClicked(int number) {
         if (enteredPassword.size() < 4) {
             enteredPassword.add(number);
             updatePasswordDisplay();
-            checkPassword();
+
+            // 4개의 숫자가 입력된 경우 비밀번호 확인
+            if (enteredPassword.size() == 4) {
+                checkPassword();
+            }
         }
     }
+
 
     private void onBackButtonClicked() {
         if (!enteredPassword.isEmpty()) {
@@ -91,13 +87,21 @@ public class LockScreenActivity extends AppCompatActivity {
             }
 
             if (enteredPass.toString().equals(storedPassword)) {
+                // 비밀번호가 맞으면 플래그 저장
+                SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("password_verified", true);
+                editor.apply();
+
+                // MainActivity로 이동
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
             } else {
                 Toast.makeText(this, "Incorrect password", Toast.LENGTH_SHORT).show();
                 enteredPassword.clear();
-                updatePasswordDisplay(); // 잘못된 비밀번호 입력 시 표시 초기화
+                updatePasswordDisplay();
             }
         }
     }
+
 }
