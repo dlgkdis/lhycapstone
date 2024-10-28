@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "212146054601",
+    "project_id": "haruniki-8619c",
+    "storage_bucket": "haruniki-8619c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212146054601:android:e03ed13d20952b594eb418",
+        "android_client_info": {
+          "package_name": "com.example.test2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212146054601-chaounv1ai7i7sr1kbfoo29vu5juv8pe.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDq0KF0hAIB7839jis9lePMMJesiqjLSlQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212146054601-chaounv1ai7i7sr1kbfoo29vu5juv8pe.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
