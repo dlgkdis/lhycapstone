@@ -29,49 +29,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/lock_screen" />
 
-
-    <ImageView
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        app:srcCompat="@drawable/kakao"
-        android:id="@+id/imageView38"
-        android:elevation="4dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button12"
-        app:layout_constraintHorizontal_bias="0.274"
-        android:layout_marginTop="24dp" />
-
-    <ImageView
-        android:layout_width="27dp"
-        android:layout_height="22dp"
-        app:srcCompat="@drawable/google"
-        android:id="@+id/imageView40"
-        android:elevation="4dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/GoogleLoginButton"
-        app:layout_constraintHorizontal_bias="0.276"
-        android:layout_marginTop="28dp" />
-
-    <Button
-        android:id="@+id/button12"
-        android:layout_width="297dp"
-        android:layout_height="74dp"
-        android:backgroundTint="#FBE28A"
-        android:fontFamily="@font/nanumfont"
-        android:text="KAKAOTALK"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginTop="45dp"
-        app:layout_constraintTop_toBottomOf="@+id/imageView37" />
-
-    <Button
+    <com.google.android.gms.common.SignInButton
         android:id="@+id/GoogleLoginButton"
         android:layout_width="297dp"
         android:layout_height="74dp"
@@ -81,12 +39,10 @@
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@+id/button12" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView37"
+        android:layout_marginTop="64dp" />
 
     <ImageButton
         android:layout_width="50dp"
