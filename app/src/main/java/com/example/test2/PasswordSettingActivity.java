@@ -3,7 +3,6 @@ package com.example.test2;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,18 +26,18 @@ public class PasswordSettingActivity extends AppCompatActivity {
 
         // taco 이미지 버튼 초기화
         tacoButtons = new ImageButton[] {
-                findViewById(R.id.imageButton49),
                 findViewById(R.id.imageButton51),
+                findViewById(R.id.imageButton49),
                 findViewById(R.id.imageButton50),
                 findViewById(R.id.imageButton48)
         };
 
         // 숫자 버튼 초기화
         int[] buttonIds = {
-                R.id.imageButton37, R.id.imageButton38, R.id.imageButton39,
-                R.id.imageButton40, R.id.imageButton41, R.id.imageButton42,
-                R.id.imageButton43, R.id.imageButton44, R.id.imageButton45,
-                R.id.imageButton46
+                R.id.password0,
+                R.id.password1, R.id.password2, R.id.password3,
+                R.id.password4, R.id.password5, R.id.password6,
+                R.id.password7, R.id.password8, R.id.password9
         };
 
         // 숫자 버튼 클릭 리스너 설정
@@ -49,7 +48,7 @@ public class PasswordSettingActivity extends AppCompatActivity {
         }
 
         // 뒤로가기 버튼 설정
-        ImageButton backButton = findViewById(R.id.imageButton47);
+        ImageButton backButton = findViewById(R.id.passwordback);
         backButton.setOnClickListener(v -> removeLastDigit());
     }
 
@@ -85,19 +84,25 @@ public class PasswordSettingActivity extends AppCompatActivity {
     }
 
     private void savePassword() {
-        StringBuilder password = new StringBuilder();
+        // 비밀번호를 문자열로 변환
+        StringBuilder passwordBuilder = new StringBuilder();
         for (int digit : passwordDigits) {
-            password.append(digit);
+            passwordBuilder.append(digit);
         }
+        String password = passwordBuilder.toString();
 
+        // SharedPreferences에 비밀번호 저장
+        SharedPreferences sharedPreferences = getSharedPreferences("user_prefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("user_password", password.toString());
+        editor.putString("password", password);
         editor.apply();
 
+        // 비밀번호 설정 완료 알림
         Toast.makeText(this, "비밀번호가 설정되었습니다.", Toast.LENGTH_SHORT).show();
 
-        // 설정 후 MainActivity로 이동
-        startActivity(new Intent(PasswordSettingActivity.this, MainActivity.class));
+        // 설정 완료 후 MainActivity로 이동
+        Intent intent = new Intent(PasswordSettingActivity.this, MainActivity.class);
+        startActivity(intent);
         finish(); // PasswordSettingActivity 종료
     }
 }
