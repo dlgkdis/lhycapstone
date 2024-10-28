@@ -34,11 +34,11 @@
         android:textStyle="bold"
         android:textColor="@color/black"
         android:fontFamily="@font/nanumfont"
-        app:layout_constraintHorizontal_bias="0.95"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:backgroundTint="#d9d9d9"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/taco_0"
         android:layout_marginTop="192dp" />
 
     <ImageView
@@ -55,7 +55,7 @@
         android:layout_marginTop="100dp" />
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/taco_0"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
@@ -63,7 +63,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/taco3" />
+        app:srcCompat="@drawable/taco_0" />
 
     <!-- GridLayout for shop items with spacing -->
     <GridLayout
