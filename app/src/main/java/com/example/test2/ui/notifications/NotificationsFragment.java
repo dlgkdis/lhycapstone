@@ -32,7 +32,7 @@ public class NotificationsFragment extends Fragment {
     private GridLayout calendarGrid;
     private SharedPreferences sharedPreferences;
     private TextView selectedDayView;
-    private int selectedDay;  // 사용자가 선택한 날짜 저장
+    private int selectedDay;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,7 +43,12 @@ public class NotificationsFragment extends Fragment {
 
         binding.button14.setOnClickListener(v -> {
             saveSelectedDateToPreferences();  // 일기 작성 화면으로 날짜 전달
-            Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment);
+            String selectedDateKey = getSelectedDateKey(selectedDay);
+
+            // 선택한 날짜를 DiaryWriteFragment로 전달
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedDateKey", selectedDateKey);
+            Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment, bundle);
         });
 
         calendar = Calendar.getInstance();
@@ -98,7 +103,6 @@ public class NotificationsFragment extends Fragment {
         int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1;
         int daysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
 
-        // 요일 맞추기 위한 빈칸 추가
         for (int i = 0; i < firstDayOfWeek; i++) {
             TextView emptyView = new TextView(getContext());
             emptyView.setLayoutParams(new GridLayout.LayoutParams(
@@ -119,8 +123,6 @@ public class NotificationsFragment extends Fragment {
             dayView.setTextSize(30);
             dayView.setPadding(8, 8, 8, 8);
             dayView.setTypeface(customFont);
-
-            // 모든 날짜 텍스트 색상 블랙으로 설정
             dayView.setTextColor(Color.BLACK);
 
             dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
@@ -131,7 +133,6 @@ public class NotificationsFragment extends Fragment {
             ));
             tempCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
-
     }
 
     private void onDaySelected(TextView dayView, int day) {
@@ -139,9 +140,6 @@ public class NotificationsFragment extends Fragment {
         dayView.setTextColor(Color.RED);
         selectedDayView = dayView;
         selectedDay = day;
-
-        String selectedDateKey = getSelectedDateKey(day);
-        displayDiaryContent(selectedDateKey);
     }
 
     private String getSelectedDateKey(int day) {
@@ -149,11 +147,6 @@ public class NotificationsFragment extends Fragment {
         Calendar selectedCalendar = (Calendar) calendar.clone();
         selectedCalendar.set(Calendar.DAY_OF_MONTH, day);
         return "diary_content_" + dateFormat.format(selectedCalendar.getTime());
-    }
-
-    private void displayDiaryContent(String dateKey) {
-        String diaryContent = sharedPreferences.getString(dateKey, "작성된 일기가 없습니다.");
-        binding.diaryContentBox.setText(diaryContent);
     }
 
     private void saveSelectedDateToPreferences() {

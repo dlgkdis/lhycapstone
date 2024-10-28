@@ -11,7 +11,7 @@
         android:layout_width="204dp"
         android:layout_height="45dp"
         android:fontFamily="@font/nanumfont"
-        android:text="&lt;2024.10.24 10:40PM&gt;"
+        android:text="&lt;0000.00.00&gt;"
         android:textColor="@color/black"
         android:textSize="35dp"
         android:textStyle="bold"

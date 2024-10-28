@@ -28,6 +28,8 @@
         <activity android:name=".Store" android:label="" />
         <activity android:name=".Person" android:label="" />
         <activity android:name=".Reward" android:label="" />
+        <activity android:name=".StorePlus"></activity>
+        <activity android:name=".LoginActivity" />
 
     </application>
     <uses-permission android:name="android.permission.INTERNET" />

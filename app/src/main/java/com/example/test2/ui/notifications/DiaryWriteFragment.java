@@ -28,18 +28,29 @@ public class DiaryWriteFragment extends Fragment {
     private EditText diaryEditText;
     private SharedPreferences sharedPreferences;
     private String selectedDateKey;
+    private TextView textView8; // 날짜 표시 TextView
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.drawing_diary, container, false);
 
-        // SharedPreferences 초기화 및 선택한 날짜 키 가져오기
+        // SharedPreferences 초기화
         sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
-        selectedDateKey = sharedPreferences.getString("selected_date_key", getTodayDateKey());
+
+        // 인자로 전달된 selectedDateKey 받기
+        if (getArguments() != null) {
+            selectedDateKey = getArguments().getString("selectedDateKey", getTodayDateKey());
+        } else {
+            selectedDateKey = getTodayDateKey();
+        }
 
         // EditText 초기화
         diaryEditText = root.findViewById(R.id.diaryEditText);
+
+        // 날짜 표시 TextView 초기화
+        textView8 = root.findViewById(R.id.textView8);
+        updateDateTextView(); // 선택된 날짜를 TextView에 설정
 
         // 등록 버튼 클릭 리스너 설정
         Button registerButton = root.findViewById(R.id.registerButton);
@@ -114,5 +125,19 @@ public class DiaryWriteFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         return "diary_content_" + dateFormat.format(calendar.getTime());
+    }
+
+    // 선택된 날짜를 textView8에 표시하는 메서드
+    private void updateDateTextView() {
+        SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+        Calendar calendar = Calendar.getInstance();
+        try {
+            // 날짜 키에서 날짜를 파싱하여 표시
+            calendar.setTime(new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(selectedDateKey.replace("diary_content_", "")));
+        } catch (Exception e) {
+            calendar = Calendar.getInstance();  // 파싱 실패 시 오늘 날짜 사용
+        }
+        String displayDate = "<" + displayFormat.format(calendar.getTime()) + ">";
+        textView8.setText(displayDate);
     }
 }

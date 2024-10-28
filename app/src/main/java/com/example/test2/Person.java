@@ -11,24 +11,26 @@ public class Person extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.login);  // 첫 번째 XML 파일 (예: main_layout.xml)
 
-        // imageButton56 (뒤로가기 버튼) 클릭 이벤트 처리
+        // 뒤로가기 버튼 (imageButton82) 설정
         ImageButton backButton = findViewById(R.id.imageButton82);
-
-// setOnClickListener 메서드를 통해 클릭 이벤트 처리
-        backButton.setOnClickListener(new View.OnClickListener()
-
-        {
+        backButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
-                // 다른 액티비티로 전환하기 위한 Intent
+            public void onClick(View v) {
                 Intent intent = new Intent(Person.this, MainActivity.class);
                 startActivity(intent);  // MainActivity 시작
             }
         });
+
+        // 로그인 버튼 (imageButton59) 클릭 시 LoginActivity로 이동
+        ImageButton loginButton = findViewById(R.id.imageButton59);
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Person.this, LoginActivity.class);
+                startActivity(intent);  // LoginActivity 시작
+            }
+        });
     }
-
-
-
 }
