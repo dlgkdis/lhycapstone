@@ -30,6 +30,8 @@
         <activity android:name=".PasswordSettingActivity" android:label="" />
         <activity android:name=".LockScreenActivity" android:label=""/>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ObjectBuyActivity" />
+        <activity android:name=".ObjectArrangementActivity" />
 
     </application>
 

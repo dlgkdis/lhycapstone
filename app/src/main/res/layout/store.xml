@@ -94,6 +94,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 1" />
 
+            <ImageView
+                android:id="@+id/shop1_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -138,6 +148,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 2" />
+
+            <ImageView
+                android:id="@+id/shop2_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -184,6 +204,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 3" />
 
+            <ImageView
+                android:id="@+id/shop3_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -228,6 +258,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 4" />
+
+            <ImageView
+                android:id="@+id/shop4_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -274,6 +314,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 5" />
 
+            <ImageView
+                android:id="@+id/shop5_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -318,6 +368,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 6" />
+
+            <ImageView
+                android:id="@+id/shop6_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -364,6 +424,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 7" />
 
+            <ImageView
+                android:id="@+id/shop7_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -408,6 +478,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 8" />
+
+            <ImageView
+                android:id="@+id/shop8_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -454,6 +534,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 9" />
 
+            <ImageView
+                android:id="@+id/shop9_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -498,6 +588,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 10" />
+
+            <ImageView
+                android:id="@+id/shop10_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -544,6 +644,16 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 11" />
 
+            <ImageView
+                android:id="@+id/shop11_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
+
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -588,6 +698,16 @@
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 12" />
+
+            <ImageView
+                android:id="@+id/shop12_lock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/shop_lock"
+                android:layout_margin="8dp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="top|center_horizontal"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
