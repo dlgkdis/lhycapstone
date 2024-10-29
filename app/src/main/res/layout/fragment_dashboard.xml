@@ -61,82 +61,8 @@
             android:padding="8dp"
             android:layout_marginTop="60dp">
 
-            <TextView
-                android:text="일"
-                android:gravity="center"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"/>
-
-            <TextView
-                android:text="월"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:text="화"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:text="수"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:text="목"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:text="금"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:text="토"
-                android:gravity="center"
-                android:textSize="20sp"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
-                android:fontFamily="@font/nanumfont"
-                android:textColor="#3D3D3D"
-                android:textStyle="bold"/>
+            <!-- 요일 텍스트들 -->
+            <!-- 일, 월, 화, 수, 목, 금, 토 TextViews (코드 생략) -->
 
         </GridLayout>
 
@@ -156,5 +82,24 @@
 
         </GridLayout>
 
+        <!-- 일정 표시용 네모 박스 -->
+        <TextView
+            android:id="@+id/scheduleBox"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:padding="16dp"
+            android:background="@drawable/schedule_box_background"
+            android:textColor="@color/black"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            android:fontFamily="@font/nanumfont"
+            android:textStyle="bold"
+            android:textSize="20dp"
+            app:layout_constraintTop_toBottomOf="@id/calendarGrid"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -30,6 +30,8 @@
         <activity android:name=".PasswordSettingActivity" android:label="" />
         <activity android:name=".LockScreenActivity" android:label=""/>
         <activity android:name=".LoginActivity" />
+        <activity android:name=".ObjectBuyActivity" />
+        <activity android:name=".ObjectArrangementActivity" />
         <activity android:name=".InviteActivity"/>
         <activity android:name=".JoinActivity" android:exported="true">
             <intent-filter>
@@ -39,7 +41,6 @@
                 <data android:host="haruniki.page.link" android:scheme="https"/>
             </intent-filter>
         </activity>
-
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
