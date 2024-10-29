@@ -29,6 +29,7 @@
         <activity android:name=".StorePlus" android:label=""/>
         <activity android:name=".PasswordSettingActivity" android:label="" />
         <activity android:name=".LockScreenActivity" android:label=""/>
+        <activity android:name=".LoginActivity" />
 
     </application>
 
