@@ -1,29 +1,27 @@
 package com.example.test2.ui.dashboard;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
-import android.widget.ImageButton;
 import android.widget.TextView;
-import android.graphics.Color;
-import android.view.Gravity;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.navigation.Navigation;
 import com.example.test2.R;
 import com.example.test2.databinding.FragmentDashboardBinding;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.HashMap;
-import java.util.Map;
+import androidx.navigation.Navigation;
 
 public class DashboardFragment extends Fragment {
 
@@ -31,27 +29,24 @@ public class DashboardFragment extends Fragment {
     private Calendar calendar;
     private TextView monthText;
     private GridLayout calendarGrid;
+    private TextView scheduleBox; // 일정 표시 네모 박스
 
-    private Map<String, String> scheduleMap = new HashMap<>();
+    private static final String SHARED_PREFS = "sharedPrefs";
+    private SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
+    private SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault());
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
-
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-
-
-        // 캘린더 초기 설정
         calendar = Calendar.getInstance();
         monthText = root.findViewById(R.id.monthText);
         calendarGrid = root.findViewById(R.id.calendarGrid);
+        scheduleBox = root.findViewById(R.id.scheduleBox); // 네모 박스
 
-        updateCalendar();
+        scheduleBox.setVisibility(View.GONE); // 초기에는 숨김
 
-        // 이전, 다음 버튼 설정
         Button prevMonthButton = root.findViewById(R.id.prevMonthButton);
         Button nextMonthButton = root.findViewById(R.id.nextMonthButton);
 
@@ -65,26 +60,21 @@ public class DashboardFragment extends Fragment {
             updateCalendar();
         });
 
+        updateCalendar();
+
         return root;
     }
 
-
     private void updateCalendar() {
-        // 월 표시 업데이트
-        SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
         monthText.setText(monthFormat.format(calendar.getTime()));
-
-        // 그리드 초기화
         calendarGrid.removeAllViews();
 
-        // 현재 달의 첫째 날로 설정
         Calendar tempCalendar = (Calendar) calendar.clone();
         tempCalendar.set(Calendar.DAY_OF_MONTH, 1);
 
         int daysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
-        int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1; // 일요일 시작(0)
+        int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1;
 
-        // 요일에 맞춰 첫 번째 날짜가 시작되도록 빈 칸 추가
         for (int i = 0; i < firstDayOfWeek; i++) {
             TextView emptyView = new TextView(getContext());
             GridLayout.LayoutParams emptyParams = new GridLayout.LayoutParams();
@@ -95,7 +85,6 @@ public class DashboardFragment extends Fragment {
             calendarGrid.addView(emptyView);
         }
 
-        // 날짜 채우기
         for (int day = 1; day <= daysInMonth; day++) {
             final int currentDay = day;
             TextView dayView = new TextView(getContext());
@@ -103,7 +92,6 @@ public class DashboardFragment extends Fragment {
             dayView.setGravity(Gravity.CENTER);
             dayView.setPadding(16, 16, 16, 16);
 
-            // 날짜 셀 레이아웃 파라미터 설정
             GridLayout.LayoutParams dayParams = new GridLayout.LayoutParams();
             dayParams.width = 0;
             dayParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -114,26 +102,43 @@ public class DashboardFragment extends Fragment {
             dayView.setTypeface(customFont);
             dayView.setTextSize(30);
 
-            // 주말 색상 설정
             int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
-            if (dayOfWeek == 0) { // 일요일
+            if (dayOfWeek == 0) {
                 dayView.setTextColor(Color.RED);
-            } else if (dayOfWeek == 6) { // 토요일
+            } else if (dayOfWeek == 6) {
                 dayView.setTextColor(Color.BLUE);
             } else {
                 dayView.setTextColor(Color.BLACK);
             }
 
-            // 날짜 클릭 이벤트 - ScheduleAddFragment로 전환
+            String fullDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
+            String savedTitle = loadData(fullDate);
+            if (savedTitle != null) {
+                dayView.setTextColor(Color.GREEN); // 일정이 있는 날짜는 녹색으로 표시
+            }
+
             dayView.setOnClickListener(v -> {
-                String selectedDate = monthFormat.format(calendar.getTime()) + " " + currentDay + "일";
-                Bundle bundle = new Bundle();
-                bundle.putString("selectedDate", selectedDate);
-                Navigation.findNavController(v).navigate(R.id.action_dashboard_to_scheduleAdd, bundle);
+                String selectedDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
+                String schedule = loadData(selectedDate);
+
+                if (schedule != null) {
+                    scheduleBox.setText("일정: " + schedule); // 등록한 일정 표시
+                    scheduleBox.setVisibility(View.VISIBLE);
+                } else {
+                    scheduleBox.setVisibility(View.GONE);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("selectedDate", selectedDate);
+                    Navigation.findNavController(v).navigate(R.id.action_dashboard_to_scheduleAdd, bundle);
+                }
             });
 
             calendarGrid.addView(dayView);
         }
+    }
+
+    private String loadData(String date) {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        return sharedPreferences.getString(date + "_title", null);
     }
 
     @Override
