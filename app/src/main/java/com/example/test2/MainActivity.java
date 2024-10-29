@@ -69,15 +69,4 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-
-        // 앱이 백그라운드로 들어갈 때 비밀번호 인증 플래그 초기화
-        SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("password_verified", false);
-        editor.apply();
-    }
-
 }

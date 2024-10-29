@@ -3,6 +3,7 @@ package com.example.test2;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 import android.app.Activity;
 
@@ -52,6 +53,17 @@ public class LoginActivity extends AppCompatActivity {
                 signIn();
             }
         });
+
+         ImageButton backButton = findViewById(R.id.imageButton56);
+         if (backButton != null) {
+             backButton.setOnClickListener(new View.OnClickListener() {
+                 @Override
+                 public void onClick(View v) {
+                     Intent intent = new Intent(LoginActivity.this, Person.class);
+                     startActivity(intent); // MainActivity 시작
+                 }
+             });
+         }
     }
     private void init(){
          activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
@@ -64,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                              try{
                                  //successful
                                  GoogleSignInAccount account = task.getResult(ApiException.class);
-                                 Toast.makeText(getApplicationContext(),"first", Toast.LENGTH_LONG).show();
+                                 Toast.makeText(getApplicationContext(),"로그인 성공", Toast.LENGTH_LONG).show();
                                  firebaseAuthWithGoogle(account);
                              }  catch (ApiException e){
                                  //failed

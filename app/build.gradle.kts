@@ -40,24 +40,31 @@ android {
 }
 
 dependencies {
+    // Firebase BOM 사용하여 모든 Firebase 의존성 버전 통일
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
 
-    implementation(platform("com.google.firebase:firebase-bom:32.1.0"))
-    implementation("com.google.android.gms:play-services-auth:20.5.0")
+    // Firebase 서비스들
     implementation("com.google.firebase:firebase-analytics")
-    implementation("androidx.appcompat:appcompat:1.4.1") // AppCompat
-    implementation("com.google.android.material:material:1.8.0") // Material Components
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // ConstraintLayout 추가
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1") // LiveData
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1") // ViewModel
-    implementation("androidx.navigation:navigation-fragment-ktx:2.4.1") // Navigation Fragment
-    implementation("androidx.navigation:navigation-ui-ktx:2.4.1") // Navigation UI
-    implementation(libs.firebase.auth)
+    implementation("com.google.firebase:firebase-auth")
+    implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-dynamic-links")
-    implementation("com.google.firebase:firebase-analytics")
-    testImplementation("junit:junit:4.13.2") // JUnit
-    androidTestImplementation("androidx.test.ext:junit:1.1.3") // Android JUnit
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 
+    // Google Play 서비스 인증
+    implementation("com.google.android.gms:play-services-auth:20.5.0")
+
+    // AndroidX 및 Material Components 최신 버전 사용
+    implementation("androidx.appcompat:appcompat:1.5.1") // 최신 AppCompat
+    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4") // 최신 ConstraintLayout
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+
+    // Android Test 라이브러리들
+    androidTestImplementation("androidx.test.ext:junit:1.1.3")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 }
+
 
 

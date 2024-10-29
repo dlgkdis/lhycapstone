@@ -30,7 +30,7 @@
         app:srcCompat="@drawable/lock_screen" />
 
     <Button
-        android:id="@+id/button9"
+        android:id="@+id/inviteButton"
         android:layout_width="297dp"
         android:layout_height="74dp"
         android:backgroundTint="#ffd9d9"

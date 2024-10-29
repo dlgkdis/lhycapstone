@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,7 +19,6 @@ public class Person extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
@@ -27,18 +27,22 @@ public class Person extends AppCompatActivity {
             userInfoText = findViewById(R.id.UserInfoText);
             userInfoText.setVisibility(View.VISIBLE); // 사용자 정보를 표시하도록 설정
 
-            // 이메일 정보 설정 (또는 다른 사용자 정보)
+            // 이메일 정보 설정
             userInfoText.setText(currentUser.getEmail());
 
-            // 로그인 완료 화면의 버튼 초기화
+            // 로그아웃 버튼 초기화
             ImageButton logoutButton = findViewById(R.id.LogoutButton1);
-            logoutButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mAuth.signOut();
-                    Toast.makeText(Person.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-                    recreate(); // 다시 로드하여 로그인 전 화면 표시
-                }
+            logoutButton.setOnClickListener(v -> {
+                mAuth.signOut();
+                Toast.makeText(Person.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+                recreate();
+            });
+
+            // 초대 버튼 초기화
+            Button inviteButton = findViewById(R.id.inviteButton);
+            inviteButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Person.this, InviteActivity.class);
+                startActivity(intent);
             });
 
         } else {
