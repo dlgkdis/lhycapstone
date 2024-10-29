@@ -10,77 +10,139 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class Person extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private TextView userInfoText;
+    private FirebaseFirestore db;
+    private TextView ownerInfoText, invitedInfoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
+
         FirebaseUser currentUser = mAuth.getCurrentUser();
-
         if (currentUser != null) {
-            setContentView(R.layout.login_complete); // 로그인 완료된 화면 설정
-            userInfoText = findViewById(R.id.UserInfoText);
-            userInfoText.setVisibility(View.VISIBLE); // 사용자 정보를 표시하도록 설정
-
-            // 이메일 정보 설정
-            userInfoText.setText(currentUser.getEmail());
-
-            // 로그아웃 버튼 초기화
-            ImageButton logoutButton = findViewById(R.id.LogoutButton1);
-            logoutButton.setOnClickListener(v -> {
-                mAuth.signOut();
-                Toast.makeText(Person.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
-                recreate();
-            });
-
-            // 초대 버튼 초기화
-            Button inviteButton = findViewById(R.id.inviteButton);
-            inviteButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Person.this, InviteActivity.class);
-                startActivity(intent);
-            });
-
+            checkUserGroupStatus(currentUser.getUid(), currentUser.getEmail());
         } else {
-            setContentView(R.layout.login); // 로그인 전 화면 설정
-
-            // 로그인 화면의 버튼 초기화
-            ImageButton loginButton = findViewById(R.id.LoginButton1);
-            loginButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Person.this, LoginActivity.class);
-                    startActivity(intent); // LoginActivity 시작
-                }
-            });
+            setContentView(R.layout.login);
+            initLoginButton();
         }
+        initCommonButtons();
+    }
 
-        // 공통으로 사용되는 버튼 초기화
+    private void checkUserGroupStatus(String userId, String userEmail) {
+        // 현재 사용자가 ownerUserId인 그룹을 먼저 검색
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && !task.getResult().isEmpty()) {
+                        setContentView(R.layout.login_join);
+                        initTextViews();  // TextView 초기화
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            String ownerUserEmail = document.getString("ownerUserEmail");
+                            String inviteUserEmail = document.getString("inviteUserEmail");
+
+                            ownerInfoText.setText("사용자: " + ownerUserEmail);
+                            invitedInfoText.setText("구성원: " + inviteUserEmail);
+                        }
+                        initLogoutAndBanButtons();
+                    } else {
+                        // invitedUserId로 검색
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnCompleteListener(inviteTask -> {
+                                    if (inviteTask.isSuccessful() && !inviteTask.getResult().isEmpty()) {
+                                        setContentView(R.layout.login_join);
+                                        initTextViews();  // TextView 초기화
+                                        for (QueryDocumentSnapshot document : inviteTask.getResult()) {
+                                            String ownerUserEmail = document.getString("ownerUserEmail");
+                                            String inviteUserEmail = document.getString("inviteUserEmail");
+
+                                            ownerInfoText.setText("사용자: " + inviteUserEmail);
+                                            invitedInfoText.setText("방장: " + ownerUserEmail);
+                                        }
+                                        initLogoutAndBanButtons();
+                                    } else {
+                                        // 그룹이 없을 경우
+                                        setContentView(R.layout.login_complete);
+                                        initTextViews();  // TextView 초기화
+                                        ownerInfoText.setText("사용자: " + userEmail);
+                                        initInviteAndLogoutButtons();
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "그룹 상태 확인에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
+    private void initTextViews() {
+        ownerInfoText = findViewById(R.id.UserInfoText);
+        invitedInfoText = findViewById(R.id.UserInfoText2);
+    }
+
+    private void initLogoutAndBanButtons() {
+        ImageButton logoutButton = findViewById(R.id.LogoutButton1);
+        logoutButton.setOnClickListener(v -> {
+            mAuth.signOut();
+            Toast.makeText(Person.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+            recreate();
+        });
+
+        Button banButton = findViewById(R.id.banButton);
+        banButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Person.this, MainActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void initInviteAndLogoutButtons() {
+        ImageButton logoutButton = findViewById(R.id.LogoutButton1);
+        logoutButton.setOnClickListener(v -> {
+            mAuth.signOut();
+            Toast.makeText(Person.this, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show();
+            recreate();
+        });
+
+        Button inviteButton = findViewById(R.id.inviteButton);
+        inviteButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Person.this, InviteActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void initLoginButton() {
+        ImageButton loginButton = findViewById(R.id.LoginButton1);
+        loginButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Person.this, LoginActivity.class);
+            startActivity(intent);
+        });
+    }
+
+    private void initCommonButtons() {
         ImageButton backButton = findViewById(R.id.imageButton82);
         if (backButton != null) {
-            backButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Person.this, MainActivity.class);
-                    startActivity(intent); // MainActivity 시작
-                }
+            backButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Person.this, MainActivity.class);
+                startActivity(intent);
             });
         }
 
-        // 비밀번호 설정 버튼 초기화 (공통 버튼)
         ImageButton passwordButton = findViewById(R.id.pwsettingButton);
         if (passwordButton != null) {
-            passwordButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(Person.this, PasswordSettingActivity.class);
-                    startActivity(intent);
-                }
+            passwordButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Person.this, PasswordSettingActivity.class);
+                startActivity(intent);
             });
         }
     }
 }
+

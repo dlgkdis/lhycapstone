@@ -58,8 +58,11 @@ public class JoinActivity extends AppCompatActivity {
         FirebaseUser user = auth.getCurrentUser();
         if (user != null && groupId != null) {
             String userId = user.getUid();
+            String userEmail = user.getEmail();  // 사용자 이메일 가져오기
+
+            // 그룹에 invitedUserId와 inviteUserEmail을 업데이트
             db.collection("groups").document(groupId)
-                    .update("invitedUserId", userId)
+                    .update("invitedUserId", userId, "inviteUserEmail", userEmail)
                     .addOnSuccessListener(aVoid -> {
                         Toast.makeText(this, "그룹에 성공적으로 가입되었습니다!", Toast.LENGTH_SHORT).show();
                         finish();
@@ -69,4 +72,5 @@ public class JoinActivity extends AppCompatActivity {
             Log.e("JoinActivity", "User or Group ID is null");
         }
     }
+
 }

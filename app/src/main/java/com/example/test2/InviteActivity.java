@@ -41,6 +41,8 @@ public class InviteActivity extends AppCompatActivity {
         groupData.put("ownerUserId", ownerUserId);
         groupData.put("invitedUserId", "");
         groupData.put("createdAt", FieldValue.serverTimestamp());
+        groupData.put("ownerUserEmail", auth.getCurrentUser().getEmail());  // 소유자 이메일 추가
+        groupData.put("inviteUserEmail", "");  // 초대된 사용자 이메일은 초기에는 빈 값으로 설정
 
         db.collection("groups").document(groupId).set(groupData)
                 .addOnSuccessListener(aVoid -> {
