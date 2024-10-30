@@ -10,6 +10,9 @@
         android:paddingTop="10dp">
 
         <!-- Room Decoration Image Views -->
+
+        <!-- Navigation and Action Buttons -->
+
         <ImageView
             android:id="@+id/img_cushion"
             android:layout_width="wrap_content"
@@ -18,9 +21,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="444dp"
+            android:layout_marginTop="452dp"
             android:elevation="4dp"
-            app:layout_constraintHorizontal_bias="0.361" />
+            app:layout_constraintHorizontal_bias="0.344" />
 
         <ImageView
             android:id="@+id/img_table"
@@ -30,21 +33,9 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="352dp"
+            android:layout_marginTop="368dp"
             android:elevation="4dp"
             app:layout_constraintHorizontal_bias="0.197" />
-
-        <ImageView
-            android:id="@+id/img_window"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/myroom_window"
-            android:elevation="4dp"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="192dp"
-            app:layout_constraintHorizontal_bias="0.758" />
 
         <ImageView
             android:id="@+id/img_bed"
@@ -54,12 +45,10 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="284dp"
-            app:layout_constraintHorizontal_bias="0.596"
+            android:layout_marginTop="304dp"
+            app:layout_constraintHorizontal_bias="0.561"
             android:elevation="4dp" />
 
-
-        <!-- Navigation and Action Buttons -->
         <ImageView
             android:id="@+id/img_background"
             android:layout_width="match_parent"
