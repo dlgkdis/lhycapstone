@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-
+import android.widget.TextView;
+import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class Store extends AppCompatActivity {
 
     private SharedPreferences sharedPreferences;
+    private TextView coinTextView;
+    private FirebaseHelper firebaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +23,15 @@ public class Store extends AppCompatActivity {
         setContentView(R.layout.store);
 
         sharedPreferences = getSharedPreferences("purchase_status", Context.MODE_PRIVATE);
+
+        // FirebaseHelper 초기화
+        firebaseHelper = new FirebaseHelper();
+
+        // 코인 데이터 표시하는 TextView 초기화
+        coinTextView = findViewById(R.id.coinTextView);
+
+        // 코인 데이터를 로드하고 실시간으로 반영
+        loadCoinData();
 
         // 각 버튼에 대해 setupShopButton 호출 시 타코야키 개수 추가
         setupShopButton(findViewById(R.id.shop1), "shop1", R.drawable.shop1, 11);
@@ -37,11 +49,17 @@ public class Store extends AppCompatActivity {
 
         ImageButton backButton = findViewById(R.id.backButton);
         if (backButton != null) {
-            backButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Store.this, MainActivity.class);
+            backButton.setOnClickListener(v -> finish());
+        }
+
+        Button moreButton = findViewById(R.id.moreButton);
+        if (moreButton != null) {
+            moreButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Store.this, StorePlus.class);
                 startActivity(intent);
             });
         }
+
     }
 
     private void setupShopButton(View shopButton, String itemId, int imageResource, int tacoCount) {
@@ -90,5 +108,15 @@ public class Store extends AppCompatActivity {
                 );
             }
         }
+    }
+
+    private void loadCoinData() {
+        firebaseHelper.getCoinData(coinData -> {
+            if (coinData != null) {
+                coinTextView.setText(String.valueOf(coinData)); // 코인 데이터 표시
+            } else {
+                coinTextView.setText("0"); // 기본값 설정
+            }
+        });
     }
 }

@@ -26,8 +26,7 @@ public class Bell extends AppCompatActivity {
             @Override
             public void onClick(View v){
                 // 다른 액티비티로 전환하기 위한 Intent
-                Intent intent = new Intent(Bell.this, MainActivity.class);
-                startActivity(intent);  // MainActivity 시작
+                finish();
             }
         });
     }

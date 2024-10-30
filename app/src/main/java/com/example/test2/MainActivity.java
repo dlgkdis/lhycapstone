@@ -59,8 +59,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
+    protected void onStop() {
+        super.onStop();
 
         // 앱 종료 시 비밀번호 인증 플래그 초기화
         SharedPreferences sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE);

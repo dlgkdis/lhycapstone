@@ -16,14 +16,6 @@ public class StorePlus extends AppCompatActivity {
 
         // 뒤로가기 버튼 클릭 이벤트 추가
         ImageButton backButton = findViewById(R.id.imageButton36);
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Store 액티비티로 돌아가기
-                Intent intent = new Intent(StorePlus.this, Store.class);
-                startActivity(intent);
-                finish(); // 현재 액티비티 종료
-            }
-        });
+        backButton.setOnClickListener(v -> finish());
     }
 }

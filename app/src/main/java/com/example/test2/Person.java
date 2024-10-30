@@ -132,10 +132,7 @@ public class Person extends AppCompatActivity {
     private void initCommonButtons() {
         ImageButton backButton = findViewById(R.id.backButton);
         if (backButton != null) {
-            backButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Person.this, MainActivity.class);
-                startActivity(intent);
-            });
+            backButton.setOnClickListener(v -> finish());
         }
 
         ImageButton passwordButton = findViewById(R.id.pwsettingButton);

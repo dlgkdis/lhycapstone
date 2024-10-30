@@ -26,7 +26,7 @@
     <!-- Small image -->
 
     <Button
-        android:id="@+id/button8"
+        android:id="@+id/moreButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="더보기"
@@ -736,4 +736,16 @@
 
         </FrameLayout>
     </GridLayout>
+
+    <TextView
+        android:text="0"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/coinTextView"
+        android:textSize="18dp"
+        app:layout_constraintStart_toStartOf="@+id/taco_0"
+        app:layout_constraintBottom_toBottomOf="@+id/taco_0"
+        android:layout_marginBottom="2dp"
+        android:layout_marginStart="65dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

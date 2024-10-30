@@ -7,11 +7,9 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 import android.app.Activity;
 
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -30,6 +28,26 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.GoogleAuthProvider;
 
 import androidx.annotation.NonNull;
+
+// Firebase Firestore 관련 import 추가
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+// 데이터 초기화를 위한 HashMap 및 ArrayList 사용
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ArrayList;
+
+// 로그 사용을 위한 import
+import android.util.Log;
+
+
+// 데이터 초기화를 위한 HashMap 사용
+import java.util.HashMap;
+import java.util.Map;
+
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -56,13 +74,7 @@ public class LoginActivity extends AppCompatActivity {
 
          ImageButton backButton = findViewById(R.id.backButton);
          if (backButton != null) {
-             backButton.setOnClickListener(new View.OnClickListener() {
-                 @Override
-                 public void onClick(View v) {
-                     Intent intent = new Intent(LoginActivity.this, Person.class);
-                     startActivity(intent); // MainActivity 시작
-                 }
-             });
+             backButton.setOnClickListener(v -> finish());
          }
     }
     private void init(){
@@ -128,30 +140,43 @@ public class LoginActivity extends AppCompatActivity {
 
     //[START auth_with_google]
     private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
-         //[START_EXCLUDE silent]
-         //[END_EXCLUDE]
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(),null);
+        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
-                        if(task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
-                            //updateUI(user);
-                            Toast.makeText(getApplicationContext(),"Complete",Toast.LENGTH_LONG).show();
+
+                            // 회원가입 시 초기 데이터 설정
+                            createUserData(user.getUid());
+
+                            Toast.makeText(getApplicationContext(), "Complete", Toast.LENGTH_LONG).show();
                             Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                             startActivity(intent);
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_LONG).show();
-                            //updateUI(null);
                         }
-
-                        //[START_EXCLUDE]
-                        //hideprogressDialog();
-                        //[END_EXCLUDE]
                     }
                 });
     }
+
+    // 회원가입 시 초기 데이터 생성 메서드
+    private void createUserData(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("coinStatus", 0); // 초기 코인 현황
+        userData.put("purchasedObjects", new ArrayList<>()); // 구매한 오브제 목록
+        userData.put("purchasedThemes", new ArrayList<>()); // 구매한 테마 목록
+        userData.put("diaries", new ArrayList<>()); // 작성한 일기
+        userData.put("calendarSchedules", new ArrayList<>()); // 캘린더 일정
+
+        db.collection("users").document(userId).set(userData)
+                .addOnSuccessListener(aVoid -> Log.d("LoginActivity", "초기 데이터 설정 완료"))
+                .addOnFailureListener(e -> Log.e("LoginActivity", "초기 데이터 설정 실패", e));
+    }
+
     private void signOut(){
          //Firebase SignOut
          mAuth.signOut();
