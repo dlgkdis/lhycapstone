@@ -9,7 +9,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:srcCompat="@drawable/arrow_left"
-        android:id="@+id/imageButton82"
+        android:id="@+id/backButton"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"

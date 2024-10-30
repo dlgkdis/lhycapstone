@@ -1,8 +1,8 @@
 package com.example.test2;
 
+import android.util.Log;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Button;
 import android.widget.TextView;
@@ -18,6 +18,7 @@ public class Person extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
     private TextView ownerInfoText, invitedInfoText;
+    private String groupId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class Person extends AppCompatActivity {
                         setContentView(R.layout.login_join);
                         initTextViews();  // TextView 초기화
                         for (QueryDocumentSnapshot document : task.getResult()) {
+                            groupId = document.getId();
                             String ownerUserEmail = document.getString("ownerUserEmail");
                             String inviteUserEmail = document.getString("inviteUserEmail");
 
@@ -98,10 +100,7 @@ public class Person extends AppCompatActivity {
         });
 
         Button banButton = findViewById(R.id.banButton);
-        banButton.setOnClickListener(v -> {
-            Intent intent = new Intent(Person.this, MainActivity.class);
-            startActivity(intent);
-        });
+        banButton.setOnClickListener(v -> showLeaveDialog());
     }
 
     private void initInviteAndLogoutButtons() {
@@ -128,7 +127,7 @@ public class Person extends AppCompatActivity {
     }
 
     private void initCommonButtons() {
-        ImageButton backButton = findViewById(R.id.imageButton82);
+        ImageButton backButton = findViewById(R.id.backButton);
         if (backButton != null) {
             backButton.setOnClickListener(v -> {
                 Intent intent = new Intent(Person.this, MainActivity.class);
@@ -144,5 +143,12 @@ public class Person extends AppCompatActivity {
             });
         }
     }
+    private void showLeaveDialog() {
+        Intent intent = new Intent(this, LeaveActivity.class);
+        Log.d("Person", "Group ID: " + groupId);
+        intent.putExtra("groupId", groupId); // 그룹 ID 전달
+        startActivity(intent);
+    }
+
 }
 

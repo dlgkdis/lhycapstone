@@ -41,6 +41,9 @@
                 <data android:host="haruniki.page.link" android:scheme="https"/>
             </intent-filter>
         </activity>
+        <activity android:name=".LeaveActivity"
+            android:theme="@style/PopupTheme"
+            android:exported="false" />
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

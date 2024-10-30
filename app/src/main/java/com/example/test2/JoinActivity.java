@@ -72,5 +72,4 @@ public class JoinActivity extends AppCompatActivity {
             Log.e("JoinActivity", "User or Group ID is null");
         }
     }
-
 }
