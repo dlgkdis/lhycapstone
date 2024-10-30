@@ -17,7 +17,7 @@ public class Bell extends AppCompatActivity {
 
 
         // imageButton56 (뒤로가기 버튼) 클릭 이벤트 처리
-        ImageButton backButton = findViewById(R.id.imageButton56);
+        ImageButton backButton = findViewById(R.id.backButton);
 
 // setOnClickListener 메서드를 통해 클릭 이벤트 처리
         backButton.setOnClickListener(new View.OnClickListener()

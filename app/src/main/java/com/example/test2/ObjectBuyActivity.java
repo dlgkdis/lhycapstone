@@ -40,7 +40,7 @@ public class ObjectBuyActivity extends AppCompatActivity {
         });
 
         // "뒤로가기" 버튼 설정
-        ImageButton backButton = findViewById(R.id.imageButton56);
+        ImageButton backButton = findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> finish());
     }
 }

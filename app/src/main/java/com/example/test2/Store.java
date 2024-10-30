@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -33,6 +34,14 @@ public class Store extends AppCompatActivity {
         setupShopButton(findViewById(R.id.shop10), "shop10", R.drawable.shop10, 6);
         setupShopButton(findViewById(R.id.shop11), "shop11", R.drawable.shop11, 4);
         setupShopButton(findViewById(R.id.shop12), "shop12", R.drawable.shop12, 10);
+
+        ImageButton backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> {
+                Intent intent = new Intent(Store.this, MainActivity.class);
+                startActivity(intent);
+            });
+        }
     }
 
     private void setupShopButton(View shopButton, String itemId, int imageResource, int tacoCount) {

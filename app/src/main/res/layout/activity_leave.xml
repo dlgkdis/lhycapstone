@@ -11,6 +11,8 @@
         android:text="그룹에서 탈퇴하시겠습니까?"
         android:textSize="18sp"
         android:layout_marginTop="32dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
@@ -34,6 +36,7 @@
         android:textColor="@color/black"
         android:text="돌아가기"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintTop_toBottomOf="@id/leaveGroupButton"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
