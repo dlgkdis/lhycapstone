@@ -99,32 +99,6 @@
 
 
     <ImageButton
-        android:id="@+id/imageButton58"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="bell"
-        app:layout_constraintHorizontal_bias="0.659"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/bell" />
-
-    <ImageButton
-        android:id="@+id/imageButton61"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginTop="40dp"
-        android:backgroundTint="@color/white"
-        android:contentDescription="person"
-        app:layout_constraintHorizontal_bias="0.797"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/profile" />
-
-    <ImageButton
         android:id="@+id/pwsettingButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
@@ -134,8 +108,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/password_"
-        app:layout_constraintStart_toEndOf="@+id/imageButton61"
-        android:layout_marginStart="3dp" />
+        android:layout_marginRight="28dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

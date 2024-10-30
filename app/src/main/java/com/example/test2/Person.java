@@ -32,8 +32,8 @@ public class Person extends AppCompatActivity {
         } else {
             setContentView(R.layout.login);
             initLoginButton();
+            initCommonButtons();
         }
-        initCommonButtons();
     }
 
     private void checkUserGroupStatus(String userId, String userEmail) {
@@ -54,6 +54,7 @@ public class Person extends AppCompatActivity {
                             invitedInfoText.setText("구성원: " + inviteUserEmail);
                         }
                         initLogoutAndBanButtons();
+                        initCommonButtons();
                     } else {
                         // invitedUserId로 검색
                         db.collection("groups")
@@ -71,12 +72,14 @@ public class Person extends AppCompatActivity {
                                             invitedInfoText.setText("방장: " + ownerUserEmail);
                                         }
                                         initLogoutAndBanButtons();
+                                        initCommonButtons();
                                     } else {
                                         // 그룹이 없을 경우
                                         setContentView(R.layout.login_complete);
                                         initTextViews();  // TextView 초기화
                                         ownerInfoText.setText("사용자: " + userEmail);
                                         initInviteAndLogoutButtons();
+                                        initCommonButtons();
                                     }
                                 });
                     }
