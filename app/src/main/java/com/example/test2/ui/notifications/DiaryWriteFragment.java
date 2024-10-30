@@ -21,7 +21,9 @@ import com.example.test2.R;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
 import java.util.Locale;
+import java.util.Set;
 
 public class DiaryWriteFragment extends Fragment {
 
@@ -115,9 +117,9 @@ public class DiaryWriteFragment extends Fragment {
 
     private void saveDiaryContent() {
         String diaryContent = diaryEditText.getText().toString();
-
-        // SharedPreferences에 일기 저장
-        sharedPreferences.edit().putString(selectedDateKey, diaryContent).apply();
+        Set<String> diaryEntries = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
+        diaryEntries.add(diaryContent);
+        sharedPreferences.edit().putStringSet(selectedDateKey, diaryEntries).apply();
     }
 
     // 오늘 날짜를 기본으로 사용하는 메서드

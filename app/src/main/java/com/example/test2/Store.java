@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,22 +20,22 @@ public class Store extends AppCompatActivity {
 
         sharedPreferences = getSharedPreferences("purchase_status", Context.MODE_PRIVATE);
 
-        // setupShopButton 호출 시 세 번째 매개변수로 이미지 리소스 ID 추가
-        setupShopButton(findViewById(R.id.shop1), "shop1", R.drawable.shop1);
-        setupShopButton(findViewById(R.id.shop2), "shop2", R.drawable.shop2);
-        setupShopButton(findViewById(R.id.shop3), "shop3", R.drawable.shop3);
-        setupShopButton(findViewById(R.id.shop4), "shop4", R.drawable.shop4);
-        setupShopButton(findViewById(R.id.shop5), "shop5", R.drawable.shop5);
-        setupShopButton(findViewById(R.id.shop6), "shop6", R.drawable.shop6);
-        setupShopButton(findViewById(R.id.shop7), "shop7", R.drawable.shop7);
-        setupShopButton(findViewById(R.id.shop8), "shop8", R.drawable.shop8);
-        setupShopButton(findViewById(R.id.shop9), "shop9", R.drawable.shop9);
-        setupShopButton(findViewById(R.id.shop10), "shop10", R.drawable.shop10);
-        setupShopButton(findViewById(R.id.shop11), "shop11", R.drawable.shop11);
-        setupShopButton(findViewById(R.id.shop12), "shop12", R.drawable.shop12);
+        // 각 버튼에 대해 setupShopButton 호출 시 타코야키 개수 추가
+        setupShopButton(findViewById(R.id.shop1), "shop1", R.drawable.shop1, 11);
+        setupShopButton(findViewById(R.id.shop2), "shop2", R.drawable.shop2, 4);
+        setupShopButton(findViewById(R.id.shop3), "shop3", R.drawable.shop3, 18);
+        setupShopButton(findViewById(R.id.shop4), "shop4", R.drawable.shop4, 8);
+        setupShopButton(findViewById(R.id.shop5), "shop5", R.drawable.shop5, 3);
+        setupShopButton(findViewById(R.id.shop6), "shop6", R.drawable.shop6, 7);
+        setupShopButton(findViewById(R.id.shop7), "shop7", R.drawable.shop7, 13);
+        setupShopButton(findViewById(R.id.shop8), "shop8", R.drawable.shop8, 7);
+        setupShopButton(findViewById(R.id.shop9), "shop9", R.drawable.shop9, 6);
+        setupShopButton(findViewById(R.id.shop10), "shop10", R.drawable.shop10, 6);
+        setupShopButton(findViewById(R.id.shop11), "shop11", R.drawable.shop11, 4);
+        setupShopButton(findViewById(R.id.shop12), "shop12", R.drawable.shop12, 10);
     }
 
-    private void setupShopButton(View shopButton, String itemId, int imageResource) {
+    private void setupShopButton(View shopButton, String itemId, int imageResource, int tacoCount) {
         ImageView lockIcon = findViewById(getResources().getIdentifier(itemId + "_lock", "id", getPackageName()));
 
         // 구매 상태 확인
@@ -57,6 +56,7 @@ public class Store extends AppCompatActivity {
                 Intent intent = new Intent(Store.this, ObjectBuyActivity.class);
                 intent.putExtra("itemId", itemId); // itemId 전달
                 intent.putExtra("imageResource", imageResource); // 이미지 리소스 전달
+                intent.putExtra("tacoCount", tacoCount); // 타코야키 개수 전달
                 startActivityForResult(intent, 1);
             }
         });
@@ -76,7 +76,8 @@ public class Store extends AppCompatActivity {
                 setupShopButton(
                         findViewById(getResources().getIdentifier(itemId, "id", getPackageName())),
                         itemId,
-                        getResources().getIdentifier(itemId, "drawable", getPackageName())
+                        getResources().getIdentifier(itemId, "drawable", getPackageName()),
+                        data.getIntExtra("tacoCount", 0)
                 );
             }
         }

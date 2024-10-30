@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,7 +24,10 @@ import com.example.test2.databinding.FragmentDiaryBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-
+import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.HashSet;
 public class NotificationsFragment extends Fragment {
 
     private FragmentDiaryBinding binding;
@@ -33,6 +37,7 @@ public class NotificationsFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private TextView selectedDayView;
     private int selectedDay;
+    private LinearLayout diaryContentContainer;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -40,12 +45,12 @@ public class NotificationsFragment extends Fragment {
         View root = binding.getRoot();
 
         sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
+        diaryContentContainer = binding.diaryContentContainer;
 
         binding.button14.setOnClickListener(v -> {
-            saveSelectedDateToPreferences();  // 일기 작성 화면으로 날짜 전달
+            saveSelectedDateToPreferences();
             String selectedDateKey = getSelectedDateKey(selectedDay);
 
-            // 선택한 날짜를 DiaryWriteFragment로 전달
             Bundle bundle = new Bundle();
             bundle.putString("selectedDateKey", selectedDateKey);
             Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment, bundle);
@@ -140,6 +145,32 @@ public class NotificationsFragment extends Fragment {
         dayView.setTextColor(Color.RED);
         selectedDayView = dayView;
         selectedDay = day;
+
+        String selectedDateKey = getSelectedDateKey(selectedDay);
+        Set<String> diaryEntriesSet = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
+        List<String> diaryEntries = new ArrayList<>(diaryEntriesSet);
+
+        displayDiaryEntries(diaryEntries);
+    }
+
+    private void displayDiaryEntries(List<String> diaryEntries) {
+        if (diaryEntries != null && !diaryEntries.isEmpty()) {
+            binding.diaryContentBox.setText(diaryEntries.get(diaryEntries.size() - 1));
+        }
+
+        diaryContentContainer.removeAllViews();
+        for (int i = 0; i < diaryEntries.size() - 1; i++) {
+            TextView diaryView = new TextView(getContext());
+            diaryView.setText(diaryEntries.get(i));
+            diaryView.setBackgroundResource(R.drawable.box_background);
+            diaryView.setPadding(16, 16, 16, 16);
+            diaryView.setTextSize(25);
+            diaryView.setTextColor(Color.BLACK);
+            diaryView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.nanumfont), Typeface.BOLD);
+            diaryView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+
+            diaryContentContainer.addView(diaryView);
+        }
     }
 
     private String getSelectedDateKey(int day) {
