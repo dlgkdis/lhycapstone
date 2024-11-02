@@ -95,14 +95,33 @@ public class ScheduleAddFragment extends Fragment {
         final Calendar calendar = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
                 (view, year, month, dayOfMonth) -> {
+                    // 선택한 날짜 문자열 생성
                     String selectedDate = String.format(Locale.getDefault(), "%d년 %d월 %d일", year, month + 1, dayOfMonth);
-                    dateTextView.setText(selectedDate);
+
+                    // 해당 날짜에 이미 저장된 일정 개수 확인
+                    int scheduleNumber = getScheduleCount(selectedDate) + 1;
+
+                    // 날짜와 일정 번호를 조합하여 저장
+                    String selectedDateWithNumber = String.format(Locale.getDefault(), "%d년 %d월 %d일 #%d", year, month + 1, dayOfMonth, scheduleNumber);
+
+                    // TextView에 선택한 날짜와 일정 번호 표시
+                    dateTextView.setText(selectedDateWithNumber);
                 },
                 calendar.get(Calendar.YEAR),
                 calendar.get(Calendar.MONTH),
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
+    }
+
+    // 특정 날짜에 저장된 일정 개수를 확인하는 함수
+    private int getScheduleCount(String date) {
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
+        int count = 0;
+        while (sharedPreferences.contains(date + "_title_" + (count + 1))) {
+            count++;
+        }
+        return count;
     }
 
     private void showHourSelectionDialog(final TextView targetTextView) {
