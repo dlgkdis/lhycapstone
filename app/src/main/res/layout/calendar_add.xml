@@ -176,7 +176,7 @@
         android:id="@+id/backButton"
         android:layout_width="60dp"
         android:layout_height="50dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="30dp"
         android:backgroundTint="@color/white"
         android:contentDescription="뒤로가기"
         app:layout_constraintHorizontal_bias="0.044"

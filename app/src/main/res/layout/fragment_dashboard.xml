@@ -85,12 +85,12 @@
                 android:text="SUN"
                 android:gravity="center"
                 android:textSize="30sp"
-                android:textColor="@color/black"
+                android:textColor="#FF0000"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
                 android:fontFamily="@font/nanumfont"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:text="MON"
@@ -151,7 +151,7 @@
                 android:text="SAT"
                 android:gravity="center"
                 android:textSize="30sp"
-                android:textColor="@color/black"
+                android:textColor="#0048FF"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"

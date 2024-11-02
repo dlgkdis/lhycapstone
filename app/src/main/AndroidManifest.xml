@@ -26,13 +26,11 @@
         <activity android:name=".Store" android:label="" />
         <activity android:name=".Person" android:label="" />
         <activity android:name=".Reward" android:label="" />
-        <activity android:name=".StorePlus" android:label=""/>
         <activity android:name=".PasswordSettingActivity" android:label="" />
         <activity android:name=".LockScreenActivity" android:label=""/>
         <activity android:name=".LoginActivity" />
-        <activity android:name=".ObjectBuyActivity" />
-        <activity android:name=".ObjectArrangementActivity" />
         <activity android:name=".InviteActivity"/>
+
         <activity android:name=".JoinActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW"/>

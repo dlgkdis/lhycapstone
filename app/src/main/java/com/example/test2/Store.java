@@ -46,18 +46,14 @@ public class Store extends AppCompatActivity {
         setupShopButton(findViewById(R.id.shop10), "shop10", R.drawable.shop10, 6);
         setupShopButton(findViewById(R.id.shop11), "shop11", R.drawable.shop11, 4);
         setupShopButton(findViewById(R.id.shop12), "shop12", R.drawable.shop12, 10);
+        setupShopButton(findViewById(R.id.shop13), "shop13", R.drawable.shop13, 5);
+        setupShopButton(findViewById(R.id.shop14), "shop14", R.drawable.shop14, 16);
+        setupShopButton(findViewById(R.id.shop15), "shop15", R.drawable.shop15, 20);
+        setupShopButton(findViewById(R.id.shop16), "shop16", R.drawable.shop16, 9);
 
         ImageButton backButton = findViewById(R.id.backButton);
         if (backButton != null) {
             backButton.setOnClickListener(v -> finish());
-        }
-
-        Button moreButton = findViewById(R.id.moreButton);
-        if (moreButton != null) {
-            moreButton.setOnClickListener(v -> {
-                Intent intent = new Intent(Store.this, StorePlus.class);
-                startActivity(intent);
-            });
         }
 
     }
@@ -74,17 +70,21 @@ public class Store extends AppCompatActivity {
         // 클릭 이벤트 설정
         shopButton.setOnClickListener(v -> {
             if (isPurchased) {
-                // 자물쇠가 열려있으면 ObjectArrangementActivity로 이동
-                Intent intent = new Intent(Store.this, ObjectArrangementActivity.class);
-                intent.putExtra("imageResource", imageResource); // 이미지 리소스 전달
-                startActivity(intent);
+                // 자물쇠가 열려있으면 ObjectArrangementDialogFragment로 이동
+                ObjectArrangementDialogFragment arrangementDialog = new ObjectArrangementDialogFragment();
+                Bundle args = new Bundle();
+                args.putInt("imageResource", imageResource); // 이미지 리소스 전달
+                arrangementDialog.setArguments(args);
+                arrangementDialog.show(getSupportFragmentManager(), "ObjectArrangementDialogFragment");
             } else {
-                // 자물쇠가 잠겨 있으면 ObjectBuyActivity로 이동
-                Intent intent = new Intent(Store.this, ObjectBuyActivity.class);
-                intent.putExtra("itemId", itemId); // itemId 전달
-                intent.putExtra("imageResource", imageResource); // 이미지 리소스 전달
-                intent.putExtra("tacoCount", tacoCount); // 타코야키 개수 전달
-                startActivityForResult(intent, 1);
+                // 자물쇠가 잠겨 있으면 ObjectBuyDialogFragment로 이동
+                ObjectBuyDialogFragment buyDialog = new ObjectBuyDialogFragment();
+                Bundle args = new Bundle();
+                args.putString("itemId", itemId); // itemId 전달
+                args.putInt("imageResource", imageResource); // 이미지 리소스 전달
+                args.putInt("tacoCount", tacoCount); // 타코야키 개수 전달
+                buyDialog.setArguments(args);
+                buyDialog.show(getSupportFragmentManager(), "ObjectBuyDialogFragment");
             }
         });
     }

@@ -71,9 +71,12 @@ public class ScheduleAddFragment extends Fragment {
 
             if (!title.isEmpty() && !content.isEmpty()) {
                 saveData(title, content, startday, endday);
-                Toast.makeText(getContext(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
 
-                // 일정이 저장되면 DashboardFragment로 돌아가기
+                // 팝업 다이얼로그 표시
+                CalendarEndDialogFragment dialog = new CalendarEndDialogFragment();
+                dialog.show(getParentFragmentManager(), "ScheduleCompleteDialog");
+
+                // DashboardFragment로 돌아가기
                 Navigation.findNavController(v).popBackStack();
             } else {
                 Toast.makeText(getContext(), "제목과 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
@@ -155,4 +158,6 @@ public class ScheduleAddFragment extends Fragment {
         startDayTextView.setText(savedStartDate);
         endDayTextView.setText(savedEndDate);
     }
+
+
 }

@@ -11,7 +11,7 @@
         android:layout_width="204dp"
         android:layout_height="45dp"
         android:fontFamily="@font/nanumfont"
-        android:text="&lt;0000.00.00&gt;"
+        android:text="&lt; 0000.00.00 &gt;"
         android:textColor="@color/black"
         android:textSize="35dp"
         android:textStyle="bold"
@@ -43,11 +43,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="그림일기"
-            android:textSize="24sp"
-            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textColor="#3D3D3D"
             android:gravity="center"
             android:fontFamily="@font/nanumfont"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
 
         <!-- ImageButton 3개 -->
         <ImageButton
@@ -126,7 +127,7 @@
         android:hint="일기작성"
         android:textColor="@color/black"
         android:textStyle="bold"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:inputType="textMultiLine"
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintLeft_toLeftOf="parent"

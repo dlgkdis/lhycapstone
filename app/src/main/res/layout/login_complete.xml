@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/white"
         android:contentDescription="뒤로가기"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="30dp"
         app:layout_constraintHorizontal_bias="0.099" />
 
     <ImageView
@@ -50,14 +50,14 @@
         android:id="@+id/LogoutButton1"
         android:layout_width="102dp"
         android:layout_height="52dp"
-        android:layout_marginTop="144dp"
+        android:layout_marginTop="140dp"
         android:backgroundTint="@color/white"
-        app:layout_constraintHorizontal_bias="0.909"
+        app:layout_constraintHorizontal_bias="0.883"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/logout"
-        android:contentDescription="logout"/>
+        android:contentDescription="logout" />
 
     <TextView
         android:id="@+id/UserInfoText"
@@ -90,13 +90,13 @@
         android:id="@+id/pwsettingButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:backgroundTint="@color/white"
         android:contentDescription="lock"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/password_"
-        android:layout_marginRight="28dp" />
+        android:layout_marginRight="36dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -63,7 +63,7 @@ public class NotificationsFragment extends Fragment {
 
         Typeface customFont = ResourcesCompat.getFont(getContext(), R.font.nanumfont);
         monthText.setTypeface(customFont, Typeface.BOLD);
-        monthText.setTextSize(30);
+        monthText.setTextSize(35);
 
         setWeekdayFonts(customFont);
         updateMonthText();
