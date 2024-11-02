@@ -15,13 +15,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.Navigation;
 import com.example.test2.R;
 import com.example.test2.databinding.FragmentDashboardBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import androidx.navigation.Navigation;
 
 public class DashboardFragment extends Fragment {
 
@@ -29,7 +28,8 @@ public class DashboardFragment extends Fragment {
     private Calendar calendar;
     private TextView monthText;
     private GridLayout calendarGrid;
-    private TextView scheduleBox; // 일정 표시 네모 박스
+    private TextView scheduleBox;
+    private Button addScheduleButton;
 
     private static final String SHARED_PREFS = "sharedPrefs";
     private SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
@@ -43,9 +43,11 @@ public class DashboardFragment extends Fragment {
         calendar = Calendar.getInstance();
         monthText = root.findViewById(R.id.monthText);
         calendarGrid = root.findViewById(R.id.calendarGrid);
-        scheduleBox = root.findViewById(R.id.scheduleBox); // 네모 박스
+        scheduleBox = root.findViewById(R.id.scheduleBox);
+        addScheduleButton = root.findViewById(R.id.addScheduleButton);
 
-        scheduleBox.setVisibility(View.GONE); // 초기에는 숨김
+        scheduleBox.setVisibility(View.GONE);
+        addScheduleButton.setVisibility(View.GONE);  // 기본적으로 숨김
 
         Button prevMonthButton = root.findViewById(R.id.prevMonthButton);
         Button nextMonthButton = root.findViewById(R.id.nextMonthButton);
@@ -60,8 +62,14 @@ public class DashboardFragment extends Fragment {
             updateCalendar();
         });
 
-        updateCalendar();
+        addScheduleButton.setOnClickListener(v -> {
+            String selectedDate = (String) addScheduleButton.getTag();  // 선택된 날짜 정보 가져오기
+            Bundle bundle = new Bundle();
+            bundle.putString("selectedDate", selectedDate);
+            Navigation.findNavController(v).navigate(R.id.action_dashboard_to_scheduleAdd, bundle);
+        });
 
+        updateCalendar();
         return root;
     }
 
@@ -75,7 +83,7 @@ public class DashboardFragment extends Fragment {
         int daysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1;
 
-        Calendar today = Calendar.getInstance(); // 현재 날짜 가져오기
+        Calendar today = Calendar.getInstance();
 
         for (int i = 0; i < firstDayOfWeek; i++) {
             TextView emptyView = new TextView(getContext());
@@ -113,41 +121,49 @@ public class DashboardFragment extends Fragment {
                 dayView.setTextColor(Color.BLACK);
             }
 
-            // 현재 날짜에 빨간 동그라미 표시 추가
             if (tempCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                     tempCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
                     currentDay == today.get(Calendar.DAY_OF_MONTH)) {
-                dayView.setBackgroundResource(R.drawable.red_circle); // 빨간색 테두리 원 배경 설정
+                dayView.setBackgroundResource(R.drawable.red_circle);
             }
 
             String fullDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
-            String savedTitle = loadData(fullDate);
-            if (savedTitle != null) {
-                dayView.setTextColor(Color.parseColor("#60A637"));  // 일정이 있는 날짜는 녹색으로 표시
+            String[] scheduleData = loadData(fullDate);
+
+            if (!scheduleData[0].isEmpty()) {
+                dayView.setTextColor(Color.parseColor("#60A637"));
             }
 
             dayView.setOnClickListener(v -> {
                 String selectedDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
-                String schedule = loadData(selectedDate);
+                String[] loadedData = loadData(selectedDate);
 
-                if (schedule != null) {
-                    scheduleBox.setText("일정: " + schedule); // 등록한 일정 표시
+                if (!loadedData[0].isEmpty()) {
+                    String displayText = "제목: " + loadedData[0] + "\n내용: " + loadedData[1] +
+                            "\n시작일: " + loadedData[2] + "\n종료일: " + loadedData[3];
+                    scheduleBox.setText(displayText);
                     scheduleBox.setVisibility(View.VISIBLE);
                 } else {
                     scheduleBox.setVisibility(View.GONE);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("selectedDate", selectedDate);
-                    Navigation.findNavController(v).navigate(R.id.action_dashboard_to_scheduleAdd, bundle);
                 }
+
+                // 날짜 선택 시 플러스 버튼 표시 및 날짜 저장
+                addScheduleButton.setVisibility(View.VISIBLE);
+                addScheduleButton.setTag(selectedDate);
             });
 
             calendarGrid.addView(dayView);
         }
     }
 
-    private String loadData(String date) {
+    private String[] loadData(String date) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        return sharedPreferences.getString(date + "_title", null);
+        String title = sharedPreferences.getString(date + "_title", "");
+        String content = sharedPreferences.getString(date + "_content", "");
+        String startDay = sharedPreferences.getString(date + "_startDate", "");
+        String endDay = sharedPreferences.getString(date + "_endDate", "");
+
+        return new String[]{title, content, startDay, endDay};
     }
 
     @Override

@@ -60,15 +60,17 @@ public class ScheduleAddFragment extends Fragment {
 
         EditText titleEditText = view.findViewById(R.id.titleEditText);
         EditText contentEditText = view.findViewById(R.id.contentEditText);
-        loadData(titleEditText, contentEditText); // 저장된 데이터 불러오기
+        loadData(titleEditText, contentEditText, startDayTextView, endDayTextView); // 저장된 데이터 불러오기
 
         Button saveButton = view.findViewById(R.id.button4);
         saveButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString();
             String content = contentEditText.getText().toString();
+            String startday = startDayTextView.getText().toString();
+            String endday = endDayTextView.getText().toString();
 
             if (!title.isEmpty() && !content.isEmpty()) {
-                saveData(title, content);
+                saveData(title, content, startday, endday);
                 Toast.makeText(getContext(), "일정이 저장되었습니다", Toast.LENGTH_SHORT).show();
 
                 // 일정이 저장되면 DashboardFragment로 돌아가기
@@ -110,19 +112,28 @@ public class ScheduleAddFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private void saveData(String title, String content) {
+    private void saveData(String title, String content, String startday, String endday) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(selectedDate + "_title", title); // 날짜별로 저장
+
+        // 제목, 내용, 시작일, 종료일을 날짜별로 저장
+        editor.putString(selectedDate + "_title", title);
         editor.putString(selectedDate + "_content", content);
+        editor.putString(selectedDate + "_startDate", startday);
+        editor.putString(selectedDate + "_endDate", endday);
         editor.apply();
     }
 
-    private void loadData(EditText titleEditText, EditText contentEditText) {
+    private void loadData(EditText titleEditText, EditText contentEditText, TextView startDayTextView, TextView endDayTextView) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         String savedTitle = sharedPreferences.getString(selectedDate + "_title", "");
         String savedContent = sharedPreferences.getString(selectedDate + "_content", "");
+        String savedStartDate = sharedPreferences.getString(selectedDate + "_startDate", selectedDate);
+        String savedEndDate = sharedPreferences.getString(selectedDate + "_endDate", selectedDate);
+
         titleEditText.setText(savedTitle);
         contentEditText.setText(savedContent);
+        startDayTextView.setText(savedStartDate);
+        endDayTextView.setText(savedEndDate);
     }
 }

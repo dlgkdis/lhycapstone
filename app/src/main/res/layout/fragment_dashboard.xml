@@ -3,11 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <!-- ScrollView로 전체 화면을 감싸기 -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <!-- 월 텍스트와 화살표 버튼 -->
+
+        <Button
+            android:id="@+id/addScheduleButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="152dp"
+            android:text="+"
+            android:backgroundTint="@color/gray"
+            android:textColor="@android:color/white"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="16dp" />
 
         <TextView
             android:id="@+id/monthText"
@@ -164,7 +183,7 @@
         <TextView
             android:id="@+id/scheduleBox"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="150dp"
             android:padding="16dp"
             android:background="@drawable/schedule_box_background"
             android:textColor="@color/black"
@@ -180,4 +199,5 @@
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
