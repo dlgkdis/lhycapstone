@@ -75,6 +75,8 @@ public class DashboardFragment extends Fragment {
         int daysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1;
 
+        Calendar today = Calendar.getInstance(); // 현재 날짜 가져오기
+
         for (int i = 0; i < firstDayOfWeek; i++) {
             TextView emptyView = new TextView(getContext());
             GridLayout.LayoutParams emptyParams = new GridLayout.LayoutParams();
@@ -111,10 +113,17 @@ public class DashboardFragment extends Fragment {
                 dayView.setTextColor(Color.BLACK);
             }
 
+            // 현재 날짜에 빨간 동그라미 표시 추가
+            if (tempCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                    tempCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+                    currentDay == today.get(Calendar.DAY_OF_MONTH)) {
+                dayView.setBackgroundResource(R.drawable.red_circle); // 빨간색 테두리 원 배경 설정
+            }
+
             String fullDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
             String savedTitle = loadData(fullDate);
             if (savedTitle != null) {
-                dayView.setTextColor(Color.GREEN); // 일정이 있는 날짜는 녹색으로 표시
+                dayView.setTextColor(Color.parseColor("#60A637"));  // 일정이 있는 날짜는 녹색으로 표시
             }
 
             dayView.setOnClickListener(v -> {

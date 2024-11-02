@@ -43,6 +43,7 @@ public class NotificationsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDiaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
+        binding.diaryContentContainer.setVisibility(View.GONE);
 
         sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
         diaryContentContainer = binding.diaryContentContainer;
@@ -132,12 +133,35 @@ public class NotificationsFragment extends Fragment {
 
             dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
 
+            // 날짜에 따라 텍스트 색상 설정
+            String dateKey = getSelectedDateKey(currentDay);
+            if (isDiaryWritten(dateKey)) {
+                // 일기 작성된 날짜는 초록색
+                dayView.setTextColor(Color.parseColor("#60A637"));
+            } else {
+                // 일기 없는 날짜는 기본 검은색
+                int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
+                if (dayOfWeek == 0) {
+                    dayView.setTextColor(Color.RED);
+                } else if (dayOfWeek == 6) {
+                    dayView.setTextColor(Color.BLUE);
+                } else {
+                    dayView.setTextColor(Color.BLACK);
+                }
+            }
+
             calendarGrid.addView(dayView, new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
                     GridLayout.spec(GridLayout.UNDEFINED, 1f)
             ));
             tempCalendar.add(Calendar.DAY_OF_MONTH, 1);
         }
+    }
+
+    private boolean isDiaryWritten(String selectedDateKey) {
+        // 선택된 날짜의 일기 내용을 가져옵니다.
+        Set<String> diarySet = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
+        return diarySet != null && !diarySet.isEmpty();
     }
 
     private void onDaySelected(TextView dayView, int day) {
@@ -156,22 +180,32 @@ public class NotificationsFragment extends Fragment {
     private void displayDiaryEntries(List<String> diaryEntries) {
         if (diaryEntries != null && !diaryEntries.isEmpty()) {
             binding.diaryContentBox.setText(diaryEntries.get(diaryEntries.size() - 1));
+        } else {
+            binding.diaryContentBox.setText("작성된 일기가 없습니다."); // 일기가 없는 경우 표시할 텍스트
         }
 
+        // 일기 두 개 이상일 경우만 diaryContentContainer 보이도록 설정
         diaryContentContainer.removeAllViews();
-        for (int i = 0; i < diaryEntries.size() - 1; i++) {
-            TextView diaryView = new TextView(getContext());
-            diaryView.setText(diaryEntries.get(i));
-            diaryView.setBackgroundResource(R.drawable.box_background);
-            diaryView.setPadding(16, 16, 16, 16);
-            diaryView.setTextSize(25);
-            diaryView.setTextColor(Color.BLACK);
-            diaryView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.nanumfont), Typeface.BOLD);
-            diaryView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+        if (diaryEntries.size() > 1) {
+            for (int i = 0; i < diaryEntries.size() - 1; i++) {
+                TextView diaryView = new TextView(getContext());
+                diaryView.setText(diaryEntries.get(i));
+                diaryView.setBackgroundResource(R.drawable.box_background);
+                diaryView.setPadding(16, 16, 16, 16);
+                diaryView.setTextSize(25);
+                diaryView.setTextColor(Color.BLACK);
+                diaryView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.nanumfont), Typeface.BOLD);
+                diaryView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
 
-            diaryContentContainer.addView(diaryView);
+                diaryContentContainer.addView(diaryView);
+            }
+            diaryContentContainer.setVisibility(View.VISIBLE);
+        } else {
+            diaryContentContainer.setVisibility(View.GONE);
         }
     }
+
+
 
     private String getSelectedDateKey(int day) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());

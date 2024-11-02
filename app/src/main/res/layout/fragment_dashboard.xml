@@ -62,6 +62,84 @@
             android:layout_marginTop="60dp">
 
             <!-- 요일 텍스트들 -->
+            <TextView
+                android:text="SUN"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="MON"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="TUE"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="WED"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="THU"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="FRI"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:text="SAT"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:textColor="@color/black"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_columnWeight="1"
+                android:fontFamily="@font/nanumfont"
+                android:textStyle="bold"/>
+
+            <!-- 요일 텍스트들 -->
             <!-- 일, 월, 화, 수, 목, 금, 토 TextViews (코드 생략) -->
 
         </GridLayout>
