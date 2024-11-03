@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import com.example.test2.FirebaseHelper;
 import com.example.test2.R;
 import com.example.test2.databinding.FragmentTemaBinding;
 import com.example.test2.ui.ThemeViewModel;
@@ -18,9 +19,10 @@ public class TemaFragment extends Fragment {
 
     private FragmentTemaBinding binding;
     private ThemeViewModel themeViewModel;
-    private View selectedButton = null; // 이전에 선택된 버튼을 추적하는 변수
+    private View selectedButton = null;
     private static final String PREFS_NAME = "theme_prefs";
     private static final String KEY_SELECTED_THEME = "selected_theme";
+    private FirebaseHelper firebaseHelper; // FirebaseHelper 초기화
 
     @Nullable
     @Override
@@ -34,12 +36,31 @@ public class TemaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         themeViewModel = new ViewModelProvider(requireActivity()).get(ThemeViewModel.class);
+        firebaseHelper = new FirebaseHelper(); // FirebaseHelper 인스턴스 생성
 
-        // SharedPreferences에서 저장된 테마 불러오기
+        // FirebaseHelper를 사용하여 오브제 개수를 확인
+        firebaseHelper.getPurchasedObjects(purchasedObjects -> {
+            int purchasedObjectCount = purchasedObjects.size();
+
+            // 각 테마 해제 조건에 따라 자물쇠 상태를 설정
+            if (purchasedObjectCount >= 4) {
+                binding.airportLock.setVisibility(View.GONE); // Airport 테마 해제
+            }
+            if (purchasedObjectCount >= 8) {
+                binding.islandLock.setVisibility(View.GONE); // Island 테마 해제
+            }
+            if (purchasedObjectCount >= 12) {
+                binding.rocketLock.setVisibility(View.GONE); // Rocket 테마 해제
+            }
+            if (purchasedObjectCount >= 16) {
+                binding.submarineLock.setVisibility(View.GONE); // Submarine 테마 해제
+            }
+        });
+
+        // 기존 SharedPreferences에서 저장된 테마 불러오기
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, null);
 
-        // 저장된 테마가 있으면 해당 버튼을 진한 테두리로 설정
         if (savedTheme != null) {
             switch (savedTheme) {
                 case "tema_home":
@@ -60,7 +81,7 @@ public class TemaFragment extends Fragment {
             }
         }
 
-        // 테마 버튼 클릭 시 테두리 적용과 ThemeViewModel, SharedPreferences에 테마 설정
+        // 테마 버튼 클릭 시 테두리 적용 및 설정 저장
         binding.btnTemaHome.setOnClickListener(v -> setTheme("tema_home", v));
         binding.btnTemaAirport.setOnClickListener(v -> setTheme("tema_airport", v));
         binding.btnTemaSubmarine.setOnClickListener(v -> setTheme("tema_submarine", v));
@@ -69,23 +90,19 @@ public class TemaFragment extends Fragment {
     }
 
     private void setTheme(String theme, View button) {
-        // ThemeViewModel에 테마 설정
         themeViewModel.setTheme(theme);
 
-        // SharedPreferences에 테마 저장
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(KEY_SELECTED_THEME, theme);
         editor.apply();
 
-        // 이전에 선택된 버튼의 테두리를 기본 배경으로 복원
         if (selectedButton != null) {
             selectedButton.setBackgroundResource(R.drawable.rounded_button_default);
         }
 
-        // 현재 선택된 버튼에 진한 테두리 배경 적용
         button.setBackgroundResource(R.drawable.rounded_button_selected);
-        selectedButton = button; // 현재 버튼을 선택된 버튼으로 설정
+        selectedButton = button;
     }
 
     @Override
