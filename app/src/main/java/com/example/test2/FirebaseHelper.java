@@ -160,16 +160,62 @@ public class FirebaseHelper {
             return;
         }
 
-        db.collection("users")
-                .document(userId)
-                .collection("notifications")
-                .add(notificationData)
-                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+        // 1. 먼저 groups 컬렉션에서 소유자 또는 초대된 사용자로서의 그룹이 있는지 확인
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        // 소유자 그룹이 있으면 해당 그룹에 알림 추가
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        groupRef.collection("notifications")
+                                .add(notificationData)
+                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to add notification to groups collection", e);
+                                    listener.onComplete(false);
+                                });
+                    } else {
+                        // 소유자 그룹이 없으면 초대된 사용자로서의 그룹 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        // 초대된 그룹이 있으면 해당 그룹에 알림 추가
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        groupRef.collection("notifications")
+                                                .add(notificationData)
+                                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                                .addOnFailureListener(e -> {
+                                                    Log.e(TAG, "Failed to add notification to groups collection", e);
+                                                    listener.onComplete(false);
+                                                });
+                                    } else {
+                                        // 그룹이 없으면 users 컬렉션에 알림 추가
+                                        db.collection("users")
+                                                .document(userId)
+                                                .collection("notifications")
+                                                .add(notificationData)
+                                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                                .addOnFailureListener(e -> {
+                                                    Log.e(TAG, "Failed to add notification to users collection", e);
+                                                    listener.onComplete(false);
+                                                });
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to fetch invited group info", e);
+                                    listener.onComplete(false);
+                                });
+                    }
+                })
                 .addOnFailureListener(e -> {
-                    Log.e(TAG, "Failed to add notification", e);
+                    Log.e(TAG, "Failed to fetch owner group info", e);
                     listener.onComplete(false);
                 });
     }
+
 
 
 
@@ -177,24 +223,60 @@ public class FirebaseHelper {
     public void getNotifications(OnDataListener<List<Map<String, Object>>> listener) {
         if (userId == null) {
             Log.e(TAG, "User is not logged in");
+            listener.onDataFetched(new ArrayList<>()); // 빈 리스트 반환
             return;
         }
 
-        db.collection("users").document(userId).collection("notifications")
-                .orderBy("timestamp", Query.Direction.DESCENDING)
-                .addSnapshotListener((querySnapshot, e) -> {
-                    if (e != null) {
-                        Log.e(TAG, "Listen failed.", e);
-                        return;
+        // 먼저 groups 컬렉션에서 소유자 또는 초대된 사용자로서의 그룹이 있는지 확인
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        // 소유자 그룹이 있으면 해당 그룹에서 알림 데이터 가져오기
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        fetchNotificationsFromReference(groupRef, listener);
+                    } else {
+                        // 소유자 그룹이 없으면 초대된 사용자로서의 그룹 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        // 초대된 그룹이 있으면 해당 그룹에서 알림 데이터 가져오기
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        fetchNotificationsFromReference(groupRef, listener);
+                                    } else {
+                                        // 그룹이 없으면 users 컬렉션에서 알림 데이터 가져오기
+                                        DocumentReference userDoc = db.collection("users").document(userId);
+                                        fetchNotificationsFromReference(userDoc, listener);
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to fetch invited group info", e);
+                                    listener.onDataFetched(new ArrayList<>());
+                                });
                     }
-
-                    if (querySnapshot != null) {
-                        List<Map<String, Object>> notifications = new ArrayList<>();
-                        for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
-                            notifications.add(doc.getData());
-                        }
-                        listener.onDataFetched(notifications);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to fetch owner group info", e);
+                    listener.onDataFetched(new ArrayList<>());
+                });
+    }
+    // 알림 데이터를 가져오는 보조 메서드
+    private void fetchNotificationsFromReference(DocumentReference reference, OnDataListener<List<Map<String, Object>>> listener) {
+        reference.collection("notifications")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    List<Map<String, Object>> notifications = new ArrayList<>();
+                    for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                        notifications.add(document.getData());
                     }
+                    listener.onDataFetched(notifications);
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to fetch notifications", e);
+                    listener.onDataFetched(new ArrayList<>()); // 빈 리스트 반환
                 });
     }
 
