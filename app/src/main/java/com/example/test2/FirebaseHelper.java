@@ -8,10 +8,19 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import java.util.HashMap;
+import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.ListenerRegistration;
 
 public class FirebaseHelper {
 
@@ -98,12 +107,31 @@ public class FirebaseHelper {
             if (snapshot != null && snapshot.exists()) {
                 T fieldData = (T) snapshot.get(fieldName);
                 listener.onDataFetched(fieldData);
+
+                // 특정 조건에 따라 알림 생성 (예: 일정 추가 감지 시)
+                if ("calendarSchedules".equals(fieldName) && fieldData != null) {
+                    // 알림 메시지를 담은 Map 생성
+                    Map<String, Object> notificationData = new HashMap<>();
+                    notificationData.put("message", "일정이 추가되었습니다");
+                    notificationData.put("timestamp", System.currentTimeMillis());
+
+                    // addNotification 호출 시 Map과 OnCompleteListener 전달
+                    addNotification(notificationData, success -> {
+                        if (success) {
+                            Log.d(TAG, "Notification added successfully");
+                        } else {
+                            Log.e(TAG, "Failed to add notification");
+                        }
+                    });
+                }
             } else {
                 listener.onDataFetched(null);
             }
         });
         onRegistered.onRegistered(registration);
     }
+
+
 
     public void removeListeners() {
         if (coinListener != null) coinListener.remove();
@@ -120,4 +148,54 @@ public class FirebaseHelper {
     private interface OnListenerRegistered {
         void onRegistered(ListenerRegistration registration);
     }
+
+    public interface OnCompleteListener {
+        void onComplete(boolean success);
+    }
+
+    public void addNotification(Map<String, Object> notificationData, OnCompleteListener listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            listener.onComplete(false);
+            return;
+        }
+
+        db.collection("users")
+                .document(userId)
+                .collection("notifications")
+                .add(notificationData)
+                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to add notification", e);
+                    listener.onComplete(false);
+                });
+    }
+
+
+
+    // FirebaseHelper.java
+    public void getNotifications(OnDataListener<List<Map<String, Object>>> listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            return;
+        }
+
+        db.collection("users").document(userId).collection("notifications")
+                .orderBy("timestamp", Query.Direction.DESCENDING)
+                .addSnapshotListener((querySnapshot, e) -> {
+                    if (e != null) {
+                        Log.e(TAG, "Listen failed.", e);
+                        return;
+                    }
+
+                    if (querySnapshot != null) {
+                        List<Map<String, Object>> notifications = new ArrayList<>();
+                        for (DocumentSnapshot doc : querySnapshot.getDocuments()) {
+                            notifications.add(doc.getData());
+                        }
+                        listener.onDataFetched(notifications);
+                    }
+                });
+    }
+
 }

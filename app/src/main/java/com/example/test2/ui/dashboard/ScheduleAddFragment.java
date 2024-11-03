@@ -20,6 +20,10 @@ import androidx.navigation.Navigation;
 import com.example.test2.R;
 import java.util.Calendar;
 import java.util.Locale;
+import android.util.Log;
+import com.example.test2.FirebaseHelper;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ScheduleAddFragment extends Fragment {
 
@@ -72,6 +76,20 @@ public class ScheduleAddFragment extends Fragment {
             if (!title.isEmpty() && !content.isEmpty()) {
                 saveData(title, content, startday, endday);
 
+                // Firebase 알림 저장 코드 추가
+                FirebaseHelper firebaseHelper = new FirebaseHelper();
+                Map<String, Object> notificationData = new HashMap<>();
+                notificationData.put("message", "새로운 일정이 추가되었습니다: " + title);
+                notificationData.put("timestamp", System.currentTimeMillis());
+
+                firebaseHelper.addNotification(notificationData, success -> {
+                    if (success) {
+                        Log.d("ScheduleAddFragment", "Notification saved successfully");
+                    } else {
+                        Log.e("ScheduleAddFragment", "Failed to save notification");
+                    }
+                });
+
                 // 팝업 다이얼로그 표시
                 CalendarEndDialogFragment dialog = new CalendarEndDialogFragment();
                 dialog.show(getParentFragmentManager(), "ScheduleCompleteDialog");
@@ -82,6 +100,7 @@ public class ScheduleAddFragment extends Fragment {
                 Toast.makeText(getContext(), "제목과 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
+
 
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
