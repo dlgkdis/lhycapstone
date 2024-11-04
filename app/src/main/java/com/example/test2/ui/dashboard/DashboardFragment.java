@@ -30,6 +30,7 @@ public class DashboardFragment extends Fragment {
     private GridLayout calendarGrid;
     private TextView scheduleBox;
     private Button addScheduleButton;
+    private TextView selectedDayView; // 이전에 선택된 날짜를 추적하기 위한 변수
 
     private static final String SHARED_PREFS = "sharedPrefs";
     private SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
@@ -100,7 +101,7 @@ public class DashboardFragment extends Fragment {
             TextView dayView = new TextView(getContext());
             dayView.setText(String.valueOf(day));
             dayView.setGravity(Gravity.CENTER);
-            dayView.setPadding(16, 16, 16, 16);
+            dayView.setPadding(0, 32, 0, 32);
 
             GridLayout.LayoutParams dayParams = new GridLayout.LayoutParams();
             dayParams.width = 0;
@@ -124,7 +125,10 @@ public class DashboardFragment extends Fragment {
             if (tempCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                     tempCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
                     currentDay == today.get(Calendar.DAY_OF_MONTH)) {
+
                 dayView.setBackgroundResource(R.drawable.red_circle);
+                dayView.setTextColor(Color.WHITE); // 흰색 텍스트 설정
+                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD); // 텍스트를 굵게 설정
             }
 
             String fullDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
@@ -135,22 +139,58 @@ public class DashboardFragment extends Fragment {
             }
 
             dayView.setOnClickListener(v -> {
-                String selectedDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
+                // 선택한 날짜를 `selectedDate`로 설정 (현재 월과 선택한 일만 포함)
+                Calendar selectedCalendar = (Calendar) tempCalendar.clone();
+                selectedCalendar.set(Calendar.DAY_OF_MONTH, currentDay);
+                String selectedDate = dayFormat.format(selectedCalendar.getTime());
+
                 String[] loadedData = loadData(selectedDate);
 
                 if (!loadedData[0].isEmpty()) {
                     String displayText = "제목: " + loadedData[0] + "\n내용: " + loadedData[1] +
-                            "\n시작일: " + loadedData[2] + "\n종료일: " + loadedData[3];
+                            "\n시작일: " + loadedData[2] + loadedData[3] + "\n종료일: " + loadedData[4] + loadedData[5];
                     scheduleBox.setText(displayText);
                     scheduleBox.setVisibility(View.VISIBLE);
                 } else {
                     scheduleBox.setVisibility(View.GONE);
                 }
 
-                // 날짜 선택 시 플러스 버튼 표시 및 날짜 저장
+                // 이전에 선택된 날짜가 있으면 기본 상태로 되돌림
+                if (selectedDayView != null && selectedDayView != dayView) {
+                    // 이전 선택 항목을 일반 상태로 되돌리기
+                    Calendar prevSelectedCalendar = (Calendar) calendar.clone();
+                    prevSelectedCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(selectedDayView.getText().toString()));
+
+                    // 이전 선택 날짜가 현재 날짜인 경우 빨간색 동그라미로 되돌림
+                    if (prevSelectedCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
+                            prevSelectedCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
+                            prevSelectedCalendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
+                        selectedDayView.setBackgroundResource(R.drawable.red_circle); // 현재 날짜는 빨간 동그라미
+                        selectedDayView.setTextColor(Color.WHITE);
+                        selectedDayView.setTypeface(dayView.getTypeface(), Typeface.BOLD);
+                    } else {
+                        selectedDayView.setBackgroundResource(android.R.color.transparent); // 투명 배경
+                        int previousDayOfWeek = prevSelectedCalendar.get(Calendar.DAY_OF_WEEK) - 1;
+                        selectedDayView.setTextColor(previousDayOfWeek == 0 ? Color.RED : (previousDayOfWeek == 6 ? Color.BLUE : Color.BLACK)); // 요일에 따른 기본 텍스트 색상
+                        selectedDayView.setTypeface(customFont, Typeface.NORMAL);
+                    }
+                }
+
+                // 현재 선택된 날짜 스타일 적용
+                dayView.setBackgroundResource(R.drawable.black_circle); // black_circle 배경 적용
+                dayView.setTextColor(Color.WHITE); // 흰색 텍스트 설정
+                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD); // 굵은 텍스트 설정
+
+                // 선택된 날짜를 `selectedDayView`에 저장
+                selectedDayView = dayView;
+
+                // 플러스 버튼에 선택한 날짜 저장
                 addScheduleButton.setVisibility(View.VISIBLE);
                 addScheduleButton.setTag(selectedDate);
             });
+
+
+
 
             calendarGrid.addView(dayView);
         }
@@ -161,9 +201,11 @@ public class DashboardFragment extends Fragment {
         String title = sharedPreferences.getString(date + "_title", "");
         String content = sharedPreferences.getString(date + "_content", "");
         String startDay = sharedPreferences.getString(date + "_startDate", "");
+        String startTime = sharedPreferences.getString(date + "_startTime", "");
         String endDay = sharedPreferences.getString(date + "_endDate", "");
+        String endTime = sharedPreferences.getString(date + "_endTime", "");
 
-        return new String[]{title, content, startDay, endDay};
+        return new String[]{title, content, startDay, startTime, endDay, endTime};
     }
 
     @Override

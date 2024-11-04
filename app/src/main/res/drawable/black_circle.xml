@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:left="8dp" android:top="8dp" android:right="8dp" android:bottom="8dp">
         <shape android:shape="oval">
-            <solid android:color="#FF0000" /> <!-- 빨간색 배경 -->
+            <solid android:color="#111111" /> <!-- 빨간색 배경 -->
         </shape>
     </item>
 </layer-list>

@@ -64,7 +64,14 @@ public class ScheduleAddFragment extends Fragment {
 
         EditText titleEditText = view.findViewById(R.id.titleEditText);
         EditText contentEditText = view.findViewById(R.id.contentEditText);
-        loadData(titleEditText, contentEditText, startDayTextView, endDayTextView); // 저장된 데이터 불러오기
+
+        TextView startTimeTextView = view.findViewById(R.id.textView6);
+        TextView endTimeTextView = view.findViewById(R.id.textView7);
+
+        startTimeTextView.setOnClickListener(v -> showHourSelectionDialog(startTimeTextView));
+        endTimeTextView.setOnClickListener(v -> showHourSelectionDialog(endTimeTextView));
+
+        loadData(titleEditText, contentEditText, startDayTextView, endDayTextView, startTimeTextView, endTimeTextView); // 저장된 데이터 불러오기
 
         Button saveButton = view.findViewById(R.id.button4);
         saveButton.setOnClickListener(v -> {
@@ -72,9 +79,11 @@ public class ScheduleAddFragment extends Fragment {
             String content = contentEditText.getText().toString();
             String startday = startDayTextView.getText().toString();
             String endday = endDayTextView.getText().toString();
+            String startTime = startTimeTextView.getText().toString();
+            String endTime = endTimeTextView.getText().toString();
 
             if (!title.isEmpty() && !content.isEmpty()) {
-                saveData(title, content, startday, endday);
+                saveData(title, content, startday, endday, startTime, endTime);
 
                 // Firebase 알림 저장 코드 추가
                 FirebaseHelper firebaseHelper = new FirebaseHelper();
@@ -101,14 +110,8 @@ public class ScheduleAddFragment extends Fragment {
             }
         });
 
-
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
-
-        TextView startTimeTextView = view.findViewById(R.id.textView6);
-        TextView endTimeTextView = view.findViewById(R.id.textView7);
-        startTimeTextView.setOnClickListener(v -> showHourSelectionDialog(startTimeTextView));
-        endTimeTextView.setOnClickListener(v -> showHourSelectionDialog(endTimeTextView));
 
         return view;
     }
@@ -153,30 +156,34 @@ public class ScheduleAddFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private void saveData(String title, String content, String startday, String endday) {
+    private void saveData(String title, String content, String startday, String endday, String startTime, String endTime) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        // 제목, 내용, 시작일, 종료일을 날짜별로 저장
+        // 제목, 내용, 시작일, 종료일, 시작 시간, 종료 시간을 날짜별로 저장
         editor.putString(selectedDate + "_title", title);
         editor.putString(selectedDate + "_content", content);
         editor.putString(selectedDate + "_startDate", startday);
         editor.putString(selectedDate + "_endDate", endday);
+        editor.putString(selectedDate + "_startTime", startTime);
+        editor.putString(selectedDate + "_endTime", endTime);
         editor.apply();
     }
 
-    private void loadData(EditText titleEditText, EditText contentEditText, TextView startDayTextView, TextView endDayTextView) {
+    private void loadData(EditText titleEditText, EditText contentEditText, TextView startDayTextView, TextView endDayTextView, TextView startTimeTextView, TextView endTimeTextView) {
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
         String savedTitle = sharedPreferences.getString(selectedDate + "_title", "");
         String savedContent = sharedPreferences.getString(selectedDate + "_content", "");
         String savedStartDate = sharedPreferences.getString(selectedDate + "_startDate", selectedDate);
         String savedEndDate = sharedPreferences.getString(selectedDate + "_endDate", selectedDate);
+        String savedStartTime = sharedPreferences.getString(selectedDate + "_startTime", "00:00");
+        String savedEndTime = sharedPreferences.getString(selectedDate + "_endTime", "00:00");
 
         titleEditText.setText(savedTitle);
         contentEditText.setText(savedContent);
         startDayTextView.setText(savedStartDate);
         endDayTextView.setText(savedEndDate);
+        startTimeTextView.setText(savedStartTime);
+        endTimeTextView.setText(savedEndTime);
     }
-
-
 }
