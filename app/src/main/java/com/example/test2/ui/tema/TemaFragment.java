@@ -3,6 +3,7 @@ package com.example.test2.ui.tema;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +23,8 @@ public class TemaFragment extends Fragment {
     private View selectedButton = null;
     private static final String PREFS_NAME = "theme_prefs";
     private static final String KEY_SELECTED_THEME = "selected_theme";
-    private FirebaseHelper firebaseHelper; // FirebaseHelper 초기화
+    private FirebaseHelper firebaseHelper;
+    private static final String TAG = "TemaFragment";
 
     @Nullable
     @Override
@@ -36,28 +38,11 @@ public class TemaFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         themeViewModel = new ViewModelProvider(requireActivity()).get(ThemeViewModel.class);
-        firebaseHelper = new FirebaseHelper(); // FirebaseHelper 인스턴스 생성
+        firebaseHelper = new FirebaseHelper();
 
-        // FirebaseHelper를 사용하여 오브제 개수를 확인
-        firebaseHelper.getPurchasedObjects(purchasedObjects -> {
-            int purchasedObjectCount = purchasedObjects.size();
+        // 자물쇠 상태 설정 및 해제 조건 확인
+        setLockState();
 
-            // 각 테마 해제 조건에 따라 자물쇠 상태를 설정
-            if (purchasedObjectCount >= 4) {
-                binding.airportLock.setVisibility(View.GONE); // Airport 테마 해제
-            }
-            if (purchasedObjectCount >= 8) {
-                binding.islandLock.setVisibility(View.GONE); // Island 테마 해제
-            }
-            if (purchasedObjectCount >= 12) {
-                binding.rocketLock.setVisibility(View.GONE); // Rocket 테마 해제
-            }
-            if (purchasedObjectCount >= 16) {
-                binding.submarineLock.setVisibility(View.GONE); // Submarine 테마 해제
-            }
-        });
-
-        // 기존 SharedPreferences에서 저장된 테마 불러오기
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
         String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, null);
 
@@ -81,12 +66,53 @@ public class TemaFragment extends Fragment {
             }
         }
 
-        // 테마 버튼 클릭 시 테두리 적용 및 설정 저장
+        // 테마 버튼 클릭 리스너 설정
         binding.btnTemaHome.setOnClickListener(v -> setTheme("tema_home", v));
         binding.btnTemaAirport.setOnClickListener(v -> setTheme("tema_airport", v));
         binding.btnTemaSubmarine.setOnClickListener(v -> setTheme("tema_submarine", v));
         binding.btnTemaRocket.setOnClickListener(v -> setTheme("tema_rocket", v));
         binding.btnTemaIsland.setOnClickListener(v -> setTheme("tema_island", v));
+    }
+
+    private void setLockState() {
+        // 오브제 개수를 확인하여 자물쇠 상태 업데이트
+        firebaseHelper.getPurchasedObjects(purchasedObjects -> {
+            int purchasedObjectCount = purchasedObjects.size();
+            Log.d(TAG, "현재 구매된 오브제 개수: " + purchasedObjectCount);
+
+            // 테마 잠금 해제 조건
+            if (purchasedObjectCount >= 4) {
+                binding.airportLock.setVisibility(View.GONE);
+                binding.btnTemaAirport.setEnabled(true);
+                Log.d(TAG, "airport 테마 잠금 해제");
+            } else {
+                binding.btnTemaAirport.setEnabled(false);
+            }
+
+            if (purchasedObjectCount >= 8) {
+                binding.islandLock.setVisibility(View.GONE);
+                binding.btnTemaIsland.setEnabled(true);
+                Log.d(TAG, "island 테마 잠금 해제");
+            } else {
+                binding.btnTemaIsland.setEnabled(false);
+            }
+
+            if (purchasedObjectCount >= 12) {
+                binding.rocketLock.setVisibility(View.GONE);
+                binding.btnTemaRocket.setEnabled(true);
+                Log.d(TAG, "rocket 테마 잠금 해제");
+            } else {
+                binding.btnTemaRocket.setEnabled(false);
+            }
+
+            if (purchasedObjectCount >= 16) {
+                binding.submarineLock.setVisibility(View.GONE);
+                binding.btnTemaSubmarine.setEnabled(true);
+                Log.d(TAG, "submarine 테마 잠금 해제");
+            } else {
+                binding.btnTemaSubmarine.setEnabled(false);
+            }
+        });
     }
 
     private void setTheme(String theme, View button) {

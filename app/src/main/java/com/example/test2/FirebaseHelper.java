@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -279,5 +280,54 @@ public class FirebaseHelper {
                     listener.onDataFetched(new ArrayList<>()); // 빈 리스트 반환
                 });
     }
+
+    public void addPurchasedObject(String objectId, OnCompleteListener listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            listener.onComplete(false);
+            return;
+        }
+
+        // 먼저 groups 컬렉션에서 소유자 또는 초대된 사용자로서의 그룹이 있는지 확인
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        // 소유자 그룹이 있는 경우 해당 그룹에 추가
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        groupRef.update("purchasedObjects", FieldValue.arrayUnion(objectId))
+                                .addOnCompleteListener(task -> listener.onComplete(task.isSuccessful()));
+                    } else {
+                        // 소유자 그룹이 없는 경우, 초대된 사용자로서의 그룹 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        // 초대된 그룹이 있는 경우 해당 그룹에 추가
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        groupRef.update("purchasedObjects", FieldValue.arrayUnion(objectId))
+                                                .addOnCompleteListener(task -> listener.onComplete(task.isSuccessful()));
+                                    } else {
+                                        // 그룹이 없을 경우 users 컬렉션에 추가
+                                        db.collection("users")
+                                                .document(userId)
+                                                .update("purchasedObjects", FieldValue.arrayUnion(objectId))
+                                                .addOnCompleteListener(task -> listener.onComplete(task.isSuccessful()));
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to fetch invited group info", e);
+                                    listener.onComplete(false);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to fetch owner group info", e);
+                    listener.onComplete(false);
+                });
+    }
+
 
 }

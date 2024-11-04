@@ -1,21 +1,22 @@
 package com.example.test2;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Button;
+import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import java.util.List;
 
-public class Store extends AppCompatActivity {
+public class Store extends AppCompatActivity implements ObjectBuyDialogFragment.OnPurchaseCompleteListener {
 
     private SharedPreferences sharedPreferences;
     private TextView coinTextView;
     private FirebaseHelper firebaseHelper;
+    private List<String> purchasedObjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,17 +24,24 @@ public class Store extends AppCompatActivity {
         setContentView(R.layout.store);
 
         sharedPreferences = getSharedPreferences("purchase_status", Context.MODE_PRIVATE);
-
-        // FirebaseHelper 초기화
         firebaseHelper = new FirebaseHelper();
 
-        // 코인 데이터 표시하는 TextView 초기화
         coinTextView = findViewById(R.id.coinTextView);
-
-        // 코인 데이터를 로드하고 실시간으로 반영
         loadCoinData();
 
-        // 각 버튼에 대해 setupShopButton 호출 시 타코야키 개수 추가
+        // 구매한 오브제 목록을 불러온 후 UI를 설정
+        firebaseHelper.getPurchasedObjects(purchasedList -> {
+            purchasedObjects = purchasedList;
+            initializeShopButtons();
+        });
+
+        ImageButton backButton = findViewById(R.id.backButton);
+        if (backButton != null) {
+            backButton.setOnClickListener(v -> finish());
+        }
+    }
+
+    private void initializeShopButtons() {
         setupShopButton(findViewById(R.id.shop1), "shop1", R.drawable.shop1, 11);
         setupShopButton(findViewById(R.id.shop2), "shop2", R.drawable.shop2, 4);
         setupShopButton(findViewById(R.id.shop3), "shop3", R.drawable.shop3, 18);
@@ -50,72 +58,62 @@ public class Store extends AppCompatActivity {
         setupShopButton(findViewById(R.id.shop14), "shop14", R.drawable.shop14, 16);
         setupShopButton(findViewById(R.id.shop15), "shop15", R.drawable.shop15, 20);
         setupShopButton(findViewById(R.id.shop16), "shop16", R.drawable.shop16, 9);
-
-        ImageButton backButton = findViewById(R.id.backButton);
-        if (backButton != null) {
-            backButton.setOnClickListener(v -> finish());
-        }
-
     }
 
     private void setupShopButton(View shopButton, String itemId, int imageResource, int tacoCount) {
         ImageView lockIcon = findViewById(getResources().getIdentifier(itemId + "_lock", "id", getPackageName()));
 
-        // 구매 상태 확인
-        boolean isPurchased = sharedPreferences.getBoolean(itemId, false);
-
-        // 자물쇠 상태 설정
+        // 구매 목록에 오브제가 있는지 확인하여 자물쇠 상태 설정
+        boolean isPurchased = purchasedObjects != null && purchasedObjects.contains(itemId);
         lockIcon.setVisibility(isPurchased ? View.GONE : View.VISIBLE);
 
-        // 클릭 이벤트 설정
         shopButton.setOnClickListener(v -> {
             if (isPurchased) {
-                // 자물쇠가 열려있으면 ObjectArrangementDialogFragment로 이동
+                // 오브제가 구매된 상태면 배치 화면으로 이동
                 ObjectArrangementDialogFragment arrangementDialog = new ObjectArrangementDialogFragment();
                 Bundle args = new Bundle();
-                args.putInt("imageResource", imageResource); // 이미지 리소스 전달
+                args.putInt("imageResource", imageResource);
                 arrangementDialog.setArguments(args);
                 arrangementDialog.show(getSupportFragmentManager(), "ObjectArrangementDialogFragment");
             } else {
-                // 자물쇠가 잠겨 있으면 ObjectBuyDialogFragment로 이동
-                ObjectBuyDialogFragment buyDialog = new ObjectBuyDialogFragment();
-                Bundle args = new Bundle();
-                args.putString("itemId", itemId); // itemId 전달
-                args.putInt("imageResource", imageResource); // 이미지 리소스 전달
-                args.putInt("tacoCount", tacoCount); // 타코야키 개수 전달
-                buyDialog.setArguments(args);
+                // 구매되지 않은 상태면 구매 화면 표시
+                ObjectBuyDialogFragment buyDialog = ObjectBuyDialogFragment.newInstance(itemId, imageResource, tacoCount, this);
                 buyDialog.show(getSupportFragmentManager(), "ObjectBuyDialogFragment");
             }
         });
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            String itemId = data.getStringExtra("itemId");
-            if (itemId != null) {
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean(itemId, true); // 구매 상태 저장
-                editor.apply();
+    public void onPurchaseComplete(String itemId) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean(itemId, true);
+        editor.apply();
 
-                // 상태 업데이트를 위해 setupShopButton 재호출
+        // Firebase에 구입한 오브제 추가
+        firebaseHelper.addPurchasedObject(itemId, success -> {
+            if (success) {
+                // 성공적으로 Firebase에 추가된 경우, 구매 목록에 추가하고 UI 업데이트
+                if (purchasedObjects != null) {
+                    purchasedObjects.add(itemId);
+                }
                 setupShopButton(
                         findViewById(getResources().getIdentifier(itemId, "id", getPackageName())),
                         itemId,
                         getResources().getIdentifier(itemId, "drawable", getPackageName()),
-                        data.getIntExtra("tacoCount", 0)
+                        0
                 );
+            } else {
+                Toast.makeText(this, "오브제를 Firebase에 추가하는 데 실패했습니다.", Toast.LENGTH_SHORT).show();
             }
-        }
+        });
     }
 
     private void loadCoinData() {
         firebaseHelper.getCoinData(coinData -> {
             if (coinData != null) {
-                coinTextView.setText(String.valueOf(coinData)); // 코인 데이터 표시
+                coinTextView.setText(String.valueOf(coinData));
             } else {
-                coinTextView.setText("0"); // 기본값 설정
+                coinTextView.setText("0");
             }
         });
     }

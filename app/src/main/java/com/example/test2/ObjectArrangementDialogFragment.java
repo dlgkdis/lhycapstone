@@ -59,7 +59,7 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.white); // 흰색 배경 설정
         }
     }
 }
