@@ -7,6 +7,8 @@
     tools:context=".ui.dashboard.DashboardFragment">
 
     <!-- Home Theme Button (Unlocked by default) -->
+
+    <!-- Island Theme Button with Lock -->
     <ImageButton
         android:id="@+id/btn_tema_home"
         android:layout_width="160dp"
@@ -18,11 +20,9 @@
         android:stateListAnimator="@animator/button_click_animator"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.25"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="64dp" />
 
-    <!-- Island Theme Button with Lock -->
     <FrameLayout
         android:id="@+id/theme_island_frame"
         android:layout_width="160dp"
@@ -30,8 +30,8 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_tema_home"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp">
 
         <ImageButton
             android:id="@+id/btn_tema_island"
@@ -59,8 +59,8 @@
         app:layout_constraintTop_toBottomOf="@+id/theme_island_frame"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintHorizontal_bias="0.25"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp">
 
         <ImageButton
             android:id="@+id/btn_tema_submarine"
@@ -88,7 +88,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
-        android:layout_marginEnd="16dp"
+        android:layout_marginEnd="32dp"
         android:layout_marginTop="64dp">
 
         <ImageButton
@@ -117,8 +117,8 @@
         app:layout_constraintTop_toBottomOf="@+id/theme_airport_frame"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.75"
-        android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp">
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="16dp">
 
         <ImageButton
             android:id="@+id/btn_tema_rocket"

@@ -72,8 +72,6 @@ public class MainFragment extends Fragment {
             if (coinStatus != null) {
                 // 코인 데이터를 UI에 표시
                 binding.coinTextView.setText(""+coinStatus);
-            } else {
-                Toast.makeText(getContext(), "코인 데이터를 불러올 수 없습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -1,8 +1,5 @@
 package com.example.test2.ui.dashboard;
 
-import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,12 +15,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.example.test2.R;
+
 import java.util.Calendar;
 import java.util.Locale;
 import android.util.Log;
 import com.example.test2.FirebaseHelper;
 import java.util.HashMap;
 import java.util.Map;
+import com.google.firebase.Timestamp;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.NumberPicker;
+
+
+
 
 public class ScheduleAddFragment extends Fragment {
 
@@ -59,94 +67,81 @@ public class ScheduleAddFragment extends Fragment {
         startDayTextView.setText(selectedDate);
         endDayTextView.setText(selectedDate);
 
-        startDayTextView.setOnClickListener(v -> showDatePickerDialog(startDayTextView));
-        endDayTextView.setOnClickListener(v -> showDatePickerDialog(endDayTextView));
-
         EditText titleEditText = view.findViewById(R.id.titleEditText);
         EditText contentEditText = view.findViewById(R.id.contentEditText);
 
-        TextView startTimeTextView = view.findViewById(R.id.textView6);
-        TextView endTimeTextView = view.findViewById(R.id.textView7);
+        TextView startTimeTextView = view.findViewById(R.id.startTime);
+        TextView endTimeTextView = view.findViewById(R.id.endTime);
+
+        startDayTextView.setOnClickListener(v -> showSpinnerDatePickerDialog(startDayTextView));
+        endDayTextView.setOnClickListener(v -> showSpinnerDatePickerDialog(endDayTextView));
 
         startTimeTextView.setOnClickListener(v -> showHourSelectionDialog(startTimeTextView));
         endTimeTextView.setOnClickListener(v -> showHourSelectionDialog(endTimeTextView));
 
-        loadData(titleEditText, contentEditText, startDayTextView, endDayTextView, startTimeTextView, endTimeTextView); // 저장된 데이터 불러오기
+        Button saveButton = view.findViewById(R.id.savebutton);
 
-        Button saveButton = view.findViewById(R.id.button4);
         saveButton.setOnClickListener(v -> {
             String title = titleEditText.getText().toString();
             String content = contentEditText.getText().toString();
-            String startday = startDayTextView.getText().toString();
-            String endday = endDayTextView.getText().toString();
+            String startDay = startDayTextView.getText().toString();
+            String endDay = endDayTextView.getText().toString();
             String startTime = startTimeTextView.getText().toString();
             String endTime = endTimeTextView.getText().toString();
 
+            Timestamp startDate = convertToTimestamp(startDay);
+            Timestamp endDate = convertToTimestamp(endDay);
+
             if (!title.isEmpty() && !content.isEmpty()) {
-                saveData(title, content, startday, endday, startTime, endTime);
+                // 데이터를 HashMap으로 저장
+                Map<String, Object> scheduleData = new HashMap<>();
+                scheduleData.put("title", title);
+                scheduleData.put("content", content);
+                scheduleData.put("startDay", startDay);
+                scheduleData.put("endDay", endDay);
+                scheduleData.put("startTime", startTime);
+                scheduleData.put("endTime", endTime);
 
-                // Firebase 알림 저장 코드 추가
+                scheduleData.put("start",startDate);
+                scheduleData.put("end",endDate);
+
+                // FirebaseHelper를 사용하여 Firebase에 저장
                 FirebaseHelper firebaseHelper = new FirebaseHelper();
-                Map<String, Object> notificationData = new HashMap<>();
-                notificationData.put("message", "새로운 일정이 추가되었습니다: " + title);
-                notificationData.put("timestamp", System.currentTimeMillis());
-
-                firebaseHelper.addNotification(notificationData, success -> {
+                firebaseHelper.addCalendarSchedule(scheduleData, success -> {
                     if (success) {
-                        Log.d("ScheduleAddFragment", "Notification saved successfully");
+                        // 저장 성공 시 알림 추가
+                        Map<String, Object> notificationData = new HashMap<>();
+                        notificationData.put("message", "새로운 일정이 추가되었습니다: " + title);
+                        notificationData.put("timestamp", System.currentTimeMillis());
+
+                        firebaseHelper.addNotification(notificationData, notificationSuccess -> {
+                            if (notificationSuccess) {
+                                Log.d("ScheduleAddFragment", "Notification saved successfully");
+                            } else {
+                                Log.e("ScheduleAddFragment", "Failed to save notification");
+                            }
+                        });
+
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "일정이 저장되었습니다.", Toast.LENGTH_SHORT).show();
+                        }
+                        Navigation.findNavController(v).popBackStack();
                     } else {
-                        Log.e("ScheduleAddFragment", "Failed to save notification");
+                        if (getContext() != null) {
+                            Toast.makeText(getContext(), "일정 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
-
-                // 팝업 다이얼로그 표시
-                CalendarEndDialogFragment dialog = new CalendarEndDialogFragment();
-                dialog.show(getParentFragmentManager(), "ScheduleCompleteDialog");
-
-                // DashboardFragment로 돌아가기
-                Navigation.findNavController(v).popBackStack();
             } else {
                 Toast.makeText(getContext(), "제목과 내용을 입력하세요.", Toast.LENGTH_SHORT).show();
             }
         });
 
+
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         return view;
-    }
-
-    private void showDatePickerDialog(final TextView dateTextView) {
-        final Calendar calendar = Calendar.getInstance();
-        DatePickerDialog datePickerDialog = new DatePickerDialog(requireContext(),
-                (view, year, month, dayOfMonth) -> {
-                    // 선택한 날짜 문자열 생성
-                    String selectedDate = String.format(Locale.getDefault(), "%d년 %d월 %d일", year, month + 1, dayOfMonth);
-
-                    // 해당 날짜에 이미 저장된 일정 개수 확인
-                    int scheduleNumber = getScheduleCount(selectedDate) + 1;
-
-                    // 날짜와 일정 번호를 조합하여 저장
-                    String selectedDateWithNumber = String.format(Locale.getDefault(), "%d년 %d월 %d일 #%d", year, month + 1, dayOfMonth, scheduleNumber);
-
-                    // TextView에 선택한 날짜와 일정 번호 표시
-                    dateTextView.setText(selectedDateWithNumber);
-                },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-    }
-
-    // 특정 날짜에 저장된 일정 개수를 확인하는 함수
-    private int getScheduleCount(String date) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        int count = 0;
-        while (sharedPreferences.contains(date + "_title_" + (count + 1))) {
-            count++;
-        }
-        return count;
     }
 
     private void showHourSelectionDialog(final TextView targetTextView) {
@@ -156,34 +151,83 @@ public class ScheduleAddFragment extends Fragment {
         dialogBuilder.show();
     }
 
-    private void saveData(String title, String content, String startday, String endday, String startTime, String endTime) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
+    private void showSpinnerDatePickerDialog(final TextView dateTextView) {
+        // 현재 날짜 설정
+        Calendar calendar = Calendar.getInstance();
+        int currentYear = calendar.get(Calendar.YEAR);
+        int currentMonth = calendar.get(Calendar.MONTH) + 1;
+        int currentDay = calendar.get(Calendar.DAY_OF_MONTH);
 
-        // 제목, 내용, 시작일, 종료일, 시작 시간, 종료 시간을 날짜별로 저장
-        editor.putString(selectedDate + "_title", title);
-        editor.putString(selectedDate + "_content", content);
-        editor.putString(selectedDate + "_startDate", startday);
-        editor.putString(selectedDate + "_endDate", endday);
-        editor.putString(selectedDate + "_startTime", startTime);
-        editor.putString(selectedDate + "_endTime", endTime);
-        editor.apply();
+        // NumberPicker로 연도 선택기 설정
+        NumberPicker yearPicker = new NumberPicker(requireContext());
+        yearPicker.setMinValue(currentYear - 100);  // 예: 100년 전까지 선택 가능
+        yearPicker.setMaxValue(currentYear + 50);   // 예: 50년 후까지 선택 가능
+        yearPicker.setValue(currentYear);
+
+        // NumberPicker로 월 선택기 설정
+        NumberPicker monthPicker = new NumberPicker(requireContext());
+        monthPicker.setMinValue(1);
+        monthPicker.setMaxValue(12);
+        monthPicker.setValue(currentMonth);
+
+        // NumberPicker로 일 선택기 설정
+        NumberPicker dayPicker = new NumberPicker(requireContext());
+        dayPicker.setMinValue(1);
+        dayPicker.setMaxValue(calendar.getActualMaximum(Calendar.DAY_OF_MONTH)); // 해당 월의 마지막 날까지 선택 가능
+        dayPicker.setValue(currentDay);
+
+        // 월이 변경될 때 일 범위 업데이트
+        monthPicker.setOnValueChangedListener((picker, oldVal, newVal) -> {
+            calendar.set(Calendar.MONTH, newVal - 1);
+            int maxDay = calendar.getActualMaximum(Calendar.DAY_OF_MONTH);
+            dayPicker.setMaxValue(maxDay);
+        });
+
+        // 레이아웃 설정
+        LinearLayout layout = new LinearLayout(requireContext());
+        layout.setOrientation(LinearLayout.HORIZONTAL);
+        layout.setGravity(Gravity.CENTER);
+        layout.setPadding(10, 10, 10, 10);
+        layout.addView(yearPicker);
+        layout.addView(monthPicker);
+        layout.addView(dayPicker);
+
+        // 다이얼로그 생성
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+        builder.setView(layout);
+        builder.setTitle("날짜 선택");
+
+        builder.setPositiveButton("확인", (dialog, which) -> {
+            // 선택된 연도, 월, 일을 문자열로 포맷하여 TextView에 설정
+            String selectedDate = String.format(Locale.getDefault(), "%d년 %02d월 %02d일",
+                    yearPicker.getValue(),
+                    monthPicker.getValue(),
+                    dayPicker.getValue());
+            dateTextView.setText(selectedDate);
+        });
+
+        builder.setNegativeButton("취소", (dialog, which) -> dialog.dismiss());
+
+        builder.create().show();
     }
 
-    private void loadData(EditText titleEditText, EditText contentEditText, TextView startDayTextView, TextView endDayTextView, TextView startTimeTextView, TextView endTimeTextView) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        String savedTitle = sharedPreferences.getString(selectedDate + "_title", "");
-        String savedContent = sharedPreferences.getString(selectedDate + "_content", "");
-        String savedStartDate = sharedPreferences.getString(selectedDate + "_startDate", selectedDate);
-        String savedEndDate = sharedPreferences.getString(selectedDate + "_endDate", selectedDate);
-        String savedStartTime = sharedPreferences.getString(selectedDate + "_startTime", "00:00");
-        String savedEndTime = sharedPreferences.getString(selectedDate + "_endTime", "00:00");
 
-        titleEditText.setText(savedTitle);
-        contentEditText.setText(savedContent);
-        startDayTextView.setText(savedStartDate);
-        endDayTextView.setText(savedEndDate);
-        startTimeTextView.setText(savedStartTime);
-        endTimeTextView.setText(savedEndTime);
+
+    public static Timestamp convertToTimestamp(String dateString) {
+        try {
+            // SimpleDateFormat으로 날짜 형식 지정
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault());
+
+            // 문자열을 Date로 파싱
+            Date date = dateFormat.parse(dateString);
+
+            // Date를 Timestamp로 변환하여 반환
+            return new Timestamp(date);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null; // 예외 발생 시 null 반환
+        }
     }
+
 }

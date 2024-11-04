@@ -8,13 +8,14 @@ import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import java.util.HashMap;
 import java.util.Map;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.Query;
@@ -22,6 +23,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.Timestamp;
 
 public class FirebaseHelper {
 
@@ -54,13 +56,6 @@ public class FirebaseHelper {
         listenToData("purchasedThemes", listener, registration -> purchasedThemesListener = registration);
     }
 
-    public void getDiaries(OnDataListener<List<Map<String, Object>>> listener) {
-        listenToData("diaries", listener, registration -> diariesListener = registration);
-    }
-
-    public void getCalendarSchedules(OnDataListener<List<Map<String, Object>>> listener) {
-        listenToData("calendarSchedules", listener, registration -> calendarSchedulesListener = registration);
-    }
 
     private <T> void listenToData(String fieldName, OnDataListener<T> listener, OnListenerRegistered onRegistered) {
         if (userId == null) {
@@ -281,6 +276,54 @@ public class FirebaseHelper {
                 });
     }
 
+    // FirebaseHelper.java
+    public void clearAllNotifications(OnCompleteListener listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            listener.onComplete(false);
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        deleteAllNotificationsFromReference(groupRef, listener);
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        deleteAllNotificationsFromReference(groupRef, listener);
+                                    } else {
+                                        DocumentReference userDoc = db.collection("users").document(userId);
+                                        deleteAllNotificationsFromReference(userDoc, listener);
+                                    }
+                                })
+                                .addOnFailureListener(e -> listener.onComplete(false));
+                    }
+                })
+                .addOnFailureListener(e -> listener.onComplete(false));
+    }
+
+    // 보조 메서드: 알림 컬렉션의 모든 문서를 삭제
+    private void deleteAllNotificationsFromReference(DocumentReference reference, OnCompleteListener listener) {
+        reference.collection("notifications")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                        document.getReference().delete();
+                    }
+                    listener.onComplete(true);
+                })
+                .addOnFailureListener(e -> listener.onComplete(false));
+    }
+
+
     public void addPurchasedObject(String objectId, OnCompleteListener listener) {
         if (userId == null) {
             Log.e(TAG, "User is not logged in");
@@ -328,6 +371,220 @@ public class FirebaseHelper {
                     listener.onComplete(false);
                 });
     }
+
+    // FirebaseHelper.java
+    public void addCalendarSchedule(Map<String, Object> scheduleData, OnCompleteListener listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            listener.onComplete(false);
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        // 소유자 그룹이 있으면 해당 그룹에 일정 추가
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        groupRef.collection("calendarSchedules")
+                                .add(scheduleData)
+                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to add schedule to groups collection", e);
+                                    listener.onComplete(false);
+                                });
+                    } else {
+                        // 소유자 그룹이 없으면 초대된 사용자로서의 그룹 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        groupRef.collection("calendarSchedules")
+                                                .add(scheduleData)
+                                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                                .addOnFailureListener(e -> {
+                                                    Log.e(TAG, "Failed to add schedule to invited groups collection", e);
+                                                    listener.onComplete(false);
+                                                });
+                                    } else {
+                                        // 그룹이 없으면 users 컬렉션에 추가
+                                        db.collection("users").document(userId)
+                                                .collection("calendarSchedules")
+                                                .add(scheduleData)
+                                                .addOnSuccessListener(documentReference -> listener.onComplete(true))
+                                                .addOnFailureListener(e -> {
+                                                    Log.e(TAG, "Failed to add schedule to users collection", e);
+                                                    listener.onComplete(false);
+                                                });
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to fetch invited group info", e);
+                                    listener.onComplete(false);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to fetch owner group info", e);
+                    listener.onComplete(false);
+                });
+    }
+
+    // FirebaseHelper.java
+    public void listenToScheduleUpdates(String selectedDate, OnDataListener<List<Map<String, Object>>> listener) {
+        if (userId == null) {
+            Log.e(TAG, "User is not logged in");
+            listener.onDataFetched(new ArrayList<>());
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        addScheduleSnapshotListener(groupRef, selectedDate, listener);
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        addScheduleSnapshotListener(groupRef, selectedDate, listener);
+                                    } else {
+                                        DocumentReference userDoc = db.collection("users").document(userId);
+                                        addScheduleSnapshotListener(userDoc, selectedDate, listener);
+                                    }
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Failed to fetch group info", e));
+    }
+
+    private void addScheduleSnapshotListener(DocumentReference reference, String selectedDate, OnDataListener<List<Map<String, Object>>> listener) {
+        Timestamp selectedTimestamp = convertStringToTimestamp(selectedDate);
+
+        reference.collection("calendarSchedules")
+                .whereLessThanOrEqualTo("start", selectedTimestamp)
+                .whereGreaterThanOrEqualTo("end", selectedTimestamp)
+                .addSnapshotListener((querySnapshot, e) -> {
+                    if (e != null) {
+                        Log.e(TAG, "Listen failed.", e);
+                        listener.onDataFetched(null);
+                        return;
+                    }
+
+                    List<Map<String, Object>> scheduleList = new ArrayList<>();
+                    if (querySnapshot != null) {
+                        for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                            Map<String, Object> scheduleData = document.getData();
+                            if (scheduleData != null) {
+                                scheduleData.put("documentId", document.getId());
+                                scheduleList.add(scheduleData);
+                            }
+                        }
+                    }
+                    listener.onDataFetched(scheduleList);
+                });
+    }
+
+
+    // 선택한 날짜가 `startDay`와 `endDay` 사이에 있는 일정을 조회하는 쿼리 실행 메서드
+    private void fetchScheduleData(DocumentReference reference, Timestamp selectedDate, OnDataListener<List<Map<String, Object>>> listener) {
+        try{
+            reference.collection("calendarSchedules")
+                    .whereLessThanOrEqualTo("start", selectedDate)
+                    .whereGreaterThanOrEqualTo("end", selectedDate)
+                    .get()
+                    .addOnSuccessListener(querySnapshot -> {
+                        List<Map<String, Object>> scheduleList = new ArrayList<>();
+                        for (DocumentSnapshot documentSnapshot : querySnapshot.getDocuments()) {
+                            Map<String, Object> scheduleData = documentSnapshot.getData();
+                            if (scheduleData != null) {
+                                scheduleData.put("documentId", documentSnapshot.getId());  // documentId 추가
+                                scheduleList.add(scheduleData);
+                            }
+                        }
+                        listener.onDataFetched(scheduleList); // 검색된 일정을 리스트로 반환
+                    })
+                    .addOnFailureListener(e -> {
+                        Log.e(TAG, "Failed to fetch schedule data", e);
+                        listener.onDataFetched(null);
+                    });
+
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to parse selected date", e);
+            listener.onDataFetched(null);
+        }
+    }
+
+
+    // 문자열 날짜를 Timestamp로 변환하는 유틸리티 메서드
+    private Timestamp convertStringToTimestamp(String dateString) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault());
+            Date date = dateFormat.parse(dateString);
+            return new Timestamp(date);
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to parse selected date", e);
+            return null;
+        }
+    }
+
+    public void deleteCalendarSchedule(String scheduleId, OnCompleteListener listener) {
+        if (userId == null) {
+            Log.e("FirebaseHelper", "User is not logged in");
+            listener.onComplete(false);
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
+                        deleteScheduleFromCollection(groupRef, scheduleId, listener);
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteSnapshot -> {
+                                    if (!inviteSnapshot.isEmpty()) {
+                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
+                                        deleteScheduleFromCollection(groupRef, scheduleId, listener);
+                                    } else {
+                                        DocumentReference userDoc = db.collection("users").document(userId);
+                                        deleteScheduleFromCollection(userDoc, scheduleId, listener);
+                                    }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e("FirebaseHelper", "Failed to fetch invited group info", e);
+                                    listener.onComplete(false);
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Log.e("FirebaseHelper", "Failed to fetch owner group info", e);
+                    listener.onComplete(false);
+                });
+    }
+
+    private void deleteScheduleFromCollection(DocumentReference reference, String scheduleId, OnCompleteListener listener) {
+        reference.collection("calendarSchedules").document(scheduleId)
+                .delete()
+                .addOnSuccessListener(aVoid -> listener.onComplete(true))
+                .addOnFailureListener(e -> {
+                    Log.e("FirebaseHelper", "Failed to delete schedule", e);
+                    listener.onComplete(false);
+                });
+    }
+
 
 
 }

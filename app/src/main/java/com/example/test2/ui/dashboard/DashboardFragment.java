@@ -1,7 +1,5 @@
 package com.example.test2.ui.dashboard;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -11,16 +9,25 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import com.example.test2.R;
+import com.example.test2.FirebaseHelper;
 import com.example.test2.databinding.FragmentDashboardBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import android.app.AlertDialog;
+import android.widget.Toast;
+
+
+
 
 public class DashboardFragment extends Fragment {
 
@@ -28,27 +35,31 @@ public class DashboardFragment extends Fragment {
     private Calendar calendar;
     private TextView monthText;
     private GridLayout calendarGrid;
-    private TextView scheduleBox;
+    private LinearLayout scheduleBox;
     private Button addScheduleButton;
-    private TextView selectedDayView; // 이전에 선택된 날짜를 추적하기 위한 변수
+    private TextView selectedDayView;
+    private Typeface nanumFont;
 
-    private static final String SHARED_PREFS = "sharedPrefs";
     private SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
     private SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault());
+    private FirebaseHelper firebaseHelper;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDashboardBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
+        firebaseHelper = new FirebaseHelper();
         calendar = Calendar.getInstance();
         monthText = root.findViewById(R.id.monthText);
         calendarGrid = root.findViewById(R.id.calendarGrid);
         scheduleBox = root.findViewById(R.id.scheduleBox);
         addScheduleButton = root.findViewById(R.id.addScheduleButton);
+        nanumFont = ResourcesCompat.getFont(requireContext(), R.font.nanumfont);
 
+        // 추가적인 초기화 코드들
         scheduleBox.setVisibility(View.GONE);
-        addScheduleButton.setVisibility(View.GONE);  // 기본적으로 숨김
+        addScheduleButton.setVisibility(View.GONE);
 
         Button prevMonthButton = root.findViewById(R.id.prevMonthButton);
         Button nextMonthButton = root.findViewById(R.id.nextMonthButton);
@@ -64,7 +75,7 @@ public class DashboardFragment extends Fragment {
         });
 
         addScheduleButton.setOnClickListener(v -> {
-            String selectedDate = (String) addScheduleButton.getTag();  // 선택된 날짜 정보 가져오기
+            String selectedDate = (String) addScheduleButton.getTag();
             Bundle bundle = new Bundle();
             bundle.putString("selectedDate", selectedDate);
             Navigation.findNavController(v).navigate(R.id.action_dashboard_to_scheduleAdd, bundle);
@@ -125,88 +136,145 @@ public class DashboardFragment extends Fragment {
             if (tempCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                     tempCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
                     currentDay == today.get(Calendar.DAY_OF_MONTH)) {
-
                 dayView.setBackgroundResource(R.drawable.red_circle);
-                dayView.setTextColor(Color.WHITE); // 흰색 텍스트 설정
-                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD); // 텍스트를 굵게 설정
+                dayView.setTextColor(Color.WHITE);
+                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD);
             }
 
-            String fullDate = dayFormat.format(calendar.getTime()) + " " + currentDay + "일";
-            String[] scheduleData = loadData(fullDate);
-
-            if (!scheduleData[0].isEmpty()) {
-                dayView.setTextColor(Color.parseColor("#60A637"));
-            }
+            Calendar selectedCalendar = (Calendar) tempCalendar.clone();
+            selectedCalendar.set(Calendar.DAY_OF_MONTH, currentDay);
+            String selectedDate = dayFormat.format(selectedCalendar.getTime());
 
             dayView.setOnClickListener(v -> {
-                // 선택한 날짜를 `selectedDate`로 설정 (현재 월과 선택한 일만 포함)
-                Calendar selectedCalendar = (Calendar) tempCalendar.clone();
-                selectedCalendar.set(Calendar.DAY_OF_MONTH, currentDay);
-                String selectedDate = dayFormat.format(selectedCalendar.getTime());
+                loadData(selectedDate);
 
-                String[] loadedData = loadData(selectedDate);
-
-                if (!loadedData[0].isEmpty()) {
-                    String displayText = "제목: " + loadedData[0] + "\n내용: " + loadedData[1] +
-                            "\n시작일: " + loadedData[2] + loadedData[3] + "\n종료일: " + loadedData[4] + loadedData[5];
-                    scheduleBox.setText(displayText);
-                    scheduleBox.setVisibility(View.VISIBLE);
-                } else {
-                    scheduleBox.setVisibility(View.GONE);
-                }
-
-                // 이전에 선택된 날짜가 있으면 기본 상태로 되돌림
                 if (selectedDayView != null && selectedDayView != dayView) {
-                    // 이전 선택 항목을 일반 상태로 되돌리기
                     Calendar prevSelectedCalendar = (Calendar) calendar.clone();
                     prevSelectedCalendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(selectedDayView.getText().toString()));
 
-                    // 이전 선택 날짜가 현재 날짜인 경우 빨간색 동그라미로 되돌림
                     if (prevSelectedCalendar.get(Calendar.YEAR) == today.get(Calendar.YEAR) &&
                             prevSelectedCalendar.get(Calendar.MONTH) == today.get(Calendar.MONTH) &&
                             prevSelectedCalendar.get(Calendar.DAY_OF_MONTH) == today.get(Calendar.DAY_OF_MONTH)) {
-                        selectedDayView.setBackgroundResource(R.drawable.red_circle); // 현재 날짜는 빨간 동그라미
+                        selectedDayView.setBackgroundResource(R.drawable.red_circle);
                         selectedDayView.setTextColor(Color.WHITE);
                         selectedDayView.setTypeface(dayView.getTypeface(), Typeface.BOLD);
                     } else {
-                        selectedDayView.setBackgroundResource(android.R.color.transparent); // 투명 배경
+                        selectedDayView.setBackgroundResource(android.R.color.transparent);
                         int previousDayOfWeek = prevSelectedCalendar.get(Calendar.DAY_OF_WEEK) - 1;
-                        selectedDayView.setTextColor(previousDayOfWeek == 0 ? Color.RED : (previousDayOfWeek == 6 ? Color.BLUE : Color.BLACK)); // 요일에 따른 기본 텍스트 색상
+                        selectedDayView.setTextColor(previousDayOfWeek == 0 ? Color.RED : (previousDayOfWeek == 6 ? Color.BLUE : Color.BLACK));
                         selectedDayView.setTypeface(customFont, Typeface.NORMAL);
                     }
                 }
 
-                // 현재 선택된 날짜 스타일 적용
-                dayView.setBackgroundResource(R.drawable.black_circle); // black_circle 배경 적용
-                dayView.setTextColor(Color.WHITE); // 흰색 텍스트 설정
-                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD); // 굵은 텍스트 설정
+                dayView.setBackgroundResource(R.drawable.black_circle);
+                dayView.setTextColor(Color.WHITE);
+                dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD);
 
-                // 선택된 날짜를 `selectedDayView`에 저장
                 selectedDayView = dayView;
-
-                // 플러스 버튼에 선택한 날짜 저장
                 addScheduleButton.setVisibility(View.VISIBLE);
                 addScheduleButton.setTag(selectedDate);
             });
-
-
-
 
             calendarGrid.addView(dayView);
         }
     }
 
-    private String[] loadData(String date) {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(SHARED_PREFS, Context.MODE_PRIVATE);
-        String title = sharedPreferences.getString(date + "_title", "");
-        String content = sharedPreferences.getString(date + "_content", "");
-        String startDay = sharedPreferences.getString(date + "_startDate", "");
-        String startTime = sharedPreferences.getString(date + "_startTime", "");
-        String endDay = sharedPreferences.getString(date + "_endDate", "");
-        String endTime = sharedPreferences.getString(date + "_endTime", "");
+    // DashboardFragment.java
 
-        return new String[]{title, content, startDay, startTime, endDay, endTime};
+    private void loadData(String selectedDate) {
+        firebaseHelper.listenToScheduleUpdates(selectedDate, scheduleList -> {
+            scheduleBox.removeAllViews();
+
+            if (scheduleList != null && !scheduleList.isEmpty()) {
+                for (Map<String, Object> scheduleData : scheduleList) {
+                    TextView titleTextView = new TextView(getContext());
+                    String title = (String) scheduleData.get("title");
+
+                    titleTextView.setText(title);
+                    titleTextView.setTextSize(16);
+                    titleTextView.setGravity(Gravity.LEFT);
+                    titleTextView.setPadding(16, 16, 16, 16);
+                    titleTextView.setTextColor(Color.BLACK);
+                    titleTextView.setBackgroundResource(R.drawable.schedule_background);
+                    if (nanumFont != null) {
+                        titleTextView.setTypeface(nanumFont);
+                    }
+
+                    LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                            LinearLayout.LayoutParams.MATCH_PARENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT
+                    );
+                    layoutParams.setMargins(0, 8, 0, 8);
+                    titleTextView.setLayoutParams(layoutParams);
+
+                    titleTextView.setOnClickListener(v -> showDetailDialog(scheduleData));
+
+                    scheduleBox.addView(titleTextView);
+                }
+                scheduleBox.setVisibility(View.VISIBLE);
+            } else {
+                scheduleBox.setVisibility(View.GONE);
+            }
+        });
     }
+
+
+    private void showDetailDialog(Map<String, Object> scheduleData) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(requireContext());
+
+        // 팝업창 커스텀 레이아웃 설정
+        LayoutInflater inflater = LayoutInflater.from(getContext());
+        View popupView = inflater.inflate(R.layout.schedule_popup, null);
+
+        TextView popupTitle = popupView.findViewById(R.id.popupTitle);
+        TextView popupContent = popupView.findViewById(R.id.popupContent);
+
+        popupTitle.setText("제목: " + scheduleData.get("title"));
+        popupContent.setText("내용: " + scheduleData.get("content") + "\n\n시작일: " + scheduleData.get("startDay") + " " + scheduleData.get("startTime") + "\n종료일: " + scheduleData.get("endDay") + " " + scheduleData.get("endTime"));
+
+        builder.setView(popupView);
+
+        // 삭제 버튼 추가
+        builder.setPositiveButton("삭제", (dialog, which) -> {
+            // 삭제 확인 후 Firebase에서 일정 삭제
+            String documentId = (String) scheduleData.get("documentId"); // 이 ID가 필요함
+            if (documentId != null) {
+                FirebaseHelper firebaseHelper = new FirebaseHelper();
+                firebaseHelper.deleteCalendarSchedule(documentId, success -> {
+                    if (success) {
+                        // 일정 삭제 성공 후 알림 메시지 데이터 구성
+                        Map<String, Object> notificationData = new HashMap<>();
+                        notificationData.put("message", "일정이 삭제되었습니다: " + scheduleData.get("title"));
+                        notificationData.put("timestamp", System.currentTimeMillis());
+
+                        // FirebaseHelper의 addNotification 메서드를 호출하여 알림 추가
+                        firebaseHelper.addNotification(notificationData, notificationSuccess -> {
+                            if (notificationSuccess) {
+                                Toast.makeText(getContext(), "일정이 삭제되었습니다.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "알림 저장에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
+                        // 화면을 업데이트하거나 필요한 작업 수행
+                    } else {
+                        Toast.makeText(getContext(), "일정 삭제에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            } else {
+                Toast.makeText(getContext(), "일정 ID를 찾을 수 없습니다.", Toast.LENGTH_SHORT).show();
+            }
+            dialog.dismiss();
+        });
+
+
+        // 확인 버튼 추가
+        builder.setNegativeButton("확인", (dialog, which) -> dialog.dismiss());
+
+        builder.create().show();
+    }
+
+
 
     @Override
     public void onDestroyView() {

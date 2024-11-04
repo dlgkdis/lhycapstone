@@ -88,7 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                              try{
                                  //successful
                                  GoogleSignInAccount account = task.getResult(ApiException.class);
-                                 Toast.makeText(getApplicationContext(),"로그인 성공", Toast.LENGTH_LONG).show();
                                  firebaseAuthWithGoogle(account);
                              }  catch (ApiException e){
                                  //failed
@@ -139,7 +138,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     //[START auth_with_google]
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct){
+    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
         AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -147,13 +146,10 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String userId = user.getUid();
 
-                            // 회원가입 시 초기 데이터 설정
-                            createUserData(user.getUid());
-
-                            Toast.makeText(getApplicationContext(), "Complete", Toast.LENGTH_LONG).show();
-                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(intent);
+                            // 기존 데이터 확인
+                            checkExistingUserData(userId);
                         } else {
                             Toast.makeText(getApplicationContext(), "Authentication Failed", Toast.LENGTH_LONG).show();
                         }
@@ -161,20 +157,58 @@ public class LoginActivity extends AppCompatActivity {
                 });
     }
 
-    // 회원가입 시 초기 데이터 생성 메서드
+    // 초기 데이터 생성 메서드
     private void createUserData(String userId) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         Map<String, Object> userData = new HashMap<>();
-        userData.put("coinStatus", 0); // 초기 코인 현황
-        userData.put("purchasedObjects", new ArrayList<>()); // 구매한 오브제 목록
-        userData.put("purchasedThemes", new ArrayList<>()); // 구매한 테마 목록
-        userData.put("diaries", new ArrayList<>()); // 작성한 일기
-        userData.put("calendarSchedules", new ArrayList<>()); // 캘린더 일정
+        userData.put("coinStatus", 0);
+        userData.put("purchasedObjects", new ArrayList<>());
+        userData.put("purchasedThemes", new ArrayList<>());
 
         db.collection("users").document(userId).set(userData)
                 .addOnSuccessListener(aVoid -> Log.d("LoginActivity", "초기 데이터 설정 완료"))
                 .addOnFailureListener(e -> Log.e("LoginActivity", "초기 데이터 설정 실패", e));
+    }
+
+    // 기존 데이터 확인 메서드
+    private void checkExistingUserData(String userId) {
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
+
+        // users 컬렉션에서 사용자 확인
+        db.collection("users").document(userId).get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // 기존 데이터가 있으므로 로그인 성공으로 처리
+                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
+                        navigateToMain();
+                    } else {
+                        // groups 컬렉션에서 사용자 확인
+                        db.collection("groups")
+                                .whereEqualTo("ownerUserId", userId)
+                                .get()
+                                .addOnSuccessListener(queryDocumentSnapshots -> {
+                                    if (!queryDocumentSnapshots.isEmpty()) {
+                                        // groups 컬렉션에 데이터가 있는 경우 로그인 성공으로 처리
+                                        Toast.makeText(getApplicationContext(), "로그인 성공", Toast.LENGTH_LONG).show();
+                                        navigateToMain();
+                                    } else {
+                                        // 기존 데이터가 없으므로 새 사용자 데이터 생성
+                                        createUserData(userId);
+                                        Toast.makeText(getApplicationContext(), "회원가입 성공", Toast.LENGTH_LONG).show();
+                                        navigateToMain();
+                                    }
+                                })
+                                .addOnFailureListener(e -> Log.e("LoginActivity", "그룹 데이터 확인 실패", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("LoginActivity", "사용자 데이터 확인 실패", e));
+    }
+
+    // 초기 데이터 생성 후 MainActivity로 이동
+    private void navigateToMain() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 
     private void signOut(){

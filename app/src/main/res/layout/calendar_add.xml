@@ -60,7 +60,7 @@
 
 
     <Button
-        android:id="@+id/button4"
+        android:id="@+id/savebutton"
         android:layout_width="200dp"
         android:layout_height="50dp"
         android:text="확인"
@@ -91,7 +91,7 @@
         android:layout_marginTop="28dp" />
 
     <TextView
-        android:id="@+id/textView6"
+        android:id="@+id/startTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
@@ -109,7 +109,7 @@
         android:background="?android:attr/selectableItemBackground"/>
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/endTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="00:00"
@@ -120,7 +120,7 @@
         app:layout_constraintHorizontal_bias="0.773"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6"
+        app:layout_constraintTop_toBottomOf="@+id/startTime"
         android:layout_marginTop="16dp"
         android:clickable="true"
         android:focusable="true"

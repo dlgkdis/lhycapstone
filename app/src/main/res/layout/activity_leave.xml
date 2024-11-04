@@ -8,6 +8,23 @@
         android:id="@+id/leaveInfoText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="※ 탈퇴하면 데이터가 다 사라져요!!"
+        android:textSize="18sp"
+        android:textColor="#BE2E22"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:fontFamily="@font/nanumfont"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintTop_toBottomOf="@+id/leaveInfoText2"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:id="@+id/leaveInfoText2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:text="그룹에서 탈퇴하시겠습니까?"
         android:textSize="25sp"
         android:layout_marginTop="32dp"
@@ -17,7 +34,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:fontFamily="@font/nanumfont"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.502" />
 
     <Button
         android:id="@+id/leaveGroupButton"

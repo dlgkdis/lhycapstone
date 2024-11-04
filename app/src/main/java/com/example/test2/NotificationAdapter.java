@@ -8,8 +8,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.Date;
 
 public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapter.NotificationViewHolder> {
 
@@ -36,8 +38,10 @@ public class NotificationAdapter extends RecyclerView.Adapter<NotificationAdapte
 
         // timestamp가 Long 타입이므로 String으로 변환하여 설정
         Long timestampLong = (Long) notification.get("timestamp");
+        Date date = new Date(timestampLong);
         if (timestampLong != null) {
-            String timestamp = String.valueOf(timestampLong);
+            SimpleDateFormat timeFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            String timestamp = timeFormat.format(date);
             holder.notificationTimestamp.setText(timestamp);
         }
     }
