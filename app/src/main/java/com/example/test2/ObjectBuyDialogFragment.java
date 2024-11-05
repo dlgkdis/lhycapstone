@@ -1,6 +1,5 @@
 package com.example.test2;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +12,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ObjectBuyDialogFragment extends DialogFragment {
 
@@ -56,19 +56,31 @@ public class ObjectBuyDialogFragment extends DialogFragment {
         Button buyButton = view.findViewById(R.id.button2);
         buyButton.setOnClickListener(v -> {
             if (itemId != null) {
-                FirebaseHelper firebaseHelper = new FirebaseHelper();
-                firebaseHelper.addPurchasedObject(itemId, success -> {
-                    if (success) {
-                        if (purchaseCompleteListener != null) {
-                            purchaseCompleteListener.onPurchaseComplete(itemId);
+                CoinManager coinManager = new CoinManager();
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // userId 가져오기
+                coinManager.checkAndDeductCoins(userId, tacoCount, new CoinManager.OnCoinDeductListener() {
+                    @Override
+                    public void onComplete(boolean success, long remainingCoins) {
+                        if (success) {
+                            FirebaseHelper firebaseHelper = new FirebaseHelper();
+                            firebaseHelper.addPurchasedObject(itemId, purchaseSuccess -> {
+                                if (purchaseSuccess) {
+                                    if (purchaseCompleteListener != null) {
+                                        purchaseCompleteListener.onPurchaseComplete(itemId);
+                                    }
+                                    dismiss();
+                                } else {
+                                    Toast.makeText(getContext(), "구입에 실패했습니다.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            Toast.makeText(getContext(), "코인이 부족합니다. 현재 코인: " + remainingCoins, Toast.LENGTH_SHORT).show();
                         }
-                        dismiss();
-                    } else {
-                        Toast.makeText(getContext(), "구입에 실패했습니다.", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
         });
+
 
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> dismiss());

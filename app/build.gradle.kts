@@ -43,6 +43,7 @@ dependencies {
     // Firebase BOM 사용하여 모든 Firebase 의존성 버전 통일
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
 
+
     // Firebase 서비스들
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-auth")
@@ -60,6 +61,8 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
     implementation("androidx.navigation:navigation-fragment-ktx:2.5.1")
     implementation("androidx.navigation:navigation-ui-ktx:2.5.1")
+
+    implementation ("com.google.firebase:firebase-auth:21.1.0") // Firebase Authentication 라이브러리 추가
 
     // Android Test 라이브러리들
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
