@@ -25,7 +25,7 @@ import java.util.Locale;
 import java.util.Map;
 import android.app.AlertDialog;
 import android.widget.Toast;
-
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 
@@ -43,6 +43,8 @@ public class DashboardFragment extends Fragment {
     private SimpleDateFormat monthFormat = new SimpleDateFormat("yyyy년 MM월", Locale.getDefault());
     private SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy년 MM월 dd일", Locale.getDefault());
     private FirebaseHelper firebaseHelper;
+
+    private FirebaseFirestore db;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -94,7 +96,6 @@ public class DashboardFragment extends Fragment {
 
         int daysInMonth = tempCalendar.getActualMaximum(Calendar.DAY_OF_MONTH);
         int firstDayOfWeek = tempCalendar.get(Calendar.DAY_OF_WEEK) - 1;
-
         Calendar today = Calendar.getInstance();
 
         for (int i = 0; i < firstDayOfWeek; i++) {
@@ -178,8 +179,6 @@ public class DashboardFragment extends Fragment {
             calendarGrid.addView(dayView);
         }
     }
-
-    // DashboardFragment.java
 
     private void loadData(String selectedDate) {
         firebaseHelper.listenToScheduleUpdates(selectedDate, scheduleList -> {
