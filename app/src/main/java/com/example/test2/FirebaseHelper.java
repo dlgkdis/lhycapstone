@@ -434,7 +434,7 @@ public class FirebaseHelper {
     }
 
     // FirebaseHelper.java
-    public void listenToScheduleUpdates(String selectedDate, OnDataListener<List<Map<String, Object>>> listener) {
+    public void listenToScheduleUpdates(String selectedDate, OnDataListener<List<Map<String, Object>>> listener, OnErrorListener errorListener) {
         if (userId == null) {
             Log.e(TAG, "User is not logged in");
             listener.onDataFetched(new ArrayList<>());
@@ -447,7 +447,7 @@ public class FirebaseHelper {
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
-                        addScheduleSnapshotListener(groupRef, selectedDate, listener);
+                        addScheduleSnapshotListener(groupRef, selectedDate, listener, errorListener);
                     } else {
                         db.collection("groups")
                                 .whereEqualTo("invitedUserId", userId)
@@ -455,18 +455,30 @@ public class FirebaseHelper {
                                 .addOnSuccessListener(inviteSnapshot -> {
                                     if (!inviteSnapshot.isEmpty()) {
                                         DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
-                                        addScheduleSnapshotListener(groupRef, selectedDate, listener);
+                                        addScheduleSnapshotListener(groupRef, selectedDate, listener, errorListener);
                                     } else {
                                         DocumentReference userDoc = db.collection("users").document(userId);
-                                        addScheduleSnapshotListener(userDoc, selectedDate, listener);
+                                        addScheduleSnapshotListener(userDoc, selectedDate, listener, errorListener);
                                     }
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to fetch invited group info", e);
+                                    errorListener.onError(e); // 오류 콜백 호출
                                 });
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to fetch group info", e));
+                .addOnFailureListener(e -> {
+                    Log.e(TAG, "Failed to fetch owner group info", e);
+                    errorListener.onError(e); // 오류 콜백 호출
+                });
     }
 
-    private void addScheduleSnapshotListener(DocumentReference reference, String selectedDate, OnDataListener<List<Map<String, Object>>> listener) {
+    public interface OnErrorListener {
+        void onError(Exception e);
+    }
+
+
+    private void addScheduleSnapshotListener(DocumentReference reference, String selectedDate, OnDataListener<List<Map<String, Object>>> listener, FirebaseHelper.OnErrorListener errorListener) {
         Timestamp selectedTimestamp = convertStringToTimestamp(selectedDate);
 
         reference.collection("calendarSchedules")
@@ -475,7 +487,10 @@ public class FirebaseHelper {
                 .addSnapshotListener((querySnapshot, e) -> {
                     if (e != null) {
                         Log.e(TAG, "Listen failed.", e);
-                        listener.onDataFetched(null);
+                        if (errorListener != null) {
+                            errorListener.onError(e);
+                        }
+                        listener.onDataFetched(null); // 필요시 여기서 null을 반환하여 데이터 수신 실패 알림
                         return;
                     }
 
@@ -492,6 +507,7 @@ public class FirebaseHelper {
                     listener.onDataFetched(scheduleList);
                 });
     }
+
 
 
     // 선택한 날짜가 `startDay`와 `endDay` 사이에 있는 일정을 조회하는 쿼리 실행 메서드

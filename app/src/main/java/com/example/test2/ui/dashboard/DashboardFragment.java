@@ -183,7 +183,7 @@ public class DashboardFragment extends Fragment {
 
     private void loadData(String selectedDate) {
         firebaseHelper.listenToScheduleUpdates(selectedDate, scheduleList -> {
-            scheduleBox.removeAllViews();
+            scheduleBox.removeAllViews(); // 기존 일정 목록을 제거합니다.
 
             if (scheduleList != null && !scheduleList.isEmpty()) {
                 for (Map<String, Object> scheduleData : scheduleList) {
@@ -196,10 +196,13 @@ public class DashboardFragment extends Fragment {
                     titleTextView.setPadding(16, 16, 16, 16);
                     titleTextView.setTextColor(Color.BLACK);
                     titleTextView.setBackgroundResource(R.drawable.schedule_background);
+
+                    // 폰트 적용
                     if (nanumFont != null) {
                         titleTextView.setTypeface(nanumFont);
                     }
 
+                    // LayoutParams를 통해 마진 추가
                     LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
                             LinearLayout.LayoutParams.MATCH_PARENT,
                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -207,16 +210,28 @@ public class DashboardFragment extends Fragment {
                     layoutParams.setMargins(0, 8, 0, 8);
                     titleTextView.setLayoutParams(layoutParams);
 
+                    // 클릭 시 세부 정보 팝업 창을 띄움
                     titleTextView.setOnClickListener(v -> showDetailDialog(scheduleData));
 
-                    scheduleBox.addView(titleTextView);
+                    scheduleBox.addView(titleTextView); // `scheduleBox`에 제목 추가
                 }
-                scheduleBox.setVisibility(View.VISIBLE);
+                scheduleBox.setVisibility(View.VISIBLE); // 일정이 있으면 `scheduleBox`를 표시
             } else {
-                scheduleBox.setVisibility(View.GONE);
+                // 일정이 없을 때 비어 있다는 메시지를 표시하도록 설정합니다.
+                TextView emptyTextView = new TextView(getContext());
+                emptyTextView.setText("일정이 없습니다.");
+                emptyTextView.setTextSize(16);
+                emptyTextView.setGravity(Gravity.CENTER);
+                emptyTextView.setTextColor(Color.GRAY);
+                scheduleBox.addView(emptyTextView);
+                scheduleBox.setVisibility(View.VISIBLE);
             }
+        }, error -> {
+            // 오류 발생 시 사용자에게 알림
+            Toast.makeText(getContext(), "데이터를 불러오는 중 오류가 발생했습니다.", Toast.LENGTH_SHORT).show();
         });
     }
+
 
 
     private void showDetailDialog(Map<String, Object> scheduleData) {
