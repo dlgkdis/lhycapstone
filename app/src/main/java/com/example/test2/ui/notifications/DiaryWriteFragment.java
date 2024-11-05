@@ -25,12 +25,30 @@ import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.auth.FirebaseAuth;
+import java.util.HashMap;
+import java.util.Map;
+import android.widget.Toast;
+import android.util.Log;
+import com.google.firebase.firestore.DocumentReference;
+
+
 public class DiaryWriteFragment extends Fragment {
 
     private EditText diaryEditText;
-    private SharedPreferences sharedPreferences;
+    private FirebaseFirestore db; // Firestore 인스턴스 추가
     private String selectedDateKey;
     private TextView textView8; // 날짜 표시 TextView
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private String userId = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
+    private String weather;      // 날씨 정보
+    private String drawingUri;   // 그림의 URI 또는 파일 경로
+    private String content;      // 일기 내용
+    private String date;         // 일기 작성 날짜
+
+
 
     @Nullable
     @Override
@@ -38,7 +56,7 @@ public class DiaryWriteFragment extends Fragment {
         View root = inflater.inflate(R.layout.drawing_diary, container, false);
 
         // SharedPreferences 초기화
-        sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
+        db = FirebaseFirestore.getInstance();
 
         // 인자로 전달된 selectedDateKey 받기
         if (getArguments() != null) {
@@ -56,18 +74,11 @@ public class DiaryWriteFragment extends Fragment {
 
         // 등록 버튼 클릭 리스너 설정
         Button registerButton = root.findViewById(R.id.registerButton);
-        registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                saveDiaryContent();
-
-                // DiarySubmitDialogFragment 팝업 표시
-                DiaryEndDialogFragment dialog = new DiaryEndDialogFragment();
-                dialog.show(getParentFragmentManager(), "DiaryEndDialogFragment");
-
-                // 작성 후 이전 화면으로 돌아가기
-                Navigation.findNavController(v).navigate(R.id.action_diaryWriteFragment_to_NotificationsFragment);
-            }
+        registerButton.setOnClickListener(v -> {
+            saveDiaryContentToFirestore(weather,);
+            DiaryEndDialogFragment dialog = new DiaryEndDialogFragment();
+            dialog.show(getParentFragmentManager(), "DiaryEndDialogFragment");
+            Navigation.findNavController(v).navigate(R.id.action_diaryWriteFragment_to_NotificationsFragment);
         });
 
         // 뒤로가기 버튼 설정
@@ -86,9 +97,9 @@ public class DiaryWriteFragment extends Fragment {
         });
 
         // 버튼 및 빨간색 동그라미 설정
-        ImageButton button1 = root.findViewById(R.id.imageButton3);
-        ImageButton button2 = root.findViewById(R.id.imageButton);
-        ImageButton button3 = root.findViewById(R.id.imageButton2);
+        ImageButton button1 = root.findViewById(R.id.imageButton3); //rain
+        ImageButton button2 = root.findViewById(R.id.imageButton);  //cloud
+        ImageButton button3 = root.findViewById(R.id.imageButton2);  //sunny
 
         View redDot1 = root.findViewById(R.id.redDot3);
         View redDot2 = root.findViewById(R.id.redDot);
@@ -98,48 +109,90 @@ public class DiaryWriteFragment extends Fragment {
             redDot1.setVisibility(View.VISIBLE);
             redDot2.setVisibility(View.INVISIBLE);
             redDot3.setVisibility(View.INVISIBLE);
+            weather = "rain"; // weather 변수 설정
         });
 
         button2.setOnClickListener(v -> {
             redDot1.setVisibility(View.INVISIBLE);
             redDot2.setVisibility(View.VISIBLE);
             redDot3.setVisibility(View.INVISIBLE);
+            weather = "cloud"; // weather 변수 설정
         });
 
         button3.setOnClickListener(v -> {
             redDot1.setVisibility(View.INVISIBLE);
             redDot2.setVisibility(View.INVISIBLE);
             redDot3.setVisibility(View.VISIBLE);
+            weather = "sunny"; // weather 변수 설정
         });
 
         return root;
     }
 
-    private void saveDiaryContent() {
-        String diaryContent = diaryEditText.getText().toString();
-        Set<String> diaryEntries = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
-        diaryEntries.add(diaryContent);
-        sharedPreferences.edit().putStringSet(selectedDateKey, diaryEntries).apply();
+    private void saveDiaryContentToFirestore(String weather, String drawingUri, String content, String date) {
+        if (userId == null) {
+            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(groupQuerySnapshot -> {
+                    if (!groupQuerySnapshot.isEmpty()) {
+                        // 사용자 ID가 그룹의 소유자인 경우 그룹에 저장
+                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
+                        saveDiaryInCollection(groupRef.collection("diaries"), weather, drawingUri, content, date);
+                    } else {
+                        // 그룹 소유자가 아닌 경우 초대된 사용자로 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteQuerySnapshot -> {
+                                    if (!inviteQuerySnapshot.isEmpty()) {
+                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
+                                        saveDiaryInCollection(invitedGroupRef.collection("diaries"), weather, drawingUri, content, date);
+                                    } else {
+                                        // 그룹에 없으므로 사용자의 diaries 컬렉션에 저장
+                                        DocumentReference userRef = db.collection("users").document(userId);
+                                        saveDiaryInCollection(userRef.collection("diaries"), weather, drawingUri, content, date);
+                                    }
+                                })
+                                .addOnFailureListener(e -> Log.e("DiaryWriteFragment", "Error checking invited groups", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("DiaryWriteFragment", "Error checking group ownership", e));
+    }
+
+    private void saveDiaryInCollection(CollectionReference diariesRef, String weather, String drawingUri, String content, String date) {
+        Map<String, Object> diaryData = new HashMap<>();
+        diaryData.put("weather", weather);
+        diaryData.put("drawing", drawingUri);
+        diaryData.put("content", content);
+        diaryData.put("date", date);
+
+        diariesRef.add(diaryData)
+                .addOnSuccessListener(documentReference ->
+                        Toast.makeText(getContext(), "Diary saved successfully", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e ->
+                        Toast.makeText(getContext(), "Failed to save diary", Toast.LENGTH_SHORT).show());
     }
 
     // 오늘 날짜를 기본으로 사용하는 메서드
     private String getTodayDateKey() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
-        return "diary_content_" + dateFormat.format(calendar.getTime());
+        return dateFormat.format(calendar.getTime());
     }
 
-    // 선택된 날짜를 textView8에 표시하는 메서드
     private void updateDateTextView() {
         SimpleDateFormat displayFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
         Calendar calendar = Calendar.getInstance();
         try {
-            // 날짜 키에서 날짜를 파싱하여 표시
-            calendar.setTime(new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(selectedDateKey.replace("diary_content_", "")));
+            calendar.setTime(new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).parse(selectedDateKey));
         } catch (Exception e) {
-            calendar = Calendar.getInstance();  // 파싱 실패 시 오늘 날짜 사용
+            calendar = Calendar.getInstance();
         }
-        String displayDate = "<" + displayFormat.format(calendar.getTime()) + ">";
-        textView8.setText(displayDate);
+        textView8.setText("<" + displayFormat.format(calendar.getTime()) + ">");
     }
 }

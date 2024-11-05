@@ -57,6 +57,11 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
         themeViewModel.initTheme(savedTheme);
         themeViewModel.getSelectedTheme().observe(getViewLifecycleOwner(), this::updateBackground);
 
+        // 버튼 클릭 리스너 설정
+        binding.btnProfile.setOnClickListener(v -> startActivity(new Intent(getActivity(), Person.class)));
+        binding.btnReward.setOnClickListener(v -> startActivity(new Intent(getActivity(), Reward.class)));
+        binding.btnBell.setOnClickListener(v -> startActivity(new Intent(getActivity(), Bell.class)));
+
         binding.btnStore.setOnClickListener(v -> {
             Intent intent = new Intent(getActivity(), Store.class);
             intent.putExtra("isShop1Arranged", isShop1Arranged); // 현재 배치 상태 전달
