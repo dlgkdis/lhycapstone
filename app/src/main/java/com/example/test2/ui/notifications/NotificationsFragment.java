@@ -48,6 +48,8 @@ public class NotificationsFragment extends Fragment {
         sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
         diaryContentContainer = binding.diaryContentContainer;
 
+        binding.button14.setVisibility(View.GONE);
+
         binding.button14.setOnClickListener(v -> {
             saveSelectedDateToPreferences();
             String selectedDateKey = getSelectedDateKey(selectedDay);
@@ -127,11 +129,11 @@ public class NotificationsFragment extends Fragment {
             dayView.setText(String.valueOf(day));
             dayView.setGravity(Gravity.CENTER);
             dayView.setTextSize(30);
-            dayView.setPadding(8, 8, 8, 8);
+            dayView.setPadding(0, 32, 0, 32);
             dayView.setTypeface(customFont);
             dayView.setTextColor(Color.BLACK);
 
-            dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
+            dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay, firstDayOfWeek));
 
             // 날짜에 따라 텍스트 색상 설정
             String dateKey = getSelectedDateKey(currentDay);
@@ -164,11 +166,38 @@ public class NotificationsFragment extends Fragment {
         return diarySet != null && !diarySet.isEmpty();
     }
 
-    private void onDaySelected(TextView dayView, int day) {
-        if (selectedDayView != null) selectedDayView.setTextColor(Color.BLACK);
-        dayView.setTextColor(Color.RED);
+    private void onDaySelected(TextView dayView, int day, int firstDayOfWeek) {
+        // 이전에 선택된 날짜를 기본 상태로 되돌림
+        if (selectedDayView != null) {
+            String previousDateKey = getSelectedDateKey(selectedDay);
+            boolean diaryWritten = isDiaryWritten(previousDateKey);
+
+            // 이전 선택된 날짜의 요일 계산 및 색상 복원
+            int previousDayOfWeek = (firstDayOfWeek + selectedDay - 1) % 7;
+
+            selectedDayView.setBackgroundResource(0); // 배경 초기화
+
+            // 일기가 있는 날짜는 초록색, 그렇지 않으면 요일에 따른 색상 복원
+            if (diaryWritten) {
+                selectedDayView.setTextColor(Color.parseColor("#60A637"));
+            } else {
+                if (previousDayOfWeek == 0) {
+                    selectedDayView.setTextColor(Color.RED);
+                } else if (previousDayOfWeek == 6) {
+                    selectedDayView.setTextColor(Color.BLUE);
+                } else {
+                    selectedDayView.setTextColor(Color.BLACK);
+                }
+            }
+        }
+
+        // 현재 선택된 날짜에 black_circle 배경 적용 및 텍스트 색상 변경
+        dayView.setBackgroundResource(R.drawable.black_circle);
+        dayView.setTextColor(Color.WHITE);
         selectedDayView = dayView;
         selectedDay = day;
+
+        binding.button14.setVisibility(View.VISIBLE);
 
         String selectedDateKey = getSelectedDateKey(selectedDay);
         Set<String> diaryEntriesSet = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
@@ -176,6 +205,7 @@ public class NotificationsFragment extends Fragment {
 
         displayDiaryEntries(diaryEntries);
     }
+
 
     private void displayDiaryEntries(List<String> diaryEntries) {
         if (diaryEntries != null && !diaryEntries.isEmpty()) {

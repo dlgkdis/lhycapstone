@@ -21,6 +21,7 @@
             android:textColor="@color/black"
             android:textSize="20dp"
             android:textStyle="bold"
+            android:visibility="gone"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="52dp"
@@ -31,9 +32,9 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/button14"
             tools:layout_editor_absoluteX="0dp"
-            android:layout_marginTop="30dp">
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="92dp">
 
             <!-- 월 텍스트 및 버튼 -->
             <TextView
@@ -47,13 +48,15 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="16dp" />
+                android:layout_marginTop="8dp" />
 
             <Button
                 android:id="@+id/prevMonthButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="&lt;"
+                android:textColor="@color/black"
+                android:textSize="24dp"
                 android:background="@android:color/transparent"
                 app:layout_constraintEnd_toStartOf="@id/monthText"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -63,6 +66,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="&gt;"
+                android:textColor="@color/black"
+                android:textSize="24dp"
                 android:background="@android:color/transparent"
                 app:layout_constraintStart_toEndOf="@id/monthText"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -155,37 +160,37 @@
                 android:columnCount="7"
                 android:padding="8dp"
                 app:layout_constraintTop_toBottomOf="@id/weekDays"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="8dp" />
 
             <TextView
                 android:id="@+id/diaryContentBox"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-            android:background="@drawable/box_background"
-            android:padding="16dp"
-            android:text="작성된 일기가 여기에 표시됩니다."
-            android:textSize="25sp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:gravity="center_vertical|start"
-            android:fontFamily="@font/nanumfont"
-            tools:text="여기에 일기가 표시됩니다."
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/calendarGrid"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+                android:background="@drawable/box_background"
+                android:padding="16dp"
+                android:text="작성된 일기가 여기에 표시됩니다."
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:gravity="center_vertical|start"
+                android:fontFamily="@font/nanumfont"
+                tools:text="여기에 일기가 표시됩니다."
+                android:layout_marginTop="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/calendarGrid"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <LinearLayout
                 android:id="@+id/diaryContentContainer"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
-            android:background="@drawable/box_background"
-            android:padding="16dp"
-            android:orientation="vertical"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toBottomOf="@id/diaryContentBox"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+                android:background="@drawable/box_background"
+                android:padding="16dp"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/diaryContentBox"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

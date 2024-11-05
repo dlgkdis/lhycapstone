@@ -601,6 +601,4 @@ public class FirebaseHelper {
                 });
     }
 
-
-
 }
