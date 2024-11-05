@@ -18,6 +18,7 @@ public class Store extends AppCompatActivity implements ObjectBuyDialogFragment.
     private FirebaseHelper firebaseHelper;
     private List<String> purchasedObjects;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
