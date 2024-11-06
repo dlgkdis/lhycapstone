@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.util.Log;
+import com.example.test2.ArrangeManager;
+import androidx.fragment.app.Fragment;
+import android.view.View;
+import android.os.Bundle;
 
 import com.example.test2.R;
 import com.example.test2.Store;
@@ -32,9 +36,11 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     private static final String PREFS_NAME = "theme_prefs";
     private static final String KEY_SELECTED_THEME = "selected_theme";
     private FirebaseHelper firebaseHelper;
+    private ArrangeManager arrangeManager;
+    private boolean isShop1Arranged = false;
 
-    // 플래그 변수: 오브제가 배치되었는지 여부를 확인
-    public boolean isShop1Arranged = false;
+
+
 
     @Nullable
     @Override
