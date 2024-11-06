@@ -1,61 +1,70 @@
+// ArrangeManager.java
 package com.example.test2;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ArrangeManager {
-
     private final FirebaseFirestore db;
-    private final Context context;
-    private final String userId;
 
     public ArrangeManager(Context context) {
-        this.context = context;
-        this.db = FirebaseFirestore.getInstance();
-        this.userId = FirebaseAuth.getInstance().getCurrentUser() != null
-                ? FirebaseAuth.getInstance().getCurrentUser().getUid()
-                : null;
+        db = FirebaseFirestore.getInstance();
     }
 
-    // 오브제 배치 상태를 Firestore에 업데이트하는 메서드
+    // 오브제 배치 상태 업데이트 메서드
     public void updateArrangementStatus(String itemId, boolean isArranged) {
+        String userId = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
         if (userId == null) {
-            Log.e("ArrangeManager", "User is not logged in. Cannot update arrangement status.");
+            Log.e("ArrangeManager", "User not logged in.");
             return;
         }
 
-        // 그룹이 있는지 확인
-        db.collection("groups").whereEqualTo("userId", userId).get().addOnSuccessListener(querySnapshot -> {
-            if (!querySnapshot.isEmpty()) {
-                // 그룹이 있는 경우 해당 그룹 문서에 업데이트
-                String groupId = querySnapshot.getDocuments().get(0).getId();
-                updateArrangeObjectsInDocument("groups", groupId, itemId, isArranged);
-            } else {
-                // 그룹이 없으면 users 컬렉션에 업데이트
-                updateArrangeObjectsInDocument("users", userId, itemId, isArranged);
-            }
-        }).addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to check group existence", e));
+        // groups에서 ownerUserId로 확인
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null && !task.getResult().isEmpty()) {
+                        DocumentReference groupRef = task.getResult().getDocuments().get(0).getReference();
+                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                    } else {
+                        // 초대된 사용자로서의 그룹 확인
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnCompleteListener(inviteTask -> {
+                                    if (inviteTask.isSuccessful() && inviteTask.getResult() != null && !inviteTask.getResult().isEmpty()) {
+                                        DocumentReference groupRef = inviteTask.getResult().getDocuments().get(0).getReference();
+                                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                                    } else {
+                                        // 그룹이 없으면 users 컬렉션에 업데이트
+                                        DocumentReference userRef = db.collection("users").document(userId);
+                                        updateArrangeObjectsField(userRef, itemId, isArranged);
+                                    }
+                                });
+                    }
+                });
     }
 
-    private void updateArrangeObjectsInDocument(String collection, String documentId, String itemId, boolean isArranged) {
-        Map<String, Object> updates = new HashMap<>();
-
+    // arrangeObjects 필드를 업데이트하는 메서드
+    private void updateArrangeObjectsField(DocumentReference ref, String itemId, boolean isArranged) {
+        Map<String, Object> updateData = new HashMap<>();
         if (isArranged) {
-            updates.put("arrangeObjects", FieldValue.arrayUnion(itemId));
+            updateData.put("arrangeObjects", FieldValue.arrayUnion(itemId));
         } else {
-            updates.put("arrangeObjects", FieldValue.arrayRemove(itemId));
+            updateData.put("arrangeObjects", FieldValue.arrayRemove(itemId));
         }
 
-        db.collection(collection).document(documentId)
-                .update(updates)
-                .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Successfully updated arrangement status for item: " + itemId))
+        ref.update(updateData)
+                .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Arrangement status updated successfully for " + itemId))
                 .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to update arrangement status", e));
     }
 }
