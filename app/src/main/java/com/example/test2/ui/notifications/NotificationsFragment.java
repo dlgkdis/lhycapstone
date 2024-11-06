@@ -24,10 +24,13 @@ import com.example.test2.databinding.FragmentDiaryBinding;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Set;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashSet;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import android.util.Log;
+
 public class NotificationsFragment extends Fragment {
 
     private FragmentDiaryBinding binding;
@@ -38,12 +41,20 @@ public class NotificationsFragment extends Fragment {
     private TextView selectedDayView;
     private int selectedDay;
     private LinearLayout diaryContentContainer;
+    private FirebaseFirestore db;
+    private FirebaseAuth mAuth;
+    private String userId;
+    private Typeface customFont;
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentDiaryBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         binding.diaryContentContainer.setVisibility(View.GONE);
+
+        db = FirebaseFirestore.getInstance();
+        mAuth = FirebaseAuth.getInstance();
+        userId = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
 
         sharedPreferences = requireContext().getSharedPreferences("DiaryPrefs", Context.MODE_PRIVATE);
         diaryContentContainer = binding.diaryContentContainer;
@@ -133,24 +144,11 @@ public class NotificationsFragment extends Fragment {
             dayView.setTypeface(customFont);
             dayView.setTextColor(Color.BLACK);
 
-            dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay, firstDayOfWeek));
+            dayView.setOnClickListener(v -> onDaySelected(dayView, currentDay));
 
             // 날짜에 따라 텍스트 색상 설정
             String dateKey = getSelectedDateKey(currentDay);
-            if (isDiaryWritten(dateKey)) {
-                // 일기 작성된 날짜는 초록색
-                dayView.setTextColor(Color.parseColor("#60A637"));
-            } else {
-                // 일기 없는 날짜는 기본 검은색
-                int dayOfWeek = (firstDayOfWeek + day - 1) % 7;
-                if (dayOfWeek == 0) {
-                    dayView.setTextColor(Color.RED);
-                } else if (dayOfWeek == 6) {
-                    dayView.setTextColor(Color.BLUE);
-                } else {
-                    dayView.setTextColor(Color.BLACK);
-                }
-            }
+            fetchDiaryPreview(dateKey, dayView); // 다이어리 작성 여부 확인 후 색상 설정
 
             calendarGrid.addView(dayView, new GridLayout.LayoutParams(
                     GridLayout.spec(GridLayout.UNDEFINED, 1f),
@@ -160,38 +158,11 @@ public class NotificationsFragment extends Fragment {
         }
     }
 
-    private boolean isDiaryWritten(String selectedDateKey) {
-        // 선택된 날짜의 일기 내용을 가져옵니다.
-        Set<String> diarySet = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
-        return diarySet != null && !diarySet.isEmpty();
-    }
-
-    private void onDaySelected(TextView dayView, int day, int firstDayOfWeek) {
-        // 이전에 선택된 날짜를 기본 상태로 되돌림
+    private void onDaySelected(TextView dayView, int day) {
         if (selectedDayView != null) {
-            String previousDateKey = getSelectedDateKey(selectedDay);
-            boolean diaryWritten = isDiaryWritten(previousDateKey);
-
-            // 이전 선택된 날짜의 요일 계산 및 색상 복원
-            int previousDayOfWeek = (firstDayOfWeek + selectedDay - 1) % 7;
-
-            selectedDayView.setBackgroundResource(0); // 배경 초기화
-
-            // 일기가 있는 날짜는 초록색, 그렇지 않으면 요일에 따른 색상 복원
-            if (diaryWritten) {
-                selectedDayView.setTextColor(Color.parseColor("#60A637"));
-            } else {
-                if (previousDayOfWeek == 0) {
-                    selectedDayView.setTextColor(Color.RED);
-                } else if (previousDayOfWeek == 6) {
-                    selectedDayView.setTextColor(Color.BLUE);
-                } else {
-                    selectedDayView.setTextColor(Color.BLACK);
-                }
-            }
+            resetDayViewColor(selectedDayView);
         }
 
-        // 현재 선택된 날짜에 black_circle 배경 적용 및 텍스트 색상 변경
         dayView.setBackgroundResource(R.drawable.black_circle);
         dayView.setTextColor(Color.WHITE);
         selectedDayView = dayView;
@@ -200,48 +171,125 @@ public class NotificationsFragment extends Fragment {
         binding.button14.setVisibility(View.VISIBLE);
 
         String selectedDateKey = getSelectedDateKey(selectedDay);
-        Set<String> diaryEntriesSet = sharedPreferences.getStringSet(selectedDateKey, new HashSet<>());
-        List<String> diaryEntries = new ArrayList<>(diaryEntriesSet);
+        fetchDiaryPreview(selectedDateKey, dayView);
+    }
 
-        displayDiaryEntries(diaryEntries);
+    private void resetDayViewColor(TextView dayView) {
+
+        if (dayView.getCurrentTextColor() == Color.parseColor("#60A637")) {
+            dayView.setTextColor(Color.parseColor("#60A637"));
+        }else {
+            dayView.setTextColor(Color.BLACK);
+        }
+        dayView.setBackgroundResource(0);
+    }
+
+    private void fetchDiaryPreview(String dateKey, TextView dayView) {
+        if (userId == null) {
+            Log.e("NotificationsFragment", "User not logged in");
+            return;
+        }
+
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(groupQuerySnapshot -> {
+                    if (!groupQuerySnapshot.isEmpty()) {
+                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
+                        getDiaryPreviewFromCollection(groupRef.collection("diaries"), dateKey, dayView, true);
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteQuerySnapshot -> {
+                                    if (!inviteQuerySnapshot.isEmpty()) {
+                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
+                                        getDiaryPreviewFromCollection(invitedGroupRef.collection("diaries"), dateKey, dayView, true);
+                                    } else {
+                                        DocumentReference userRef = db.collection("users").document(userId);
+                                        getDiaryPreviewFromCollection(userRef.collection("diaries"), dateKey, dayView, true);
+                                    }
+                                })
+                                .addOnFailureListener(e -> Log.e("NotificationsFragment", "Error checking invited groups", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("NotificationsFragment", "Error checking group ownership", e));
     }
 
 
-    private void displayDiaryEntries(List<String> diaryEntries) {
-        if (diaryEntries != null && !diaryEntries.isEmpty()) {
-            binding.diaryContentBox.setText(diaryEntries.get(diaryEntries.size() - 1));
-        } else {
-            binding.diaryContentBox.setText("작성된 일기가 없습니다."); // 일기가 없는 경우 표시할 텍스트
-        }
+    private void getDiaryPreviewFromCollection(CollectionReference diariesRef, String dateKey, TextView dayView, boolean setButtonAction) {
+        diariesRef.whereEqualTo("date", dateKey)
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    if (!querySnapshot.isEmpty()) {
+                        DocumentSnapshot diaryDoc = querySnapshot.getDocuments().get(0);
+                        String content = (String) diaryDoc.get("content");
+                        String weather = (String) diaryDoc.get("weather");
 
-        // 일기 두 개 이상일 경우만 diaryContentContainer 보이도록 설정
-        diaryContentContainer.removeAllViews();
-        if (diaryEntries.size() > 1) {
-            for (int i = 0; i < diaryEntries.size() - 1; i++) {
-                TextView diaryView = new TextView(getContext());
-                diaryView.setText(diaryEntries.get(i));
-                diaryView.setBackgroundResource(R.drawable.box_background);
-                diaryView.setPadding(16, 16, 16, 16);
-                diaryView.setTextSize(25);
-                diaryView.setTextColor(Color.BLACK);
-                diaryView.setTypeface(ResourcesCompat.getFont(getContext(), R.font.nanumfont), Typeface.BOLD);
-                diaryView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+                        if (content != null && !content.isEmpty()) {
+                            String preview = content.split("\n")[0];
+                            preview = preview.length() > 50 ? preview.substring(0, 50) + "..." : preview;
+                            String previewText = "날씨: " + formatWeather(weather) + "\n" + preview;
 
-                diaryContentContainer.addView(diaryView);
-            }
-            diaryContentContainer.setVisibility(View.VISIBLE);
-        } else {
-            diaryContentContainer.setVisibility(View.GONE);
-        }
+                            // binding이 null이 아닌지 확인 후 diaryContentBox에 접근
+                            if (binding != null) {
+                                binding.diaryContentBox.setText(previewText);
+                            } else {
+                                Log.e("NotificationsFragment", "Binding is null, cannot set diary content preview.");
+                            }
+
+                            dayView.setTextColor(Color.parseColor("#60A637"));
+                            dayView.setTypeface(dayView.getTypeface(), Typeface.BOLD);
+
+                            // 버튼을 '수정'으로 변경하고 `DiaryFixFragment`로 이동하도록 설정
+                            if (setButtonAction && binding != null) {
+                                binding.button14.setText("수정");
+                                binding.button14.setOnClickListener(v -> {
+                                    Bundle bundle = new Bundle();
+                                    bundle.putString("selectedDateKey", dateKey);
+                                    Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryFixFragment, bundle);
+                                });
+                            }
+                        }
+                    } else {
+                        if (binding != null) {
+                            binding.diaryContentBox.setText("작성된 일기가 없습니다.");
+                            binding.button14.setText("일기작성");
+                            binding.button14.setOnClickListener(v -> {
+                                Bundle bundle = new Bundle();
+                                bundle.putString("selectedDateKey", dateKey);
+                                Navigation.findNavController(v).navigate(R.id.action_notificationsFragment_to_diaryWriteFragment, bundle);
+                            });
+                        } else {
+                            Log.e("NotificationsFragment", "Binding is null, cannot set button action or diary content preview.");
+                        }
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("NotificationsFragment", "Failed to fetch diary preview", e));
     }
 
+
+
+    // 날씨 정보 형식을 한글로 변환하는 메서드
+    private String formatWeather(String weather) {
+        switch (weather) {
+            case "sunny":
+                return "맑음";
+            case "cloud":
+                return "흐림";
+            case "rain":
+                return "비";
+            default:
+                return "알 수 없음"; // 예기치 않은 값 처리
+        }
+    }
 
 
     private String getSelectedDateKey(int day) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMdd", Locale.getDefault());
         Calendar selectedCalendar = (Calendar) calendar.clone();
         selectedCalendar.set(Calendar.DAY_OF_MONTH, day);
-        return "diary_content_" + dateFormat.format(selectedCalendar.getTime());
+        return dateFormat.format(selectedCalendar.getTime());
     }
 
     private void saveSelectedDateToPreferences() {

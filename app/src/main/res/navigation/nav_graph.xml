@@ -57,6 +57,16 @@
         app:destination="@id/diaryWriteFragment" />
 
     <fragment
+        android:id="@+id/diaryFixFragment"
+        android:name="com.example.test2.ui.notifications.DiaryFixFragment"
+        android:label="Diary Fix"
+        tools:layout="@layout/fix_diary" /> <!-- XML 레이아웃 파일의 이름 -->
+
+    <action
+        android:id="@+id/action_notificationsFragment_to_diaryFixFragment"
+        app:destination="@id/diaryFixFragment" />
+
+    <fragment
         android:id="@+id/notificationsFragment"
         android:name="com.example.test2.ui.notifications.NotificationsFragment"
         android:label="NotificationsFragment"

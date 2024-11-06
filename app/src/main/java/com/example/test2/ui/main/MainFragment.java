@@ -1,4 +1,3 @@
-// MainFragment.java
 package com.example.test2.ui.main;
 
 import android.content.Context;
@@ -8,10 +7,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import android.util.Log;
 
 import com.example.test2.R;
 import com.example.test2.Store;
@@ -58,6 +59,12 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
         themeViewModel.getSelectedTheme().observe(getViewLifecycleOwner(), this::updateBackground);
 
         // 버튼 클릭 리스너 설정
+        if (binding != null) {
+            setupButtonListeners();
+        }
+    }
+
+    private void setupButtonListeners() {
         binding.btnProfile.setOnClickListener(v -> startActivity(new Intent(getActivity(), Person.class)));
         binding.btnReward.setOnClickListener(v -> startActivity(new Intent(getActivity(), Reward.class)));
         binding.btnBell.setOnClickListener(v -> startActivity(new Intent(getActivity(), Bell.class)));
@@ -79,23 +86,36 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     }
 
     private void loadCoinData() {
+        if (binding == null) return;
+
         firebaseHelper.getCoinData(coinStatus -> {
-            if (coinStatus != null) {
+            if (coinStatus != null && binding != null) { // 비동기 작업에서 binding이 null이 아닌지 확인
                 binding.coinTextView.setText(String.valueOf(coinStatus));
+            } else {
+                Log.e("MainFragment", "Binding is null or coinStatus is null when setting coinTextView");
             }
         });
     }
 
     private void loadPurchasedObjects() {
+        if (binding == null) return;
+
         firebaseHelper.getPurchasedObjects(purchasedObjects -> {
-            if (purchasedObjects != null && purchasedObjects.contains("shop1")) {
-                binding.imgShop1.setVisibility(View.VISIBLE);
-                isShop1Arranged = true;
+            if (purchasedObjects != null && binding != null) {
+                if (purchasedObjects.contains("shop1")) {
+                    binding.imgShop1.setVisibility(View.VISIBLE);
+                    isShop1Arranged = true;
+                }
+            } else {
+                Log.e("MainFragment", "Binding is null or purchasedObjects is null when setting imgShop1 visibility");
             }
         });
     }
 
+
     private void updateBackground(String theme) {
+        if (binding == null) return;
+
         switch (theme) {
             case "tema_home":
                 binding.imgBackground.setImageResource(R.drawable.myroom_basic);
@@ -135,7 +155,9 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
 
     private void openDeleteDialog() {
         ObjectDeleteDialogFragment deleteDialog = ObjectDeleteDialogFragment.newInstance(() -> {
-            binding.imgShop1.setVisibility(View.GONE);
+            if (binding != null) {
+                binding.imgShop1.setVisibility(View.GONE);
+            }
             isShop1Arranged = false;
         });
         deleteDialog.show(getParentFragmentManager(), "ObjectDeleteDialogFragment");
@@ -143,7 +165,9 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
 
     @Override
     public void onObjectArranged() {
-        binding.imgShop1.setVisibility(View.VISIBLE);
+        if (binding != null) {
+            binding.imgShop1.setVisibility(View.VISIBLE);
+        }
         isShop1Arranged = true;
     }
 

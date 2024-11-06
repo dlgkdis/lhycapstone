@@ -38,18 +38,6 @@
             android:layout_height="match_parent"
             android:background="@drawable/diary_drawing" />
 
-        <TextView
-            android:id="@+id/drawingHintText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="그림일기"
-            android:textSize="20sp"
-            android:textColor="#3D3D3D"
-            android:gravity="center"
-            android:fontFamily="@font/nanumfont"
-            android:layout_gravity="center"
-            android:textStyle="bold"/>
-
         <!-- ImageButton 3개 -->
         <ImageButton
             android:id="@+id/sunnyButton"
@@ -124,7 +112,7 @@
         android:background="@drawable/diary_text"
         android:fontFamily="@font/nanumfont"
         android:gravity="center"
-        android:hint="일기작성"
+        android:hint=""
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="25sp"
@@ -139,7 +127,7 @@
         android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="등록"
+        android:text="수정"
         android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/black"
@@ -148,6 +136,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:backgroundTint="#d9d9d9"
+        app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
+        android:layout_marginBottom="28dp" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="삭제"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumfont"
+        app:layout_constraintHorizontal_bias="0.17"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="#f05650"
         app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
         android:layout_marginBottom="28dp" />
 
