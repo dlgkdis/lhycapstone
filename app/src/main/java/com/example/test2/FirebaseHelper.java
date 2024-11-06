@@ -28,6 +28,7 @@ public class FirebaseHelper {
     private FirebaseAuth mAuth;
     private String userId;
 
+
     private ListenerRegistration coinListener;
     private ListenerRegistration purchasedObjectsListener;
     private ListenerRegistration purchasedThemesListener;
@@ -37,6 +38,7 @@ public class FirebaseHelper {
     public FirebaseHelper() {
         db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
+
         userId = mAuth.getCurrentUser() != null ? mAuth.getCurrentUser().getUid() : null;
     }
 
@@ -428,6 +430,8 @@ public class FirebaseHelper {
                     listener.onComplete(false);
                 });
     }
+
+
 
     // FirebaseHelper.java
     public void listenToScheduleUpdates(String selectedDate, OnDataListener<List<Map<String, Object>>> listener, OnErrorListener errorListener) {

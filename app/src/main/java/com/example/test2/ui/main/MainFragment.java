@@ -13,6 +13,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.util.Log;
+import com.example.test2.ArrangeManager;
+import androidx.fragment.app.Fragment;
+import android.view.View;
+import android.os.Bundle;
 
 import com.example.test2.R;
 import com.example.test2.Store;
@@ -44,6 +48,11 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     private boolean isShop1Arranged = false;
     private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
+    private ArrangeManager arrangeManager;
+    private boolean isShop1Arranged = false;
+
+
+
 
     @Nullable
     @Override
