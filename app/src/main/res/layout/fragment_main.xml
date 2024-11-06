@@ -75,7 +75,7 @@
             app:layout_constraintStart_toEndOf="@+id/btn_bell" />
 
         <ImageButton
-            android:id="@+id/btn_takoyaki_store"
+            android:id="@+id/coinButton"
             android:layout_width="117dp"
             android:layout_height="93dp"
             android:backgroundTint="@color/white"
@@ -132,9 +132,9 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             android:id="@+id/coinTextView"
-            app:layout_constraintBottom_toBottomOf="@+id/btn_takoyaki_store"
+            app:layout_constraintBottom_toBottomOf="@+id/coinButton"
             android:layout_marginBottom="20dp"
-            app:layout_constraintStart_toStartOf="@+id/btn_takoyaki_store"
+            app:layout_constraintStart_toStartOf="@+id/coinButton"
             android:layout_marginStart="93dp" />
 
         <ImageView

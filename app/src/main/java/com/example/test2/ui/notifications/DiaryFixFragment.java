@@ -381,7 +381,7 @@ public class DiaryFixFragment extends Fragment {
                     Toast.makeText(getContext(), "일기가 삭제되었습니다.", Toast.LENGTH_SHORT).show();
                     // 수정 성공 시 알림 추가
                     Map<String, Object> notificationData = new HashMap<>();
-                    notificationData.put("message", "일기가 삭제되었습니다: " + date);
+                    notificationData.put("message", "일기가 삭제되었습니다: " + selectedDateKey);
                     notificationData.put("timestamp", System.currentTimeMillis());
 
                     // 알림 데이터를 Firestore에 저장
