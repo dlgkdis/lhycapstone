@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -15,6 +16,12 @@ import com.example.test2.FirebaseHelper;
 import com.example.test2.R;
 import com.example.test2.databinding.FragmentTemaBinding;
 import com.example.test2.ui.ThemeViewModel;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class TemaFragment extends Fragment {
 
@@ -24,6 +31,8 @@ public class TemaFragment extends Fragment {
     private static final String PREFS_NAME = "theme_prefs";
     private static final String KEY_SELECTED_THEME = "selected_theme";
     private FirebaseHelper firebaseHelper;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private String userId; // 사용자의 ID를 초기화해야 합니다.
     private static final String TAG = "TemaFragment";
 
     @Nullable
@@ -36,6 +45,11 @@ public class TemaFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (binding == null) {
+            Log.e(TAG, "Binding is null");
+            return;
+        }
 
         themeViewModel = new ViewModelProvider(requireActivity()).get(ThemeViewModel.class);
         firebaseHelper = new FirebaseHelper();
@@ -75,12 +89,15 @@ public class TemaFragment extends Fragment {
     }
 
     private void setLockState() {
-        // 오브제 개수를 확인하여 자물쇠 상태 업데이트
+        if (binding == null) {
+            Log.e(TAG, "Binding is null in setLockState");
+            return;
+        }
+
         firebaseHelper.getPurchasedObjects(purchasedObjects -> {
             int purchasedObjectCount = purchasedObjects.size();
             Log.d(TAG, "현재 구매된 오브제 개수: " + purchasedObjectCount);
 
-            // 테마 잠금 해제 조건
             if (purchasedObjectCount >= 4) {
                 binding.airportLock.setVisibility(View.GONE);
                 binding.btnTemaAirport.setEnabled(true);

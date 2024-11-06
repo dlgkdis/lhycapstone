@@ -13,10 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.util.Log;
-import com.example.test2.ArrangeManager;
-import androidx.fragment.app.Fragment;
-import android.view.View;
-import android.os.Bundle;
 
 import com.example.test2.R;
 import com.example.test2.Store;
@@ -42,14 +38,13 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     private ThemeViewModel themeViewModel;
     private FirebaseHelper firebaseHelper;
     private FirebaseFirestore db;
-    private static final String PREFS_NAME = "checkin_prefs";
+    private static final String PREFS_NAME = "main_prefs";
+    private static final String PREFS_NAME_TEMA = "theme_prefs";
     private static final String KEY_CHECKIN_DATE = "last_checkin_date";
     private static final String KEY_SELECTED_THEME = "selected_theme";
     private boolean isShop1Arranged = false;
     private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
-    private ArrangeManager arrangeManager;
-    private boolean isShop1Arranged = false;
 
 
 
@@ -71,12 +66,15 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
 
         loadCoinData();
         loadPurchasedObjects();
-        setupButtonListeners();
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME_TEMA, Context.MODE_PRIVATE);
         String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, "tema_home");
         themeViewModel.initTheme(savedTheme);
         themeViewModel.getSelectedTheme().observe(getViewLifecycleOwner(), this::updateBackground);
+
+        if (binding != null) {
+            setupButtonListeners();
+        }
     }
 
     private void setupButtonListeners() {
@@ -173,6 +171,7 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     }
 
     private void updateBackground(String theme) {
+        if (binding == null) return;
         switch (theme) {
             case "tema_home":
                 binding.imgBackground.setImageResource(R.drawable.myroom_basic);
@@ -199,8 +198,10 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
                 binding.imgBed.setImageResource(R.drawable.bed_basic);
         }
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString(KEY_SELECTED_THEME, theme).apply();
+        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME_TEMA, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(KEY_SELECTED_THEME, theme);
+        editor.apply();
     }
 
     private void openArrangementDialog(int imageResource) {
