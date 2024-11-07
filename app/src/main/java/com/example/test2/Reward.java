@@ -3,7 +3,10 @@ package com.example.test2;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
@@ -14,8 +17,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
-import android.view.LayoutInflater;
-import android.view.ViewGroup;
 
 import java.util.List;
 
@@ -67,7 +68,11 @@ public class Reward extends AppCompatActivity {
                     final int rewardStep = i;
                     ImageButton rewardButton = findViewById(getRewardButtonId(rewardStep));
 
-                    // 오늘 보상을 이미 받았거나 현재 보상 단계가 아닌 경우 버튼을 비활성화
+                    boolean isClaimed = rewardStep < currentRewardStep;
+                    if (isClaimed) {
+                        markRewardAsClaimed(rewardStep);  // Show overlay on previously claimed rewards
+                    }
+
                     rewardButton.setEnabled(!alreadyClaimedToday && rewardStep == currentRewardStep);
 
                     if (rewardStep == currentRewardStep) {
@@ -76,7 +81,7 @@ public class Reward extends AppCompatActivity {
                                 claimReward(rewardStep, rewardButton);
                             } else {
                                 Toast.makeText(this, "모든 보상을 수령하였습니다.", Toast.LENGTH_SHORT).show();
-                                rewardButton.setEnabled(false);  // MAX_REWARD_STEP에 도달하면 비활성화
+                                rewardButton.setEnabled(false);
                             }
                         });
                     } else {
@@ -123,7 +128,7 @@ public class Reward extends AppCompatActivity {
                 return;  // MAX_REWARD_STEP에 도달 시 종료
         }
 
-        markRewardAsClaimed(rewardButton);
+        markRewardAsClaimed(rewardStep);
         updateRewardStep(rewardStep);
         updateRewardDate();
     }
@@ -207,13 +212,28 @@ public class Reward extends AppCompatActivity {
     }
 
 
-    private void markRewardAsClaimed(ImageButton rewardButton) {
-        rewardButton.setEnabled(false);
-        View overlay = LayoutInflater.from(this).inflate(R.layout.claimed_overlay, null);
-        ViewGroup parent = (ViewGroup) rewardButton.getParent();
-        int index = parent.indexOfChild(rewardButton);
-        parent.addView(overlay, index + 1);
+    private void markRewardAsClaimed(int rewardStep) {
+        // 보상 단계에 따라 해당하는 success 이미지의 ID를 동적으로 가져옵니다.
+        String successImageId = "reward" + rewardStep + "_success";
+        int resId = getResources().getIdentifier(successImageId, "id", getPackageName());
+
+        // 성공 이미지의 visibility를 VISIBLE로 설정
+        ImageView successImageView = findViewById(resId);
+        if (successImageView != null) {
+            successImageView.setVisibility(View.VISIBLE); // 해당 이미지 표시
+        } else {
+            Log.e("Reward", "Success image not found for reward step: " + rewardStep);
+        }
+
+        // 해당 보상 버튼을 비활성화
+        ImageButton rewardButton = findViewById(getRewardButtonId(rewardStep));
+        if (rewardButton != null) {
+            rewardButton.setEnabled(false);
+        }
     }
+
+
+
 
     private int getRewardButtonId(int rewardStep) {
         switch (rewardStep) {

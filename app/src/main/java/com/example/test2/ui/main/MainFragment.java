@@ -45,22 +45,6 @@ public class MainFragment extends Fragment {
     private static final String PREFS_NAME_TEMA = "theme_prefs";
     private static final String KEY_CHECKIN_DATE = "last_checkin_date";
     private static final String KEY_SELECTED_THEME = "selected_theme";
-    private boolean isShop1Arranged = false;
-    private boolean isShop2Arranged = false;
-    private boolean isShop3Arranged = false;
-    private boolean isShop4Arranged = false;
-    private boolean isShop5Arranged = false;
-    private boolean isShop6Arranged = false;
-    private boolean isShop7Arranged = false;
-    private boolean isShop8Arranged = false;
-    private boolean isShop9Arranged = false;
-    private boolean isShop10Arranged = false;
-    private boolean isShop11Arranged = false;
-    private boolean isShop12Arranged = false;
-    private boolean isShop13Arranged = false;
-    private boolean isShop14Arranged = false;
-    private boolean isShop15Arranged = false;
-    private boolean isShop16Arranged = false;
 
     private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
@@ -115,78 +99,96 @@ public class MainFragment extends Fragment {
     }
 
     private void loadArrangedObjects() {
-        // ArrangeManager에서 arrangeObjects 필드 로드 후 배치된 오브제만 보이도록 설정
-        arrangeManager.loadArrangementStatus(arrangedItems -> {
-            if (binding != null) {
-                for (String itemId : arrangedItems) {
-                    switch (itemId) {
-                        case "shop1":
-                            binding.imgShop1.setVisibility(View.VISIBLE);
-                            isShop1Arranged = true;
-                            break;
-                        case "shop2":
-                            binding.imgShop2.setVisibility(View.VISIBLE);
-                            isShop2Arranged = true;
-                            break;
-                        case "shop3":
-                            binding.imgShop3.setVisibility(View.VISIBLE);
-                            isShop3Arranged = true;
-                            break;
-                        case "shop4":
-                            binding.imgShop4.setVisibility(View.VISIBLE);
-                            isShop4Arranged = true;
-                            break;
-                        case "shop5":
-                            binding.imgShop5.setVisibility(View.VISIBLE);
-                            isShop5Arranged = true;
-                            break;
-                        case "shop6":
-                            binding.imgShop6.setVisibility(View.VISIBLE);
-                            isShop6Arranged = true;
-                            break;
-                        case "shop7":
-                            binding.imgShop7.setVisibility(View.VISIBLE);
-                            isShop7Arranged = true;
-                            break;
-                        case "shop8":
-                            binding.imgShop8.setVisibility(View.VISIBLE);
-                            isShop8Arranged = true;
-                            break;
-                        case "shop9":
-                            binding.imgShop9.setVisibility(View.VISIBLE);
-                            isShop9Arranged = true;
-                            break;
-                        case "shop10":
-                            binding.imgShop10.setVisibility(View.VISIBLE);
-                            isShop10Arranged = true;
-                            break;
-                        case "shop11":
-                            binding.imgShop11.setVisibility(View.VISIBLE);
-                            isShop11Arranged = true;
-                            break;
-                        case "shop12":
-                            binding.imgShop12.setVisibility(View.VISIBLE);
-                            isShop12Arranged = true;
-                            break;
-                        case "shop13":
-                            binding.imgShop13.setVisibility(View.VISIBLE);
-                            isShop13Arranged = true;
-                            break;
-                        case "shop14":
-                            binding.imgShop14.setVisibility(View.VISIBLE);
-                            isShop14Arranged = true;
-                            break;
-                        case "shop15":
-                            binding.imgShop15.setVisibility(View.VISIBLE);
-                            isShop15Arranged = true;
-                            break;
+        checkGroupMembership((isInGroup, reference, field) -> {
+            reference.addSnapshotListener((documentSnapshot, e) -> {
+                if (e != null) {
+                    Log.e("MainFragment", "Listen failed.", e);
+                    return;
+                }
 
+                if (documentSnapshot != null && documentSnapshot.exists()) {
+                    List<String> arrangedItems = (List<String>) documentSnapshot.get("arrangeObjects");
 
+                    if (binding != null) {
+                        // 모든 오브제를 숨기고 시작
+                        binding.imgShop1.setVisibility(View.GONE);
+                        binding.imgShop2.setVisibility(View.GONE);
+                        binding.imgShop3.setVisibility(View.GONE);
+                        binding.imgShop4.setVisibility(View.GONE);
+                        binding.imgShop5.setVisibility(View.GONE);
+                        binding.imgShop6.setVisibility(View.GONE);
+                        binding.imgShop7.setVisibility(View.GONE);
+                        binding.imgShop8.setVisibility(View.GONE);
+                        binding.imgShop9.setVisibility(View.GONE);
+                        binding.imgShop10.setVisibility(View.GONE);
+                        binding.imgShop11.setVisibility(View.GONE);
+                        binding.imgShop12.setVisibility(View.GONE);
+                        binding.imgShop13.setVisibility(View.GONE);
+                        binding.imgShop14.setVisibility(View.GONE);
+                        binding.imgShop15.setVisibility(View.GONE);
+                        binding.imgShop16.setVisibility(View.GONE);
+
+                        // `arrangeObjects` 필드에 있는 아이템만 보이도록 설정
+                        if (arrangedItems != null) {
+                            for (String itemId : arrangedItems) {
+                                switch (itemId) {
+                                    case "shop1":
+                                        binding.imgShop1.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop2":
+                                        binding.imgShop2.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop3":
+                                        binding.imgShop3.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop4":
+                                        binding.imgShop4.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop5":
+                                        binding.imgShop5.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop6":
+                                        binding.imgShop6.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop7":
+                                        binding.imgShop7.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop8":
+                                        binding.imgShop8.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop9":
+                                        binding.imgShop9.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop10":
+                                        binding.imgShop10.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop11":
+                                        binding.imgShop11.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop12":
+                                        binding.imgShop12.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop13":
+                                        binding.imgShop13.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop14":
+                                        binding.imgShop14.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop15":
+                                        binding.imgShop15.setVisibility(View.VISIBLE);
+                                        break;
+                                    case "shop16":
+                                        binding.imgShop16.setVisibility(View.VISIBLE);
+                                        break;
+                                }
+                            }
+                        }
                     }
                 }
-            }
+            });
         });
     }
+
 
     private void setupButtonListeners() {
         binding.btnProfile.setOnClickListener(v -> startActivity(new Intent(getActivity(), Person.class)));
@@ -197,27 +199,27 @@ public class MainFragment extends Fragment {
 
         binding.btnStore.setOnClickListener(v -> startActivity(new Intent(getActivity(), Store.class)));
 
-        setupShopItemClickListener("shop1", binding.imgShop1);
-        setupShopItemClickListener("shop2", binding.imgShop2);
-        setupShopItemClickListener("shop3", binding.imgShop3);
-        setupShopItemClickListener("shop4", binding.imgShop4);
-        setupShopItemClickListener("shop5", binding.imgShop5);
-        setupShopItemClickListener("shop6", binding.imgShop6);
-        setupShopItemClickListener("shop7", binding.imgShop7);
-        setupShopItemClickListener("shop8", binding.imgShop8);
-        setupShopItemClickListener("shop9", binding.imgShop9);
-        setupShopItemClickListener("shop10", binding.imgShop10);
-        setupShopItemClickListener("shop11", binding.imgShop11);
-        setupShopItemClickListener("shop12", binding.imgShop12);
-        setupShopItemClickListener("shop13", binding.imgShop13);
-        setupShopItemClickListener("shop14", binding.imgShop14);
-        setupShopItemClickListener("shop15", binding.imgShop15);
-        setupShopItemClickListener("shop16", binding.imgShop16);
+        setupShopItemClickListener("shop1", binding.imgShop1, R.drawable.shop1);
+        setupShopItemClickListener("shop2", binding.imgShop2, R.drawable.shop2);
+        setupShopItemClickListener("shop3", binding.imgShop3, R.drawable.shop3);
+        setupShopItemClickListener("shop4", binding.imgShop4, R.drawable.shop4);
+        setupShopItemClickListener("shop5", binding.imgShop5, R.drawable.shop5);
+        setupShopItemClickListener("shop6", binding.imgShop6, R.drawable.shop6);
+        setupShopItemClickListener("shop7", binding.imgShop7, R.drawable.shop7);
+        setupShopItemClickListener("shop8", binding.imgShop8, R.drawable.shop8);
+        setupShopItemClickListener("shop9", binding.imgShop9, R.drawable.shop9);
+        setupShopItemClickListener("shop10", binding.imgShop10, R.drawable.shop10);
+        setupShopItemClickListener("shop11", binding.imgShop11, R.drawable.shop11);
+        setupShopItemClickListener("shop12", binding.imgShop12, R.drawable.shop12);
+        setupShopItemClickListener("shop13", binding.imgShop13, R.drawable.shop13);
+        setupShopItemClickListener("shop14", binding.imgShop14, R.drawable.shop14);
+        setupShopItemClickListener("shop15", binding.imgShop15, R.drawable.shop15);
+        setupShopItemClickListener("shop16", binding.imgShop16, R.drawable.shop16);
     }
 
-    private void setupShopItemClickListener(String itemId, View shopImageView) {
+    private void setupShopItemClickListener(String itemId, View shopImageView, int imageResource) {
         shopImageView.setOnClickListener(v -> {
-            openDeleteDialog(itemId);
+            openDeleteDialog(itemId, imageResource);
         });
     }
 
@@ -264,75 +266,57 @@ public class MainFragment extends Fragment {
                     switch (itemId) {
                         case "shop1":
                             binding.imgShop1.setVisibility(View.GONE);
-                            isShop1Arranged = false;
                             break;
                         case "shop2":
                             binding.imgShop2.setVisibility(View.GONE);
-                            isShop2Arranged = false;
                             break;
                         case "shop3":
                             binding.imgShop3.setVisibility(View.GONE);
-                            isShop3Arranged = false;
                             break;
                         case "shop4":
                             binding.imgShop4.setVisibility(View.GONE);
-                            isShop4Arranged = false;
                             break;
                         case "shop5":
                             binding.imgShop5.setVisibility(View.GONE);
-                            isShop5Arranged = false;
                             break;
                         case "shop6":
                             binding.imgShop6.setVisibility(View.GONE);
-                            isShop6Arranged = false;
                             break;
                         case "shop7":
                             binding.imgShop7.setVisibility(View.GONE);
-                            isShop7Arranged = false;
                             break;
                         case "shop8":
                             binding.imgShop8.setVisibility(View.GONE);
-                            isShop8Arranged = false;
                             break;
                         case "shop9":
                             binding.imgShop9.setVisibility(View.GONE);
-                            isShop9Arranged = false;
                             break;
                         case "shop10":
                             binding.imgShop10.setVisibility(View.GONE);
-                            isShop10Arranged = false;
                             break;
                         case "shop11":
                             binding.imgShop11.setVisibility(View.GONE);
-                            isShop11Arranged = false;
                             break;
                         case "shop12":
                             binding.imgShop12.setVisibility(View.GONE);
-                            isShop12Arranged = false;
                             break;
                         case "shop13":
                             binding.imgShop13.setVisibility(View.GONE);
-                            isShop13Arranged = false;
                             break;
                         case "shop14":
                             binding.imgShop14.setVisibility(View.GONE);
-                            isShop14Arranged = false;
                             break;
                         case "shop15":
                             binding.imgShop15.setVisibility(View.GONE);
-                            isShop15Arranged = false;
                             break;
                         case "shop16":
                             binding.imgShop16.setVisibility(View.GONE);
-                            isShop16Arranged = false;
                             break;
                     }
                 }
             }
         });
     }
-
-
 
 
     private void loadBackgroundTheme() {
@@ -385,83 +369,22 @@ public class MainFragment extends Fragment {
         });
     }
 
-    // 오브제를 배치하는 다이얼로그를 열기 위한 메서드
-    private void openArrangementDialog(String itemId, int imageResource) {
-        ObjectArrangementDialogFragment arrangementDialog = ObjectArrangementDialogFragment.newInstance(imageResource, itemId);
-        arrangementDialog.show(getParentFragmentManager(), "ObjectArrangementDialogFragment");
-    }
-
-
-
     // 오브제를 삭제하는 다이얼로그를 열기 위한 메서드
-    private void openDeleteDialog(String itemId) {
-        ObjectDeleteDialogFragment deleteDialog = ObjectDeleteDialogFragment.newInstance(() -> {
-            if (binding != null) {
-                // 오브제의 ID에 맞게 UI에서 숨김 처리
-                switch (itemId) {
-                    case "shop1":
-                        binding.imgShop1.setVisibility(View.GONE);
-                        break;
-                    case "shop2":
-                        binding.imgShop2.setVisibility(View.GONE);
-                        break;
-                    case "shop3":
-                        binding.imgShop3.setVisibility(View.GONE);
-                        break;
-                    case "shop4":
-                        binding.imgShop4.setVisibility(View.GONE);
-                        break;
-                    case "shop5":
-                        binding.imgShop5.setVisibility(View.GONE);
-                        break;
-                    case "shop6":
-                        binding.imgShop6.setVisibility(View.GONE);
-                        break;
-                    case "shop7":
-                        binding.imgShop7.setVisibility(View.GONE);
-                        break;
-                    case "shop8":
-                        binding.imgShop8.setVisibility(View.GONE);
-                        break;
-                    case "shop9":
-                        binding.imgShop9.setVisibility(View.GONE);
-                        break;
-                    case "shop10":
-                        binding.imgShop10.setVisibility(View.GONE);
-                        break;
-                    case "shop11":
-                        binding.imgShop11.setVisibility(View.GONE);
-                        break;
-                    case "shop12":
-                        binding.imgShop12.setVisibility(View.GONE);
-                        break;
-                    case "shop13":
-                        binding.imgShop13.setVisibility(View.GONE);
-                        break;
-                    case "shop14":
-                        binding.imgShop14.setVisibility(View.GONE);
-                        break;
-                    case "shop15":
-                        binding.imgShop15.setVisibility(View.GONE);
-                        break;
-                    case "shop16":
-                        binding.imgShop16.setVisibility(View.GONE);
-                        break;
-                }
-            }
-
+    private void openDeleteDialog(String itemId, int imageResource) {
+        ObjectDeleteDialogFragment deleteDialog = ObjectDeleteDialogFragment.newInstance(itemId, imageResource, () -> {
             // Firestore에서 arrangeObjects에서 오브제를 제거
             arrangeManager.updateArrangementStatus(itemId, true, success -> {
                 if (success) {
-                    Log.d("MainFragment", "Object successfully updated in Firestore");
-                    // UI 업데이트
+                    Log.d("MainFragment", "Object successfully deleted from Firestore");
+                    // UI 업데이트 없이 Firestore에서만 삭제 처리
                 } else {
-                    Log.e("MainFragment", "Failed to update object in Firestore");
+                    Log.e("MainFragment", "Failed to delete object in Firestore");
                 }
             });
         });
         deleteDialog.show(getParentFragmentManager(), "ObjectDeleteDialogFragment");
     }
+
 
     @Override
     public void onDestroyView() {

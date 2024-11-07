@@ -13,21 +13,25 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import com.google.firebase.auth.FirebaseAuth;
+import java.util.List;
+import java.util.ArrayList;
 
 public class ObjectBuyDialogFragment extends DialogFragment {
 
     private String itemId;
     private int imageResource;
     private int tacoCount;
+    private List<String> allowedThemes;
     private OnPurchaseCompleteListener purchaseCompleteListener;
 
     public interface OnPurchaseCompleteListener {
         void onPurchaseComplete(String itemId);
     }
 
-    public static ObjectBuyDialogFragment newInstance(String itemId, int imageResource, int tacoCount, OnPurchaseCompleteListener listener) {
+    public static ObjectBuyDialogFragment newInstance(String itemId, int imageResource, int tacoCount, OnPurchaseCompleteListener listener, List<String> allowedThemes) {
         ObjectBuyDialogFragment fragment = new ObjectBuyDialogFragment();
         fragment.purchaseCompleteListener = listener;
+        fragment.allowedThemes = allowedThemes;
         Bundle args = new Bundle();
         args.putString("itemId", itemId);
         args.putInt("imageResource", imageResource);
@@ -53,11 +57,15 @@ public class ObjectBuyDialogFragment extends DialogFragment {
         TextView tacoCountView = view.findViewById(R.id.textView29);
         tacoCountView.setText(String.valueOf(tacoCount));
 
+        // 테마 설명 표시
+        TextView themeTextView = view.findViewById(R.id.checktemaText);
+        themeTextView.setText(getThemeNames(allowedThemes));
+
         Button buyButton = view.findViewById(R.id.button2);
         buyButton.setOnClickListener(v -> {
             if (itemId != null) {
                 CoinManager coinManager = new CoinManager();
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid(); // userId 가져오기
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 coinManager.checkAndDeductCoins(userId, tacoCount, new CoinManager.OnCoinDeductListener() {
                     @Override
                     public void onComplete(boolean success, long remainingCoins) {
@@ -81,11 +89,38 @@ public class ObjectBuyDialogFragment extends DialogFragment {
             }
         });
 
-
         ImageButton backButton = view.findViewById(R.id.backButton);
         backButton.setOnClickListener(v -> dismiss());
 
         return view;
+    }
+
+    private String getThemeNames(List<String> allowedThemes) {
+        // 테마 ID와 설명 매핑
+        List<String> themeNames = new ArrayList<>();
+        for (String themeId : allowedThemes) {
+            switch (themeId) {
+                case "tema_home":
+                    themeNames.add("집");
+                    break;
+                case "tema_airport":
+                    themeNames.add("비행기");
+                    break;
+                case "tema_island":
+                    themeNames.add("섬");
+                    break;
+                case "tema_submarine":
+                    themeNames.add("잠수함");
+                    break;
+                case "tema_rocket":
+                    themeNames.add("우주선");
+                    break;
+                default:
+                    themeNames.add("알 수 없는 테마");
+                    break;
+            }
+        }
+        return "적용 테마: " + String.join(", ", themeNames);
     }
 
     @Override
@@ -93,7 +128,7 @@ public class ObjectBuyDialogFragment extends DialogFragment {
         super.onStart();
         if (getDialog() != null && getDialog().getWindow() != null) {
             getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.white); // 흰색 배경 설정
+            getDialog().getWindow().setBackgroundDrawableResource(android.R.color.white);
         }
     }
 }

@@ -17,7 +17,7 @@
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@+id/imageView35"
-        android:layout_marginStart="36dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="132dp" />
 
     <ImageButton
@@ -45,278 +45,342 @@
         android:layout_marginTop="116dp"
         app:layout_constraintHorizontal_bias="0.25" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
+    <GridLayout
+        android:id="@+id/rewardGrid"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/reward1"
-        android:contentDescription="보상1"
-        android:backgroundTint="#FAE7D2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="260dp"
-        android:enabled="true"
-        app:layout_constraintHorizontal_bias="0.087" />
+        android:columnCount="3"
+        android:padding="20dp"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/imageView35"
+        tools:layout_editor_absoluteX="0dp"
+        android:layout_marginTop="0dp">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/reward4"
-        android:contentDescription="보상1"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        android:layout_marginTop="12dp" />
+        <!-- 첫 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/reward6"
-        android:contentDescription="보상1"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
-        app:layout_constraintTop_toBottomOf="@+id/textView35"
-        android:layout_marginTop="12dp" />
+            <ImageButton
+                android:id="@+id/reward1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco"
+                android:contentDescription="보상1"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="true" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/reward8"
-        android:contentDescription="보상1"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintTop_toBottomOf="@+id/textView37"
-        android:layout_marginTop="12dp" />
+            <ImageView
+                android:id="@+id/reward1_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:visibility="gone" />
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/reward2"
-        android:contentDescription="보상2"
-        android:backgroundTint="#FAE7D2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="260dp"
-        android:enabled="false"
-        app:layout_constraintHorizontal_bias="0.498" />
+            <TextView
+                android:id="@+id/reward1_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco3"
-        android:id="@+id/reward3"
-        android:contentDescription="보상3"
-        android:backgroundTint="#FAE7D2"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="260dp"
-        android:enabled="false"
-        app:layout_constraintHorizontal_bias="0.912" />
+        <!-- 두 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_taco3"
-        android:id="@+id/reward9"
-        android:contentDescription="보상3"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.912"
-        app:layout_constraintTop_toBottomOf="@+id/textView38"
-        android:layout_marginTop="8dp" />
+            <ImageButton
+                android:id="@+id/reward2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco"
+                android:contentDescription="보상2"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="1일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
-        app:layout_constraintTop_toBottomOf="@+id/reward1"
-        app:layout_constraintStart_toStartOf="@+id/reward1"
-        app:layout_constraintEnd_toEndOf="@+id/reward1" />
+            <ImageView
+                android:id="@+id/reward2_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"
+                android:visibility="gone" />
 
-    <TextView
-        android:id="@+id/textView36"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="4일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintHorizontal_bias="0.533"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/reward4"
-        app:layout_constraintStart_toStartOf="@+id/reward4"
-        app:layout_constraintEnd_toEndOf="@+id/reward4" />
+            <TextView
+                android:id="@+id/reward2_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
 
-    <TextView
-        android:id="@+id/textView39"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="7일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.159"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/reward7" />
+        <!-- 세 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/textView40"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="8일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/reward8" />
+            <ImageButton
+                android:id="@+id/reward3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco3"
+                android:contentDescription="보상3"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
 
-    <TextView
-        android:id="@+id/textView41"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="9일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintTop_toBottomOf="@+id/reward9" />
+            <ImageView
+                android:id="@+id/reward3_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
 
-    <TextView
-        android:id="@+id/textView37"
-        android:layout_width="42dp"
-        android:layout_height="24dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="5일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.474"
-        app:layout_constraintVertical_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/reward5"
-        app:layout_constraintEnd_toEndOf="@+id/reward5"
-        app:layout_constraintTop_toBottomOf="@+id/reward5" />
+            <TextView
+                android:id="@+id/reward3_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
 
-    <TextView
-        android:id="@+id/textView38"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="6일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintVertical_bias="0.004"
-        app:layout_constraintStart_toStartOf="@+id/reward6"
-        app:layout_constraintEnd_toEndOf="@+id/reward6"
-        app:layout_constraintTop_toBottomOf="@+id/reward6" />
+        <!-- 네 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/textView34"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="2일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/reward2"
-        app:layout_constraintEnd_toEndOf="@+id/reward2"
-        app:layout_constraintHorizontal_bias="0.508"
-        app:layout_constraintTop_toBottomOf="@+id/reward2" />
+            <ImageButton
+                android:id="@+id/reward4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco"
+                android:contentDescription="보상4"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
 
-    <TextView
-        android:id="@+id/textView35"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/nanumfont"
-        android:text="3일차"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.483"
-        app:layout_constraintTop_toBottomOf="@+id/reward3"
-        app:layout_constraintStart_toStartOf="@+id/reward3"
-        app:layout_constraintEnd_toEndOf="@+id/reward3" />
+            <ImageView
+                android:id="@+id/reward4_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_object"
-        android:id="@+id/reward5"
-        android:contentDescription="보상5"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView34"
-        android:layout_marginTop="12dp" />
+            <TextView
+                android:id="@+id/reward4_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
 
-    <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/reward_page_object2"
-        android:id="@+id/reward7"
-        android:contentDescription="보상7"
-        android:backgroundTint="#FAE7D2"
-        android:enabled="false"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.087"
-        app:layout_constraintTop_toBottomOf="@+id/textView36"
-        android:layout_marginTop="8dp" />
+        <!-- 다섯 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/reward5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_object"
+                android:contentDescription="보상5"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/reward5_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/reward5_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="5일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
+
+        <!-- 여섯 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/reward6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco"
+                android:contentDescription="보상6"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/reward6_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/reward6_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="6일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
+
+        <!-- 일곱 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/reward7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_object2"
+                android:contentDescription="보상7"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/reward7_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/reward7_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="7일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
+
+        <!-- 여덟 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/reward8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco"
+                android:contentDescription="보상8"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/reward8_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/reward8_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="8일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
+
+        <!-- 아홉 번째 보상 -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="110dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp">
+
+            <ImageButton
+                android:id="@+id/reward9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/reward_page_taco3"
+                android:contentDescription="보상9"
+                android:backgroundTint="#FAE7D2"
+                android:enabled="false" />
+
+            <ImageView
+                android:id="@+id/reward9_success"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/success_reward"
+                android:visibility="gone"
+                android:layout_marginBottom="12dp"
+                android:layout_marginLeft="12dp"/>
+
+            <TextView
+                android:id="@+id/reward9_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="9일차"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:layout_gravity="center_horizontal|bottom"
+                android:fontFamily="@font/nanumfont" />
+        </FrameLayout>
+
+    </GridLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
