@@ -2,17 +2,19 @@ package com.example.test2;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+
 
 public class ArrangeManager {
     private final FirebaseFirestore db;
@@ -24,53 +26,90 @@ public class ArrangeManager {
         userId = FirebaseAuth.getInstance().getCurrentUser() != null ? FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
     }
 
-    public void updateArrangementStatus(String itemId, boolean isArranged) {
+    public void updateArrangementStatus(String itemId, boolean isArranged, OnFirestoreUpdateListener listener) {
         if (userId == null) {
-            Log.e("ArrangeManager", "User not logged in.");
+            Log.e(TAG, "User not logged in.");
+            listener.onUpdate(false);
             return;
         }
 
-        Log.d("ArrangeManager", "Attempting to update arrangement status for itemId: " + itemId + " with status: " + isArranged);
+        checkGroupMembership(( reference, field) -> {
+            if (isArranged) {
+                // 필드가 없으면 초기화 후 추가, 있으면 바로 추가
+                reference.get().addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists() && documentSnapshot.get("arrangeObjects") != null) {
+                        // 필드가 있는 경우 바로 추가
+                        reference.update("arrangeObjects", FieldValue.arrayUnion(itemId))
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "Successfully arranged " + itemId + " in Firestore");
+                                    listener.onUpdate(true);
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to arrange item " + itemId + " in Firestore", e);
+                                    listener.onUpdate(false);
+                                });
+                    } else {
+                        // 필드가 없으면 초기화 후 추가
+                        reference.set(new HashMap<String, Object>() {{
+                                    put("arrangeObjects", new ArrayList<String>() {{ add(itemId); }});
+                                }}, SetOptions.merge())
+                                .addOnSuccessListener(aVoid -> {
+                                    Log.d(TAG, "Successfully initialized and arranged " + itemId + " in Firestore");
+                                    listener.onUpdate(true);
+                                })
+                                .addOnFailureListener(e -> {
+                                    Log.e(TAG, "Failed to initialize and arrange item " + itemId + " in Firestore", e);
+                                    listener.onUpdate(false);
+                                });
+                    }
+                });
+            } else {
+                reference.update("arrangeObjects", FieldValue.arrayRemove(itemId))
+                        .addOnSuccessListener(aVoid -> {
+                            Log.d(TAG, "Successfully removed " + itemId + " from arrangement in Firestore");
+                            listener.onUpdate(true);
+                        })
+                        .addOnFailureListener(e -> {
+                            Log.e(TAG, "Failed to remove item " + itemId + " from arrangement in Firestore", e);
+                            listener.onUpdate(false);
+                        });
+            }
+        });
+    }
 
+    private void checkGroupMembership(GroupCheckCallback callback) {
         db.collection("groups")
                 .whereEqualTo("ownerUserId", userId)
                 .get()
-                .addOnSuccessListener(querySnapshot -> {
-                    if (!querySnapshot.isEmpty()) {
-                        DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
-                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                .addOnSuccessListener(groupQuerySnapshot -> {
+                    if (!groupQuerySnapshot.isEmpty()) {
+                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
+                        callback.onGroupCheckCompleted( groupRef, "arrangeObjects");
                     } else {
                         db.collection("groups")
                                 .whereEqualTo("invitedUserId", userId)
                                 .get()
-                                .addOnSuccessListener(inviteSnapshot -> {
-                                    if (!inviteSnapshot.isEmpty()) {
-                                        DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
-                                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                                .addOnSuccessListener(inviteQuerySnapshot -> {
+                                    if (!inviteQuerySnapshot.isEmpty()) {
+                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
+                                        callback.onGroupCheckCompleted( invitedGroupRef, "arrangeObjects");
                                     } else {
                                         DocumentReference userRef = db.collection("users").document(userId);
-                                        updateArrangeObjectsField(userRef, itemId, isArranged);
+                                        callback.onGroupCheckCompleted( userRef, "arrangeObjects");
                                     }
                                 })
-                                .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch invited group info", e));
+                                .addOnFailureListener(e -> Log.e(TAG, "Error checking invited groups", e));
                     }
                 })
-                .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch owner group info", e));
+                .addOnFailureListener(e -> Log.e(TAG, "Error checking group ownership", e));
     }
 
+    public interface GroupCheckCallback {
+        void onGroupCheckCompleted( DocumentReference reference, String field);
+    }
 
-    private void updateArrangeObjectsField(DocumentReference ref, String itemId, boolean isArranged) {
-        Log.d("ArrangeManager", "Updating arrangeObjects for itemId: " + itemId + " with isArranged: " + isArranged);
-
-        if (isArranged) {
-            ref.update("arrangeObjects", FieldValue.arrayUnion(itemId))
-                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Successfully arranged " + itemId + " in Firestore"))
-                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to arrange item " + itemId + " in Firestore", e));
-        } else {
-            ref.update("arrangeObjects", FieldValue.arrayRemove(itemId))
-                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Successfully removed " + itemId + " from arrangement in Firestore"))
-                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to remove item " + itemId + " from arrangement in Firestore", e));
-        }
+    public interface OnFirestoreUpdateListener {
+        void onUpdate(boolean success);
     }
 
     public interface OnLoadArrangementStatusListener {
@@ -79,7 +118,7 @@ public class ArrangeManager {
 
     public void loadArrangementStatus(OnLoadArrangementStatusListener listener) {
         if (userId == null) {
-            Log.e("ArrangeManager", "User not logged in.");
+            Log.e(TAG, "User not logged in.");
             return;
         }
 

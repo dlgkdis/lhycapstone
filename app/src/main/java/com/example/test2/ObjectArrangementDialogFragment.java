@@ -39,7 +39,14 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
         Button arrangeButton = view.findViewById(R.id.button2);
         arrangeButton.setOnClickListener(v -> {
             if (itemId != null) {
-                arrangeManager.updateArrangementStatus(itemId, true);
+                arrangeManager.updateArrangementStatus(itemId, false, success -> {
+                    if (success) {
+                        Log.d("MainFragment", "Object successfully updated in Firestore");
+                        // UI 업데이트
+                    } else {
+                        Log.e("MainFragment", "Failed to update object in Firestore");
+                    }
+                });
             }
             dismiss();
         });

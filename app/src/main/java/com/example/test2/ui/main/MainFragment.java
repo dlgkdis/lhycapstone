@@ -200,20 +200,19 @@ public class MainFragment extends Fragment {
         setupShopItemClickListener("shop1", binding.imgShop1);
         setupShopItemClickListener("shop2", binding.imgShop2);
         setupShopItemClickListener("shop3", binding.imgShop3);
-        setupShopItemClickListener("shop4", binding.imgShop1);
-        setupShopItemClickListener("shop5", binding.imgShop2);
-        setupShopItemClickListener("shop6", binding.imgShop3);
-        setupShopItemClickListener("shop7", binding.imgShop1);
-        setupShopItemClickListener("shop8", binding.imgShop2);
-        setupShopItemClickListener("shop9", binding.imgShop3);
-        setupShopItemClickListener("shop10", binding.imgShop1);
-        setupShopItemClickListener("shop11", binding.imgShop2);
-        setupShopItemClickListener("shop12", binding.imgShop3);
-        setupShopItemClickListener("shop13", binding.imgShop1);
-        setupShopItemClickListener("shop14", binding.imgShop2);
-        setupShopItemClickListener("shop15", binding.imgShop3);
-        setupShopItemClickListener("shop16", binding.imgShop3);
-
+        setupShopItemClickListener("shop4", binding.imgShop4);
+        setupShopItemClickListener("shop5", binding.imgShop5);
+        setupShopItemClickListener("shop6", binding.imgShop6);
+        setupShopItemClickListener("shop7", binding.imgShop7);
+        setupShopItemClickListener("shop8", binding.imgShop8);
+        setupShopItemClickListener("shop9", binding.imgShop9);
+        setupShopItemClickListener("shop10", binding.imgShop10);
+        setupShopItemClickListener("shop11", binding.imgShop11);
+        setupShopItemClickListener("shop12", binding.imgShop12);
+        setupShopItemClickListener("shop13", binding.imgShop13);
+        setupShopItemClickListener("shop14", binding.imgShop14);
+        setupShopItemClickListener("shop15", binding.imgShop15);
+        setupShopItemClickListener("shop16", binding.imgShop16);
     }
 
     private void setupShopItemClickListener(String itemId, View shopImageView) {
@@ -402,73 +401,64 @@ public class MainFragment extends Fragment {
                 switch (itemId) {
                     case "shop1":
                         binding.imgShop1.setVisibility(View.GONE);
-                        isShop1Arranged = false;
                         break;
                     case "shop2":
                         binding.imgShop2.setVisibility(View.GONE);
-                        isShop2Arranged = false;
                         break;
                     case "shop3":
                         binding.imgShop3.setVisibility(View.GONE);
-                        isShop3Arranged = false;
                         break;
                     case "shop4":
                         binding.imgShop4.setVisibility(View.GONE);
-                        isShop4Arranged = false;
                         break;
                     case "shop5":
                         binding.imgShop5.setVisibility(View.GONE);
-                        isShop5Arranged = false;
                         break;
                     case "shop6":
                         binding.imgShop6.setVisibility(View.GONE);
-                        isShop6Arranged = false;
                         break;
                     case "shop7":
                         binding.imgShop7.setVisibility(View.GONE);
-                        isShop7Arranged = false;
                         break;
                     case "shop8":
                         binding.imgShop8.setVisibility(View.GONE);
-                        isShop8Arranged = false;
                         break;
                     case "shop9":
                         binding.imgShop9.setVisibility(View.GONE);
-                        isShop9Arranged = false;
                         break;
                     case "shop10":
                         binding.imgShop10.setVisibility(View.GONE);
-                        isShop10Arranged = false;
                         break;
                     case "shop11":
                         binding.imgShop11.setVisibility(View.GONE);
-                        isShop11Arranged = false;
                         break;
                     case "shop12":
                         binding.imgShop12.setVisibility(View.GONE);
-                        isShop12Arranged = false;
                         break;
                     case "shop13":
                         binding.imgShop13.setVisibility(View.GONE);
-                        isShop13Arranged = false;
                         break;
                     case "shop14":
                         binding.imgShop14.setVisibility(View.GONE);
-                        isShop14Arranged = false;
                         break;
                     case "shop15":
                         binding.imgShop15.setVisibility(View.GONE);
-                        isShop15Arranged = false;
                         break;
                     case "shop16":
                         binding.imgShop16.setVisibility(View.GONE);
-                        isShop16Arranged = false;
                         break;
                 }
             }
 
             // Firestore에서 arrangeObjects에서 오브제를 제거
-            arrangeManager.updateArrangementStatus(itemId, false);
+            arrangeManager.updateArrangementStatus(itemId, true, success -> {
+                if (success) {
+                    Log.d("MainFragment", "Object successfully updated in Firestore");
+                    // UI 업데이트
+                } else {
+                    Log.e("MainFragment", "Failed to update object in Firestore");
+                }
+            });
         });
         deleteDialog.show(getParentFragmentManager(), "ObjectDeleteDialogFragment");
     }
