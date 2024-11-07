@@ -32,6 +32,12 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.object_arrangement, container, false);
 
+        // 배치 버튼 클릭 이벤트
+        view.findViewById(R.id.button2).setOnClickListener(v -> {
+            arrangeManager.updateArrangementStatus(itemId, true);  // Firestore에 배치 상태 저장
+            dismiss();  // 다이얼로그 닫기
+        });
+
         arrangeManager = new ArrangeManager(requireContext());
 
         if (getArguments() != null) {
@@ -60,4 +66,5 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
 
         return view;
     }
+
 }

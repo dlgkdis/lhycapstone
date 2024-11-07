@@ -26,17 +26,18 @@ public class ArrangeManager {
 
     public void updateArrangementStatus(String itemId, boolean isArranged) {
         if (userId == null) {
-            Log.e(TAG, "User not logged in.");
+            Log.e("ArrangeManager", "User not logged in.");
             return;
         }
 
+        // Firestore에서 그룹 소유자나 초대된 그룹을 확인하고 상태를 업데이트
         db.collection("groups")
                 .whereEqualTo("ownerUserId", userId)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
-                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                        modifyArrangeObjects(groupRef, itemId, isArranged);
                     } else {
                         db.collection("groups")
                                 .whereEqualTo("invitedUserId", userId)
@@ -44,30 +45,45 @@ public class ArrangeManager {
                                 .addOnSuccessListener(inviteSnapshot -> {
                                     if (!inviteSnapshot.isEmpty()) {
                                         DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
-                                        updateArrangeObjectsField(groupRef, itemId, isArranged);
+                                        modifyArrangeObjects(groupRef, itemId, isArranged);
                                     } else {
                                         DocumentReference userRef = db.collection("users").document(userId);
-                                        updateArrangeObjectsField(userRef, itemId, isArranged);
+                                        modifyArrangeObjects(userRef, itemId, isArranged);
                                     }
                                 })
-                                .addOnFailureListener(e -> Log.e(TAG, "Failed to fetch invited group info", e));
+                                .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch invited group info", e));
                     }
                 })
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to fetch owner group info", e));
+                .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch owner group info", e));
     }
 
     private void updateArrangeObjectsField(DocumentReference ref, String itemId, boolean isArranged) {
-        Map<String, Object> updateData = new HashMap<>();
-        if (isArranged) {
-            updateData.put("arrangeObjects", FieldValue.arrayUnion(itemId));
-        } else {
-            updateData.put("arrangeObjects", FieldValue.arrayRemove(itemId));
-        }
+        Log.d("ArrangeManager", "Updating arrangeObjects for itemId: " + itemId + " with isArranged: " + isArranged);
 
-        ref.set(updateData, SetOptions.merge())
-                .addOnSuccessListener(aVoid -> Log.d(TAG, "Arrangement status updated successfully for " + itemId))
-                .addOnFailureListener(e -> Log.e(TAG, "Failed to update arrangement status", e));
+        if (isArranged) {
+            ref.update("arrangeObjects", FieldValue.arrayUnion(itemId))
+                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Successfully arranged " + itemId + " in Firestore"))
+                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to arrange item " + itemId + " in Firestore", e));
+        } else {
+            ref.update("arrangeObjects", FieldValue.arrayRemove(itemId))
+                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Successfully removed " + itemId + " from arrangement in Firestore"))
+                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to remove item " + itemId + " from arrangement in Firestore", e));
+        }
     }
+
+    // Firestore의 arrangeObjects 필드를 업데이트하는 메서드
+    private void modifyArrangeObjects(DocumentReference ref, String itemId, boolean isArranged) {
+        if (isArranged) {
+            ref.update("arrangeObjects", FieldValue.arrayUnion(itemId))
+                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Arrangement status added for " + itemId))
+                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to add arrangement status", e));
+        } else {
+            ref.update("arrangeObjects", FieldValue.arrayRemove(itemId))
+                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Arrangement status removed for " + itemId))
+                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to remove arrangement status", e));
+        }
+    }
+
 
     public interface OnLoadArrangementStatusListener {
         void onArrangementStatusLoaded(List<String> arrangedItems);
@@ -75,7 +91,7 @@ public class ArrangeManager {
 
     public void loadArrangementStatus(OnLoadArrangementStatusListener listener) {
         if (userId == null) {
-            Log.e(TAG, "User not logged in.");
+            Log.e("ArrangeManager", "User not logged in.");
             return;
         }
 
