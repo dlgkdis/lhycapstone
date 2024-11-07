@@ -1,13 +1,10 @@
 package com.example.test2.ui.tema;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -17,22 +14,18 @@ import com.example.test2.R;
 import com.example.test2.databinding.FragmentTemaBinding;
 import com.example.test2.ui.ThemeViewModel;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class TemaFragment extends Fragment {
 
     private FragmentTemaBinding binding;
     private ThemeViewModel themeViewModel;
     private View selectedButton = null;
-    private static final String PREFS_NAME = "theme_prefs";
-    private static final String KEY_SELECTED_THEME = "selected_theme";
     private FirebaseHelper firebaseHelper;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private String userId; // 사용자의 ID를 초기화해야 합니다.
+    private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
+            FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
     private static final String TAG = "TemaFragment";
 
     @Nullable
@@ -56,29 +49,7 @@ public class TemaFragment extends Fragment {
 
         // 자물쇠 상태 설정 및 해제 조건 확인
         setLockState();
-
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, null);
-
-        if (savedTheme != null) {
-            switch (savedTheme) {
-                case "tema_home":
-                    setTheme("tema_home", binding.btnTemaHome);
-                    break;
-                case "tema_airport":
-                    setTheme("tema_airport", binding.btnTemaAirport);
-                    break;
-                case "tema_submarine":
-                    setTheme("tema_submarine", binding.btnTemaSubmarine);
-                    break;
-                case "tema_rocket":
-                    setTheme("tema_rocket", binding.btnTemaRocket);
-                    break;
-                case "tema_island":
-                    setTheme("tema_island", binding.btnTemaIsland);
-                    break;
-            }
-        }
+        loadSavedTheme();
 
         // 테마 버튼 클릭 리스너 설정
         binding.btnTemaHome.setOnClickListener(v -> setTheme("tema_home", v));
@@ -132,13 +103,48 @@ public class TemaFragment extends Fragment {
         });
     }
 
+    private void loadSavedTheme() {
+        checkGroupMembership((isInGroup, reference) -> {
+            reference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.contains("tema_background")) {
+                    String savedTheme = documentSnapshot.getString("tema_background");
+                    themeViewModel.initTheme(savedTheme);
+                    updateButtonSelection(savedTheme);
+                }
+            });
+        });
+    }
+
+    private void updateButtonSelection(String theme) {
+        View button = null;
+        switch (theme) {
+            case "tema_home":
+                button = binding.btnTemaHome;
+                break;
+            case "tema_airport":
+                button = binding.btnTemaAirport;
+                break;
+            case "tema_submarine":
+                button = binding.btnTemaSubmarine;
+                break;
+            case "tema_rocket":
+                button = binding.btnTemaRocket;
+                break;
+            case "tema_island":
+                button = binding.btnTemaIsland;
+                break;
+        }
+        if (button != null) setTheme(theme, button);
+    }
+
     private void setTheme(String theme, View button) {
         themeViewModel.setTheme(theme);
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_SELECTED_THEME, theme);
-        editor.apply();
+        checkGroupMembership((isInGroup, reference) -> {
+            reference.update("tema_background", theme)
+                    .addOnSuccessListener(aVoid -> Log.d(TAG, "Theme background updated in Firestore"))
+                    .addOnFailureListener(e -> Log.e(TAG, "Failed to update theme background in Firestore", e));
+        });
 
         if (selectedButton != null) {
             selectedButton.setBackgroundResource(R.drawable.rounded_button_default);
@@ -146,6 +152,37 @@ public class TemaFragment extends Fragment {
 
         button.setBackgroundResource(R.drawable.rounded_button_selected);
         selectedButton = button;
+    }
+
+    private void checkGroupMembership(GroupCheckCallback callback) {
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(groupQuerySnapshot -> {
+                    if (!groupQuerySnapshot.isEmpty()) {
+                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
+                        callback.onGroupCheckCompleted(true, groupRef);
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteQuerySnapshot -> {
+                                    if (!inviteQuerySnapshot.isEmpty()) {
+                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
+                                        callback.onGroupCheckCompleted(true, invitedGroupRef);
+                                    } else {
+                                        DocumentReference userRef = db.collection("users").document(userId);
+                                        callback.onGroupCheckCompleted(false, userRef);
+                                    }
+                                })
+                                .addOnFailureListener(e -> Log.e(TAG, "Error checking invited groups", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e(TAG, "Error checking group ownership", e));
+    }
+
+    interface GroupCheckCallback {
+        void onGroupCheckCompleted(boolean isInGroup, DocumentReference reference);
     }
 
     @Override

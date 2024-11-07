@@ -11,16 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/nanumfont"
-        android:text="출석보상"
+        android:text="뉴비 패키지"
         android:textColor="@color/black"
         android:textSize="35dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.827"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.168" />
+        app:layout_constraintStart_toEndOf="@+id/imageView35"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="132dp" />
 
     <ImageButton
         android:id="@+id/imageButton66"
@@ -35,11 +33,12 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/arrow_left" />
 
-    <ImageView
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_octopus"
         android:id="@+id/imageView35"
+        android:backgroundTint="#FAE7D2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,92 +49,99 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/imageButton67"
+        android:id="@+id/reward1"
         android:contentDescription="보상1"
         android:backgroundTint="#FAE7D2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="260dp"
+        android:enabled="true"
         app:layout_constraintHorizontal_bias="0.087" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/imageButton70"
+        android:id="@+id/reward4"
         android:contentDescription="보상1"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="400dp"
-        app:layout_constraintHorizontal_bias="0.087" />
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintTop_toBottomOf="@+id/textView10"
+        android:layout_marginTop="12dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/imageButton73"
+        android:id="@+id/reward6"
         android:contentDescription="보상1"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="400dp"
-        app:layout_constraintHorizontal_bias="0.912" />
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintTop_toBottomOf="@+id/textView35"
+        android:layout_marginTop="12dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/imageButton75"
+        android:id="@+id/reward8"
         android:contentDescription="보상1"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="556dp"
-        app:layout_constraintHorizontal_bias="0.501" />
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintTop_toBottomOf="@+id/textView37"
+        android:layout_marginTop="12dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco"
-        android:id="@+id/imageButton68"
+        android:id="@+id/reward2"
         android:contentDescription="보상2"
         android:backgroundTint="#FAE7D2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="260dp"
+        android:enabled="false"
         app:layout_constraintHorizontal_bias="0.498" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco3"
-        android:id="@+id/imageButton69"
+        android:id="@+id/reward3"
         android:contentDescription="보상3"
         android:backgroundTint="#FAE7D2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="260dp"
+        android:enabled="false"
         app:layout_constraintHorizontal_bias="0.912" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_taco3"
-        android:id="@+id/imageButton76"
+        android:id="@+id/reward9"
         android:contentDescription="보상3"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="556dp"
-        app:layout_constraintHorizontal_bias="0.912" />
+        app:layout_constraintHorizontal_bias="0.912"
+        app:layout_constraintTop_toBottomOf="@+id/textView38"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textView10"
@@ -146,12 +152,12 @@
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.167"
-        app:layout_constraintVertical_bias="0.504" />
+        app:layout_constraintHorizontal_bias="0.522"
+        app:layout_constraintTop_toBottomOf="@+id/reward1"
+        app:layout_constraintStart_toStartOf="@+id/reward1"
+        app:layout_constraintEnd_toEndOf="@+id/reward1" />
 
     <TextView
         android:id="@+id/textView36"
@@ -164,10 +170,11 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.167"
-        app:layout_constraintVertical_bias="0.707" />
+        app:layout_constraintHorizontal_bias="0.533"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/reward4"
+        app:layout_constraintStart_toStartOf="@+id/reward4"
+        app:layout_constraintEnd_toEndOf="@+id/reward4" />
 
     <TextView
         android:id="@+id/textView39"
@@ -181,9 +188,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.168"
-        app:layout_constraintVertical_bias="0.93" />
+        app:layout_constraintHorizontal_bias="0.159"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/reward7" />
 
     <TextView
         android:id="@+id/textView40"
@@ -197,9 +204,9 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.522"
-        app:layout_constraintVertical_bias="0.928" />
+        app:layout_constraintHorizontal_bias="0.501"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/reward8" />
 
     <TextView
         android:id="@+id/textView41"
@@ -213,14 +220,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintVertical_bias="0.93" />
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintTop_toBottomOf="@+id/reward9" />
 
     <TextView
         android:id="@+id/textView37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="42dp"
+        android:layout_height="24dp"
         android:fontFamily="@font/nanumfont"
         android:text="5일차"
         android:textColor="@color/black"
@@ -229,9 +236,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintVertical_bias="0.706" />
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/reward5"
+        app:layout_constraintEnd_toEndOf="@+id/reward5"
+        app:layout_constraintTop_toBottomOf="@+id/reward5" />
 
     <TextView
         android:id="@+id/textView38"
@@ -245,9 +254,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.84"
-        app:layout_constraintVertical_bias="0.707" />
+        app:layout_constraintVertical_bias="0.004"
+        app:layout_constraintStart_toStartOf="@+id/reward6"
+        app:layout_constraintEnd_toEndOf="@+id/reward6"
+        app:layout_constraintTop_toBottomOf="@+id/reward6" />
 
     <TextView
         android:id="@+id/textView34"
@@ -258,11 +268,12 @@
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.508" />
+        app:layout_constraintStart_toStartOf="@+id/reward2"
+        app:layout_constraintEnd_toEndOf="@+id/reward2"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintTop_toBottomOf="@+id/reward2" />
 
     <TextView
         android:id="@+id/textView35"
@@ -273,37 +284,39 @@
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.837"
-        app:layout_constraintVertical_bias="0.508" />
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintTop_toBottomOf="@+id/reward3"
+        app:layout_constraintStart_toStartOf="@+id/reward3"
+        app:layout_constraintEnd_toEndOf="@+id/reward3" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_object"
-        android:id="@+id/imageButton72"
+        android:id="@+id/reward5"
         android:contentDescription="보상5"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="400dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textView34"
+        android:layout_marginTop="12dp" />
 
     <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:srcCompat="@drawable/reward_page_object2"
-        android:id="@+id/imageButton74"
+        android:id="@+id/reward7"
         android:contentDescription="보상7"
         android:backgroundTint="#FAE7D2"
+        android:enabled="false"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="556dp"
-        app:layout_constraintHorizontal_bias="0.09" />
+        app:layout_constraintHorizontal_bias="0.087"
+        app:layout_constraintTop_toBottomOf="@+id/textView36"
+        android:layout_marginTop="8dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.example.test2.ui.main;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class MainFragment extends Fragment implements ObjectArrangementDialogFragment.OnObjectArrangementCompleteListener {
 
@@ -38,16 +38,9 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     private ThemeViewModel themeViewModel;
     private FirebaseHelper firebaseHelper;
     private FirebaseFirestore db;
-    private static final String PREFS_NAME = "main_prefs";
-    private static final String PREFS_NAME_TEMA = "theme_prefs";
-    private static final String KEY_CHECKIN_DATE = "last_checkin_date";
-    private static final String KEY_SELECTED_THEME = "selected_theme";
     private boolean isShop1Arranged = false;
     private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
-
-
-
 
     @Nullable
     @Override
@@ -66,11 +59,7 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
 
         loadCoinData();
         loadPurchasedObjects();
-
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME_TEMA, Context.MODE_PRIVATE);
-        String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, "tema_home");
-        themeViewModel.initTheme(savedTheme);
-        themeViewModel.getSelectedTheme().observe(getViewLifecycleOwner(), this::updateBackground);
+        loadBackgroundTheme();
 
         if (binding != null) {
             setupButtonListeners();
@@ -101,54 +90,28 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     }
 
     private void handleCheckInReward() {
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
-        String lastCheckInDate = sharedPreferences.getString(KEY_CHECKIN_DATE, "");
-
-        String todayDate = new SimpleDateFormat("yyyyMMdd").format(Calendar.getInstance().getTime());
-
-        if (!todayDate.equals(lastCheckInDate)) {
-            incrementCoin();
-            sharedPreferences.edit().putString(KEY_CHECKIN_DATE, todayDate).apply();
-            Toast.makeText(getContext(), "출석 체크! 코인이 1개 증가했습니다.", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(getContext(), "오늘은 이미 출석 체크를 완료했습니다.", Toast.LENGTH_SHORT).show();
-        }
+        checkGroupMembership((isInGroup, reference, field) -> {
+            String todayDate = new SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Calendar.getInstance().getTime());
+            reference.get().addOnSuccessListener(documentSnapshot -> {
+                String lastCheckInDate = documentSnapshot.contains(field) ? documentSnapshot.getString(field) : "";
+                if (!todayDate.equals(lastCheckInDate)) {
+                    incrementCoin();
+                    reference.update(field, todayDate)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getContext(), "출석 체크! 코인이 1개 증가했습니다.", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update check-in date", e));
+                } else {
+                    Toast.makeText(getContext(), "오늘은 이미 출석 체크를 완료했습니다.", Toast.LENGTH_SHORT).show();
+                }
+            });
+        });
     }
 
     private void incrementCoin() {
-        db.collection("groups")
-                .whereEqualTo("ownerUserId", userId)
-                .get()
-                .addOnSuccessListener(groupQuerySnapshot -> {
-                    if (!groupQuerySnapshot.isEmpty()) {
-                        // 그룹이 있으면 해당 그룹의 `coinStatus` 증가
-                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
-                        groupRef.update("coinStatus", FieldValue.increment(1))
-                                .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in group"))
-                                .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin in group", e));
-                    } else {
-                        // 그룹이 없으면 `users` 컬렉션의 `coinStatus` 증가
-                        db.collection("groups")
-                                .whereEqualTo("invitedUserId", userId)
-                                .get()
-                                .addOnSuccessListener(inviteQuerySnapshot -> {
-                                    if (!inviteQuerySnapshot.isEmpty()) {
-                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
-                                        invitedGroupRef.update("coinStatus", FieldValue.increment(1))
-                                                .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in invited group"))
-                                                .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin in invited group", e));
-                                    } else {
-                                        // 그룹이 없으면 `users` 컬렉션의 `coinStatus` 증가
-                                        DocumentReference userRef = db.collection("users").document(userId);
-                                        userRef.update("coinStatus", FieldValue.increment(1))
-                                                .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in user"))
-                                                .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin in user", e));
-                                    }
-                                })
-                                .addOnFailureListener(e -> Log.e("MainFragment", "Error checking invited groups", e));
-                    }
-                })
-                .addOnFailureListener(e -> Log.e("MainFragment", "Error checking group ownership", e));
+        checkGroupMembership((isInGroup, reference, field) -> {
+            reference.update("coinStatus", FieldValue.increment(1))
+                    .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated"))
+                    .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin", e));
+        });
     }
 
     private void loadCoinData() {
@@ -170,38 +133,54 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
         });
     }
 
+    private void loadBackgroundTheme() {
+        checkGroupMembership((isInGroup, reference, field) -> {
+            reference.get().addOnSuccessListener(documentSnapshot -> {
+                if (documentSnapshot.contains("tema_background")) {
+                    String theme = documentSnapshot.getString("tema_background");
+                    themeViewModel.initTheme(theme);
+                    themeViewModel.getSelectedTheme().observe(getViewLifecycleOwner(), this::updateBackground);
+                }
+            });
+        });
+    }
+
     private void updateBackground(String theme) {
         if (binding == null) return;
+        int backgroundRes, bedRes;
         switch (theme) {
-            case "tema_home":
-                binding.imgBackground.setImageResource(R.drawable.myroom_basic);
-                binding.imgBed.setImageResource(R.drawable.bed_basic);
-                break;
             case "tema_airport":
-                binding.imgBackground.setImageResource(R.drawable.myroom_airport);
-                binding.imgBed.setImageResource(R.drawable.bed_airport);
+                backgroundRes = R.drawable.myroom_airport;
+                bedRes = R.drawable.bed_airport;
                 break;
             case "tema_submarine":
-                binding.imgBackground.setImageResource(R.drawable.myroom_submarine);
-                binding.imgBed.setImageResource(R.drawable.bed_submarine);
+                backgroundRes = R.drawable.myroom_submarine;
+                bedRes = R.drawable.bed_submarine;
                 break;
             case "tema_rocket":
-                binding.imgBackground.setImageResource(R.drawable.myroom_rocket);
-                binding.imgBed.setImageResource(R.drawable.bed_rocket);
+                backgroundRes = R.drawable.myroom_rocket;
+                bedRes = R.drawable.bed_rocket;
                 break;
             case "tema_island":
-                binding.imgBackground.setImageResource(R.drawable.myroom_island);
-                binding.imgBed.setImageResource(R.drawable.bed_island);
+                backgroundRes = R.drawable.myroom_island;
+                bedRes = R.drawable.bed_island;
                 break;
             default:
-                binding.imgBackground.setImageResource(R.drawable.myroom_basic);
-                binding.imgBed.setImageResource(R.drawable.bed_basic);
+                backgroundRes = R.drawable.myroom_basic;
+                bedRes = R.drawable.bed_basic;
+                break;
         }
+        binding.imgBackground.setImageResource(backgroundRes);
+        binding.imgBed.setImageResource(bedRes);
+        saveBackgroundTheme(theme);
+    }
 
-        SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME_TEMA, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString(KEY_SELECTED_THEME, theme);
-        editor.apply();
+    private void saveBackgroundTheme(String theme) {
+        checkGroupMembership((isInGroup, reference, field) -> {
+            reference.update("tema_background", theme)
+                    .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Theme background updated"))
+                    .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update theme background", e));
+        });
     }
 
     private void openArrangementDialog(int imageResource) {
@@ -231,5 +210,36 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    private void checkGroupMembership(GroupCheckCallback callback) {
+        db.collection("groups")
+                .whereEqualTo("ownerUserId", userId)
+                .get()
+                .addOnSuccessListener(groupQuerySnapshot -> {
+                    if (!groupQuerySnapshot.isEmpty()) {
+                        DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
+                        callback.onGroupCheckCompleted(true, groupRef, "owner_last_checkin");
+                    } else {
+                        db.collection("groups")
+                                .whereEqualTo("invitedUserId", userId)
+                                .get()
+                                .addOnSuccessListener(inviteQuerySnapshot -> {
+                                    if (!inviteQuerySnapshot.isEmpty()) {
+                                        DocumentReference invitedGroupRef = inviteQuerySnapshot.getDocuments().get(0).getReference();
+                                        callback.onGroupCheckCompleted(true, invitedGroupRef, "invited_last_checkin");
+                                    } else {
+                                        DocumentReference userRef = db.collection("users").document(userId);
+                                        callback.onGroupCheckCompleted(false, userRef, "last_checkin");
+                                    }
+                                })
+                                .addOnFailureListener(e -> Log.e("MainFragment", "Error checking invited groups", e));
+                    }
+                })
+                .addOnFailureListener(e -> Log.e("MainFragment", "Error checking group ownership", e));
+    }
+
+    interface GroupCheckCallback {
+        void onGroupCheckCompleted(boolean isInGroup, DocumentReference reference, String field);
     }
 }
