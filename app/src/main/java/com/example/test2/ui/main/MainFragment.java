@@ -178,53 +178,30 @@ public class MainFragment extends Fragment {
 
         binding.coinButton.setOnClickListener(v -> handleCheckInReward());
 
-        binding.btnStore.setOnClickListener(v -> {
-            Intent intent = new Intent(getActivity(), Store.class);
-            intent.putExtra("isShop1Arranged", isShop1Arranged);
-            intent.putExtra("isShop2Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop3Arranged", isShop3Arranged);
-            intent.putExtra("isShop4Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop5Arranged", isShop3Arranged);
-            intent.putExtra("isShop6Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop7Arranged", isShop3Arranged);
-            intent.putExtra("isShop8Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop9Arranged", isShop3Arranged);
-            intent.putExtra("isShop10Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop11Arranged", isShop3Arranged);
-            intent.putExtra("isShop12Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop13Arranged", isShop3Arranged);
-            intent.putExtra("isShop14Arranged", isShop2Arranged); // 추가
-            intent.putExtra("isShop15Arranged", isShop3Arranged);
-            intent.putExtra("isShop16Arranged", isShop2Arranged);
-            startActivity(intent);
-        });
-        setupShopItemClickListener("shop1", binding.imgShop1, R.drawable.shop1, isShop1Arranged);
-        setupShopItemClickListener("shop2", binding.imgShop2, R.drawable.shop2, isShop2Arranged);
-        setupShopItemClickListener("shop3", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
-        setupShopItemClickListener("shop4", binding.imgShop1, R.drawable.shop1, isShop1Arranged);
-        setupShopItemClickListener("shop5", binding.imgShop2, R.drawable.shop2, isShop2Arranged);
-        setupShopItemClickListener("shop6", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
-        setupShopItemClickListener("shop7", binding.imgShop1, R.drawable.shop1, isShop1Arranged);
-        setupShopItemClickListener("shop8", binding.imgShop2, R.drawable.shop2, isShop2Arranged);
-        setupShopItemClickListener("shop9", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
-        setupShopItemClickListener("shop10", binding.imgShop1, R.drawable.shop1, isShop1Arranged);
-        setupShopItemClickListener("shop11", binding.imgShop2, R.drawable.shop2, isShop2Arranged);
-        setupShopItemClickListener("shop12", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
-        setupShopItemClickListener("shop13", binding.imgShop1, R.drawable.shop1, isShop1Arranged);
-        setupShopItemClickListener("shop14", binding.imgShop2, R.drawable.shop2, isShop2Arranged);
-        setupShopItemClickListener("shop15", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
-        setupShopItemClickListener("shop16", binding.imgShop3, R.drawable.shop3, isShop3Arranged);
+        binding.btnStore.setOnClickListener(v -> startActivity(new Intent(getActivity(), Store.class)));
+
+        setupShopItemClickListener("shop1", binding.imgShop1);
+        setupShopItemClickListener("shop2", binding.imgShop2);
+        setupShopItemClickListener("shop3", binding.imgShop3);
+        setupShopItemClickListener("shop4", binding.imgShop1);
+        setupShopItemClickListener("shop5", binding.imgShop2);
+        setupShopItemClickListener("shop6", binding.imgShop3);
+        setupShopItemClickListener("shop7", binding.imgShop1);
+        setupShopItemClickListener("shop8", binding.imgShop2);
+        setupShopItemClickListener("shop9", binding.imgShop3);
+        setupShopItemClickListener("shop10", binding.imgShop1);
+        setupShopItemClickListener("shop11", binding.imgShop2);
+        setupShopItemClickListener("shop12", binding.imgShop3);
+        setupShopItemClickListener("shop13", binding.imgShop1);
+        setupShopItemClickListener("shop14", binding.imgShop2);
+        setupShopItemClickListener("shop15", binding.imgShop3);
+        setupShopItemClickListener("shop16", binding.imgShop3);
 
     }
 
-    private void setupShopItemClickListener(String itemId, View shopImageView, int imageResource, boolean isArranged) {
-        shopImageView.setVisibility(View.GONE);
+    private void setupShopItemClickListener(String itemId, View shopImageView) {
         shopImageView.setOnClickListener(v -> {
-            if (isArranged) {
-                openDeleteDialog(itemId);
-            } else {
-                openArrangementDialog(itemId, imageResource);
-            }
+            openDeleteDialog(itemId);
         });
     }
 

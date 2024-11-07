@@ -73,20 +73,6 @@ public class ArrangeManager {
         }
     }
 
-    // Firestore의 arrangeObjects 필드를 업데이트하는 메서드
-    private void modifyArrangeObjects(DocumentReference ref, String itemId, boolean isArranged) {
-        if (isArranged) {
-            ref.update("arrangeObjects", FieldValue.arrayUnion(itemId))
-                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Arrangement status added for " + itemId))
-                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to add arrangement status", e));
-        } else {
-            ref.update("arrangeObjects", FieldValue.arrayRemove(itemId))
-                    .addOnSuccessListener(aVoid -> Log.d("ArrangeManager", "Arrangement status removed for " + itemId))
-                    .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to remove arrangement status", e));
-        }
-    }
-
-
     public interface OnLoadArrangementStatusListener {
         void onArrangementStatusLoaded(List<String> arrangedItems);
     }

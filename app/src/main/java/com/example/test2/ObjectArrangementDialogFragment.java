@@ -34,10 +34,13 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
         arrangeManager = new ArrangeManager(requireContext());
         itemId = getArguments() != null ? getArguments().getString("itemId") : null;
 
-        // 배치 버튼 클릭 이벤트
-        view.findViewById(R.id.button2).setOnClickListener(v -> {
-            arrangeManager.updateArrangementStatus(itemId, true);  // Firestore에 배치 상태 저장
-            dismiss();  // 다이얼로그 닫기
+        // "배치하기" 버튼 설정
+        Button arrangeButton = view.findViewById(R.id.button2);
+        arrangeButton.setOnClickListener(v -> {
+            if (itemId != null) {
+                arrangeManager.updateArrangementStatus(itemId, true);
+            }
+            dismiss();
         });
 
 
@@ -51,15 +54,6 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
         if (imageResource != -1) {
             imageView33.setImageResource(imageResource);
         }
-
-        // "배치하기" 버튼 설정
-        Button arrangeButton = view.findViewById(R.id.button2);
-        arrangeButton.setOnClickListener(v -> {
-            if (itemId != null) {
-                arrangeManager.updateArrangementStatus(itemId, true);
-            }
-            dismiss();
-        });
 
         // "뒤로가기" 버튼 설정
         ImageButton backButton = view.findViewById(R.id.backButton);
