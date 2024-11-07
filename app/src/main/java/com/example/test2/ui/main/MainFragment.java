@@ -17,7 +17,7 @@ import com.example.test2.ArrangeManager;
 import com.example.test2.R;
 import com.example.test2.Store;
 import com.example.test2.Person;
-import com.example.test2.Reward;
+import com.example.test2.Reward;\
 import com.example.test2.Bell;
 import com.example.test2.databinding.FragmentMainBinding;
 import com.example.test2.ui.ThemeViewModel;
