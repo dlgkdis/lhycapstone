@@ -2,6 +2,7 @@
 package com.example.test2;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,8 +37,13 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
 
         // 배치 버튼 클릭 이벤트
         view.findViewById(R.id.button2).setOnClickListener(v -> {
-            arrangeManager.updateArrangementStatus(itemId, true);  // Firestore에 배치 상태 저장
-            dismiss();  // 다이얼로그 닫기
+            if (itemId != null) {
+                Log.d("ObjectArrangementDialog", "Placing item with ID: " + itemId);
+                arrangeManager.updateArrangementStatus(itemId, true);
+            } else {
+                Log.e("ObjectArrangementDialog", "itemId is null");
+            }
+            dismiss(); // 다이얼로그 닫기
         });
 
 
