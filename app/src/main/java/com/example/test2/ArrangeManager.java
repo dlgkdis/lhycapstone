@@ -30,14 +30,15 @@ public class ArrangeManager {
             return;
         }
 
-        // Firestore에서 그룹 소유자나 초대된 그룹을 확인하고 상태를 업데이트
+        Log.d("ArrangeManager", "Attempting to update arrangement status for itemId: " + itemId + " with status: " + isArranged);
+
         db.collection("groups")
                 .whereEqualTo("ownerUserId", userId)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     if (!querySnapshot.isEmpty()) {
                         DocumentReference groupRef = querySnapshot.getDocuments().get(0).getReference();
-                        modifyArrangeObjects(groupRef, itemId, isArranged);
+                        updateArrangeObjectsField(groupRef, itemId, isArranged);
                     } else {
                         db.collection("groups")
                                 .whereEqualTo("invitedUserId", userId)
@@ -45,10 +46,10 @@ public class ArrangeManager {
                                 .addOnSuccessListener(inviteSnapshot -> {
                                     if (!inviteSnapshot.isEmpty()) {
                                         DocumentReference groupRef = inviteSnapshot.getDocuments().get(0).getReference();
-                                        modifyArrangeObjects(groupRef, itemId, isArranged);
+                                        updateArrangeObjectsField(groupRef, itemId, isArranged);
                                     } else {
                                         DocumentReference userRef = db.collection("users").document(userId);
-                                        modifyArrangeObjects(userRef, itemId, isArranged);
+                                        updateArrangeObjectsField(userRef, itemId, isArranged);
                                     }
                                 })
                                 .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch invited group info", e));
@@ -56,6 +57,7 @@ public class ArrangeManager {
                 })
                 .addOnFailureListener(e -> Log.e("ArrangeManager", "Failed to fetch owner group info", e));
     }
+
 
     private void updateArrangeObjectsField(DocumentReference ref, String itemId, boolean isArranged) {
         Log.d("ArrangeManager", "Updating arrangeObjects for itemId: " + itemId + " with isArranged: " + isArranged);

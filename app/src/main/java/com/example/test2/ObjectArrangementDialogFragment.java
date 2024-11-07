@@ -31,6 +31,8 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.object_arrangement, container, false);
+        arrangeManager = new ArrangeManager(requireContext());
+        itemId = getArguments() != null ? getArguments().getString("itemId") : null;
 
         // 배치 버튼 클릭 이벤트
         view.findViewById(R.id.button2).setOnClickListener(v -> {
@@ -38,7 +40,6 @@ public class ObjectArrangementDialogFragment extends DialogFragment {
             dismiss();  // 다이얼로그 닫기
         });
 
-        arrangeManager = new ArrangeManager(requireContext());
 
         if (getArguments() != null) {
             imageResource = getArguments().getInt("imageResource", -1);
