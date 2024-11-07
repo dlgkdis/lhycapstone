@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import android.util.Log;
 
+import com.example.test2.ArrangeManager;
 import com.example.test2.R;
 import com.example.test2.Store;
 import com.example.test2.Person;
@@ -22,22 +23,24 @@ import com.example.test2.Bell;
 import com.example.test2.databinding.FragmentMainBinding;
 import com.example.test2.ui.ThemeViewModel;
 import com.example.test2.FirebaseHelper;
-import com.example.test2.ObjectArrangementDialogFragment;
 import com.example.test2.ObjectDeleteDialogFragment;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.example.test2.ObjectArrangementDialogFragment;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 
-public class MainFragment extends Fragment implements ObjectArrangementDialogFragment.OnObjectArrangementCompleteListener {
+public class MainFragment extends Fragment {
 
     private FragmentMainBinding binding;
     private ThemeViewModel themeViewModel;
     private FirebaseHelper firebaseHelper;
     private FirebaseFirestore db;
+    private ArrangeManager arrangeManager;
     private static final String PREFS_NAME = "main_prefs";
     private static final String PREFS_NAME_TEMA = "theme_prefs";
     private static final String KEY_CHECKIN_DATE = "last_checkin_date";
@@ -46,14 +49,12 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
     private String userId = FirebaseAuth.getInstance().getCurrentUser() != null ?
             FirebaseAuth.getInstance().getCurrentUser().getUid() : null;
 
-
-
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = FragmentMainBinding.inflate(inflater, container, false);
         db = FirebaseFirestore.getInstance();
+        arrangeManager = new ArrangeManager(requireContext());
         return binding.getRoot();
     }
 
@@ -66,6 +67,7 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
 
         loadCoinData();
         loadPurchasedObjects();
+        loadArrangedObjects(); // Firestore에 저장된 배치 상태에 따라 오브제 보이기 설정
 
         SharedPreferences sharedPreferences = requireActivity().getSharedPreferences(PREFS_NAME_TEMA, Context.MODE_PRIVATE);
         String savedTheme = sharedPreferences.getString(KEY_SELECTED_THEME, "tema_home");
@@ -95,7 +97,7 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
             if (isShop1Arranged) {
                 openDeleteDialog();
             } else {
-                openArrangementDialog(R.drawable.shop1);
+                openArrangementDialog(R.drawable.shop1, "shop1"); // itemId 추가
             }
         });
     }
@@ -121,13 +123,11 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
                 .get()
                 .addOnSuccessListener(groupQuerySnapshot -> {
                     if (!groupQuerySnapshot.isEmpty()) {
-                        // 그룹이 있으면 해당 그룹의 `coinStatus` 증가
                         DocumentReference groupRef = groupQuerySnapshot.getDocuments().get(0).getReference();
                         groupRef.update("coinStatus", FieldValue.increment(1))
                                 .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in group"))
                                 .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin in group", e));
                     } else {
-                        // 그룹이 없으면 `users` 컬렉션의 `coinStatus` 증가
                         db.collection("groups")
                                 .whereEqualTo("invitedUserId", userId)
                                 .get()
@@ -138,7 +138,6 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
                                                 .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in invited group"))
                                                 .addOnFailureListener(e -> Log.e("MainFragment", "Failed to update coin in invited group", e));
                                     } else {
-                                        // 그룹이 없으면 `users` 컬렉션의 `coinStatus` 증가
                                         DocumentReference userRef = db.collection("users").document(userId);
                                         userRef.update("coinStatus", FieldValue.increment(1))
                                                 .addOnSuccessListener(aVoid -> Log.d("MainFragment", "Coin updated in user"))
@@ -169,6 +168,24 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
             }
         });
     }
+
+    private void loadArrangedObjects() {
+        // ArrangeManager에서 arrangeObjects 필드 로드 후 배치된 오브제만 보이도록 설정
+        arrangeManager.loadArrangementStatus(arrangedItems -> {
+            if (binding != null) {
+                for (String itemId : arrangedItems) {
+                    switch (itemId) {
+                        case "shop1":
+                            binding.imgShop1.setVisibility(View.VISIBLE);
+                            isShop1Arranged = true;
+                            break;
+                        // 추가 오브제 설정
+                    }
+                }
+            }
+        });
+    }
+
 
     private void updateBackground(String theme) {
         if (binding == null) return;
@@ -204,10 +221,11 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
         editor.apply();
     }
 
-    private void openArrangementDialog(int imageResource) {
-        ObjectArrangementDialogFragment arrangementDialog = ObjectArrangementDialogFragment.newInstance(imageResource, this);
+    private void openArrangementDialog(int imageResource, String itemId) {
+        ObjectArrangementDialogFragment arrangementDialog = ObjectArrangementDialogFragment.newInstance(imageResource, itemId);
         arrangementDialog.show(getParentFragmentManager(), "ObjectArrangementDialogFragment");
     }
+
 
     private void openDeleteDialog() {
         ObjectDeleteDialogFragment deleteDialog = ObjectDeleteDialogFragment.newInstance(() -> {
@@ -215,16 +233,9 @@ public class MainFragment extends Fragment implements ObjectArrangementDialogFra
                 binding.imgShop1.setVisibility(View.GONE);
             }
             isShop1Arranged = false;
+            arrangeManager.updateArrangementStatus("shop1", false);
         });
         deleteDialog.show(getParentFragmentManager(), "ObjectDeleteDialogFragment");
-    }
-
-    @Override
-    public void onObjectArranged() {
-        if (binding != null) {
-            binding.imgShop1.setVisibility(View.VISIBLE);
-        }
-        isShop1Arranged = true;
     }
 
     @Override
