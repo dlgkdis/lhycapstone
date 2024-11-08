@@ -72,7 +72,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#d9d9d9"
+        android:backgroundTint="#F5E4D0"
         app:layout_constraintTop_toBottomOf="@+id/endday"
         android:layout_marginTop="44dp" />
 
@@ -178,7 +178,7 @@
         android:layout_width="60dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
-        android:backgroundTint="@color/white"
+        android:backgroundTint="@android:color/transparent"
         android:contentDescription="뒤로가기"
         app:layout_constraintHorizontal_bias="0.044"
         app:layout_constraintLeft_toLeftOf="parent"

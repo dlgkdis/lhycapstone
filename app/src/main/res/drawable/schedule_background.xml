@@ -1,10 +1,18 @@
 <!-- res/drawable/schedule_background.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="#F0F0F0"/>
-    <corners android:radius="8dp"/>
-    <padding
-        android:left="8dp"
-        android:right="8dp"
-        android:top="4dp"
-        android:bottom="4dp"/>
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 바깥쪽 배경 -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#F5E4D0"/>
+            <corners android:radius="8dp"/>
+        </shape>
+    </item>
+
+    <!-- 안쪽 테두리 (stroke) -->
+    <item android:left="3dp" android:right="3dp" android:top="3dp" android:bottom="3dp">
+        <shape android:shape="rectangle">
+            <stroke android:width="2dp" android:color="#D9B391"/>
+            <corners android:radius="5dp"/>
+        </shape>
+    </item>
+</layer-list>

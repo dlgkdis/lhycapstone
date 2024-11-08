@@ -127,10 +127,38 @@ public class Store extends AppCompatActivity implements ObjectBuyDialogFragment.
     //테마별 오브제 설정
     private List<String> getAllowedThemes(String itemId) {
         switch (itemId) {
-            case "shop1":
+            case "shop1": // 장작불
                 return Arrays.asList("tema_island");
-            case "shop2":
+            case "shop2": //시계
                 return Arrays.asList("tema_home", "tema_airport");
+            case "shop3": //천복이
+                return Arrays.asList("tema_home", "tema_airport","tema_island","tema_submarine","tema_rocket");
+            case "shop4": //UFO
+                return Arrays.asList("tema_rocket");
+            case "shop5": //컵
+                return Arrays.asList("tema_home", "tema_airport","tema_island","tema_submarine","tema_rocket");
+            case "shop6": //산딸기
+                return Arrays.asList("tema_island");
+            case "shop7": //램프
+                return Arrays.asList("tema_island","tema_submarine");
+            case "shop8": //라디오
+                return Arrays.asList("tema_home", "tema_airport");
+            case "shop9": //카메라
+                return Arrays.asList("tema_home", "tema_airport");
+            case "shop10": //깃발
+                return Arrays.asList("tema_home", "tema_airport");
+            case "shop11": //소파
+                return Arrays.asList("tema_home", "tema_airport","tema_island","tema_submarine","tema_rocket");
+            case "shop12": //표지판
+                return Arrays.asList("tema_island");
+            case "shop13": //문
+                return Arrays.asList("tema_home", "tema_airport","tema_island","tema_submarine","tema_rocket");
+            case "shop14": //연못
+                return Arrays.asList("tema_island");
+            case "shop15": //네노
+                return Arrays.asList("tema_home", "tema_airport","tema_island","tema_submarine","tema_rocket");
+            case "shop16": //잠수부
+                return Arrays.asList("tema_submarine");
             // 각 오브제에 맞는 테마 목록 추가
             default:
                 return Arrays.asList("tema_home");

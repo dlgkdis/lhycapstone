@@ -68,7 +68,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -123,7 +122,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -178,20 +176,21 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
             <ImageButton
                 android:id="@+id/shop3"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="43dp"
                 app:srcCompat="@drawable/shop3"
                 android:background="@null"
                 android:layout_margin="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
-                android:contentDescription="Shop item 3" />
+                android:contentDescription="Shop item 3"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:id="@+id/shop3_lock"
@@ -233,7 +232,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -288,7 +286,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -343,7 +340,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -398,7 +394,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -453,20 +448,21 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
             <ImageButton
                 android:id="@+id/shop8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="41dp"
+                android:layout_height="42dp"
                 app:srcCompat="@drawable/shop8"
                 android:background="@null"
                 android:layout_margin="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
-                android:contentDescription="Shop item 8" />
+                android:contentDescription="Shop item 8"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:id="@+id/shop8_lock"
@@ -508,7 +504,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -563,7 +558,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -618,20 +612,21 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
             <ImageButton
                 android:id="@+id/shop11"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 app:srcCompat="@drawable/shop11"
                 android:background="@null"
                 android:layout_margin="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
-                android:contentDescription="Shop item 11" />
+                android:contentDescription="Shop item 11"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:id="@+id/shop11_lock"
@@ -673,7 +668,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -727,7 +721,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -781,7 +774,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -835,7 +827,6 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
@@ -848,7 +839,9 @@
                 android:layout_margin="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
-                android:contentDescription="Shop item 15" />
+                android:contentDescription="Shop item 15"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <ImageView
                 android:id="@+id/shop15_lock"
@@ -889,20 +882,21 @@
         <FrameLayout
             android:layout_width="80dp"
             android:layout_height="85dp"
-            android:backgroundTint="#D3D3D3"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
 
             <ImageButton
                 android:id="@+id/shop16"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 app:srcCompat="@drawable/shop16"
                 android:background="@null"
                 android:layout_margin="8dp"
                 android:layout_marginTop="4dp"
                 android:layout_gravity="top|center_horizontal"
-                android:contentDescription="Shop item 16" />
+                android:contentDescription="Shop item 16"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:id="@+id/shop16_lock"

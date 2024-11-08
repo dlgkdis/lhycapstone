@@ -66,18 +66,6 @@
             android:layout_marginEnd="10dp"
             android:background="@android:color/transparent" /> <!-- DrawingView를 투명하게 설정 -->
 
-        <TextView
-            android:id="@+id/drawingHintText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="그림일기"
-            android:textSize="20sp"
-            android:textColor="#3D3D3D"
-            android:gravity="center"
-            android:fontFamily="@font/nanumfont"
-            android:layout_gravity="center"
-            android:textStyle="bold"/>
-
         <!-- ImageButton 3개 -->
         <ImageButton
             android:id="@+id/sunnyButton"
@@ -204,7 +192,7 @@
         app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#d9d9d9"
+        android:backgroundTint="#F5E4D0"
         app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
         android:layout_marginBottom="6dp" />
 

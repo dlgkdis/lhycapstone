@@ -188,7 +188,7 @@
         app:layout_constraintHorizontal_bias="0.835"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#d9d9d9"
+        android:backgroundTint="#F5E4D0"
         app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
         android:layout_marginBottom="6dp" />
 

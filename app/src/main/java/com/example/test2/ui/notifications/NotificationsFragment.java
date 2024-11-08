@@ -273,6 +273,10 @@ public class NotificationsFragment extends Fragment {
 
     // 날씨 정보 형식을 한글로 변환하는 메서드
     private String formatWeather(String weather) {
+        if (weather == null) {
+            return "알 수 없음";
+        }
+
         switch (weather) {
             case "sunny":
                 return "맑음";
