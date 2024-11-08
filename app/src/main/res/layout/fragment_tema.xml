@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.dashboard.DashboardFragment">
+    tools:context=".ui.dashboard.DashboardFragment"
+    android:background="@drawable/totalbackground">
 
     <!-- Home Theme Button (Unlocked by default) -->
 
@@ -13,7 +14,7 @@
         android:id="@+id/btn_tema_home"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:background="@drawable/rounded_button_background"
+        android:background="@drawable/rounded_button_default"
         android:src="@drawable/tema_home"
         android:scaleType="centerInside"
         android:contentDescription="테마_홈"
@@ -22,6 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginStart="32dp"
         android:layout_marginTop="64dp" />
+
 
     <FrameLayout
         android:id="@+id/theme_island_frame"
@@ -37,7 +39,7 @@
             android:id="@+id/btn_tema_island"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_button_background"
+            android:background="@drawable/rounded_button_default"
             android:src="@drawable/tema_island"
             android:contentDescription="테마_섬"
             android:stateListAnimator="@animator/button_click_animator" />
@@ -66,7 +68,7 @@
             android:id="@+id/btn_tema_submarine"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_button_background"
+            android:background="@drawable/rounded_button_default"
             android:src="@drawable/tema_submarine"
             android:contentDescription="테마_잠수함"
             android:stateListAnimator="@animator/button_click_animator" />
@@ -95,7 +97,7 @@
             android:id="@+id/btn_tema_airport"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_button_background"
+            android:background="@drawable/rounded_button_default"
             android:src="@drawable/tema_airport"
             android:contentDescription="테마_비행기"
             android:stateListAnimator="@animator/button_click_animator" />
@@ -124,7 +126,7 @@
             android:id="@+id/btn_tema_rocket"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/rounded_button_background"
+            android:background="@drawable/rounded_button_default"
             android:src="@drawable/tema_rocket"
             android:contentDescription="테마_로켓"
             android:stateListAnimator="@animator/button_click_animator" />

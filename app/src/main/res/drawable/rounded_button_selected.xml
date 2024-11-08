@@ -1,6 +1,19 @@
-<!-- rounded_button_selected.xml -->
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="@color/white"/> <!-- 배경색 -->
-    <stroke android:width="4dp" android:color="#D9B391"/> <!-- 더 진한 테두리 색상과 두께 -->
-    <corners android:radius="16dp"/> <!-- 모서리 둥글기 -->
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!-- 그림자 효과를 위한 반투명 원형 배경 -->
+<item android:top="3dp" android:left="3dp">
+    <shape android:shape="oval"> <!-- 원형으로 설정 -->
+        <solid android:color="#20000000" /> <!-- 그림자 색상 (반투명 검정) -->
+    </shape>
+</item>
+
+<!-- 버튼의 흰색 배경과 테두리 -->
+<item android:bottom="3dp" android:right="3dp">
+    <shape android:shape="oval"> <!-- 원형으로 설정 -->
+        <solid android:color="#F7F7EF" /> <!-- 버튼 배경색 -->
+        <stroke android:width="4dp" android:color="#D9B391" /> <!-- 테두리 색상과 두께 -->
+    </shape>
+</item>
+</layer-list>
+
+

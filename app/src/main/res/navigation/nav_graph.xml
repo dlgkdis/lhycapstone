@@ -60,7 +60,7 @@
         android:id="@+id/diaryFixFragment"
         android:name="com.example.test2.ui.notifications.DiaryFixFragment"
         android:label="Diary Fix"
-        tools:layout="@layout/fix_diary" /> <!-- XML 레이아웃 파일의 이름 -->
+        tools:layout="@layout/fix_diary1" /> <!-- XML 레이아웃 파일의 이름 -->
 
     <action
         android:id="@+id/action_notificationsFragment_to_diaryFixFragment"

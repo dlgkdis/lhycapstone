@@ -144,10 +144,9 @@ public class DashboardFragment extends Fragment {
 
             Calendar selectedCalendar = (Calendar) tempCalendar.clone();
             selectedCalendar.set(Calendar.DAY_OF_MONTH, currentDay);
-            String selectedDate = dayFormat.format(selectedCalendar.getTime());
 
             dayView.setOnClickListener(v -> {
-                loadData(selectedDate);
+                loadData(dayFormat.format(selectedCalendar.getTime()));
 
                 if (selectedDayView != null && selectedDayView != dayView) {
                     Calendar prevSelectedCalendar = (Calendar) calendar.clone();
@@ -173,12 +172,13 @@ public class DashboardFragment extends Fragment {
 
                 selectedDayView = dayView;
                 addScheduleButton.setVisibility(View.VISIBLE);
-                addScheduleButton.setTag(selectedDate);
+                addScheduleButton.setTag(dayFormat.format(selectedCalendar.getTime()));
             });
 
             calendarGrid.addView(dayView);
         }
     }
+
 
     private void loadData(String selectedDate) {
         firebaseHelper.listenToScheduleUpdates(selectedDate, scheduleList -> {

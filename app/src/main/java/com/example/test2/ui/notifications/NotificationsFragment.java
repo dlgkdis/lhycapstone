@@ -31,6 +31,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import android.util.Log;
 
+
 public class NotificationsFragment extends Fragment {
 
     private FragmentDiaryBinding binding;

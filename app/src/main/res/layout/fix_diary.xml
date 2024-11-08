@@ -3,141 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/totalbackground">
 
-
-    <TextView
-        android:id="@+id/dateTextView"
-        android:layout_width="204dp"
-        android:layout_height="45dp"
-        android:fontFamily="@font/nanumfont"
-        android:text="&lt; 0000.00.00 &gt;"
-        android:textColor="@color/black"
-        android:textSize="35dp"
-        android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
-        android:layout_marginBottom="12dp" />
-
-    <FrameLayout
-        android:id="@+id/drawingFrame"
-        android:layout_width="303dp"
-        android:layout_height="224dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginTop="10dp"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.424"
-        android:layout_marginRight="52dp">
-
-        <com.example.test2.ui.notifications.DrawingView
-            android:id="@+id/drawingView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/diary_drawing" />
-
-        <!-- ImageButton 3개 -->
-        <ImageButton
-            android:id="@+id/sunnyButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/sun"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:contentDescription="해"/>
-
-        <!-- imageButton3 위에 빨간 동그라미 -->
-        <View
-            android:id="@+id/redDot3"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/red_dot"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:visibility="invisible" />
-
-        <ImageButton
-            android:id="@+id/cloudButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/cloud"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="58dp"
-            android:contentDescription="구름"/>
-
-        <!-- imageButton 위에 빨간 동그라미 -->
-        <View
-            android:id="@+id/redDot"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/red_dot"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="54dp"
-            android:visibility="invisible" />
-
-        <ImageButton
-            android:id="@+id/rainButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/rain"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="108dp"
-            android:contentDescription="비"/>
-
-        <!-- imageButton2 위에 빨간 동그라미 -->
-        <View
-            android:id="@+id/redDot2"
-            android:layout_width="12dp"
-            android:layout_height="12dp"
-            android:background="@drawable/red_dot"
-            android:layout_gravity="top|end"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="104dp"
-            android:visibility="invisible" />
-
-    </FrameLayout>
-
-
-    <EditText
-        android:id="@+id/diaryEditText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/diary_text"
-        android:fontFamily="@font/nanumfont"
-        android:gravity="center"
-        android:hint=""
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:textSize="25sp"
-        android:inputType="textMultiLine"
-        app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/drawingFrame"
-        android:layout_marginTop="36dp" />
-
-    <Button
-        android:id="@+id/saveButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="수정"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:fontFamily="@font/nanumfont"
-        app:layout_constraintHorizontal_bias="0.839"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:backgroundTint="#d9d9d9"
-        app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
-        android:layout_marginBottom="28dp" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -153,7 +21,192 @@
         app:layout_constraintRight_toRightOf="parent"
         android:backgroundTint="#f05650"
         app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
-        android:layout_marginBottom="28dp" />
+        android:layout_marginBottom="6dp" />
+
+    <TextView
+        android:id="@+id/dateTextView"
+        android:layout_width="204dp"
+        android:layout_height="45dp"
+        android:fontFamily="@font/nanumfont"
+        android:text="&lt; 0000.00.00 &gt;"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintHorizontal_bias="0.555"
+        app:layout_constraintBottom_toTopOf="@+id/saveButton"
+        android:layout_marginBottom="2dp" />
+
+    <FrameLayout
+        android:id="@+id/drawingFrame"
+        android:layout_width="360dp"
+        android:layout_height="270dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.324"
+        android:layout_marginRight="20dp">
+
+        <ImageView
+            android:id="@+id/backgroundImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/diary_sketch"
+            android:scaleType="centerCrop"
+            android:contentDescription="배경 이미지" />
+
+        <com.example.test2.ui.notifications.DrawingView
+            android:id="@+id/drawingView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="35dp"
+            android:layout_marginBottom="15dp"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/transparent" /> <!-- DrawingView를 투명하게 설정 -->
+
+        <TextView
+            android:id="@+id/drawingHintText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그림일기"
+            android:textSize="20sp"
+            android:textColor="#3D3D3D"
+            android:gravity="center"
+            android:fontFamily="@font/nanumfont"
+            android:layout_gravity="center"
+            android:textStyle="bold"/>
+
+        <!-- ImageButton 3개 -->
+        <ImageButton
+            android:id="@+id/sunnyButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/sun"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="34dp"
+            android:layout_marginEnd="20dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="해"/>
+
+        <!-- imageButton3 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot3"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="10dp"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/cloudButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/cloud"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="65dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="구름"/>
+
+        <!-- imageButton 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="55dp"
+            android:visibility="invisible" />
+
+        <ImageButton
+            android:id="@+id/rainButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:srcCompat="@drawable/rain"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="35dp"
+            android:layout_marginEnd="110dp"
+            android:background="@android:color/transparent"
+            android:contentDescription="비"/>
+
+        <!-- imageButton2 위에 빨간 동그라미 -->
+        <View
+            android:id="@+id/redDot2"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@drawable/red_dot"
+            android:layout_gravity="top|end"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="100dp"
+            android:visibility="invisible" />
+
+    </FrameLayout>
+
+
+    <FrameLayout
+        android:layout_width="370dp"
+        android:layout_height="200dp"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/drawingFrame"
+        android:layout_marginTop="12dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="5dp"
+            android:background="#20000000" />
+
+        <!-- 배경 이미지 설정 -->
+        <ImageView
+            android:layout_width="367dp"
+            android:layout_height="195dp"
+            android:src="@drawable/diary_text"
+            android:scaleType="centerCrop"
+            android:contentDescription="배경 이미지" />
+
+        <!-- 투명 배경의 EditText -->
+        <EditText
+            android:id="@+id/diaryEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:fontFamily="@font/nanumfont"
+            android:gravity="center"
+            android:hint="일기작성"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:inputType="textMultiLine"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="10dp"/>
+    </FrameLayout>
+
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="수정"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/nanumfont"
+        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:backgroundTint="#d9d9d9"
+        app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
+        android:layout_marginBottom="6dp" />
 
     <ImageButton
         android:id="@+id/backButton"
@@ -168,7 +221,8 @@
         app:layout_constraintEnd_toStartOf="@+id/dateTextView"
         android:layout_marginEnd="28dp"
         app:layout_constraintBottom_toTopOf="@+id/saveButton"
-        android:layout_marginBottom="12dp" />
+        android:layout_marginBottom="2dp"
+        android:background="@android:color/transparent"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

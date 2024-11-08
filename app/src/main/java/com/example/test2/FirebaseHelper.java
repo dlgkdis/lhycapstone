@@ -19,6 +19,9 @@ import java.util.Locale;
 
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.Query;
+
 
 
 public class FirebaseHelper {
@@ -600,5 +603,6 @@ public class FirebaseHelper {
                     listener.onComplete(false);
                 });
     }
+
 
 }
