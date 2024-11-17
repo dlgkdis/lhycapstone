@@ -19,7 +19,7 @@
             android:id="@+id/addScheduleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="152dp"
+            android:layout_marginTop="90dp"
             android:text="+"
             android:backgroundTint="@color/gray"
             android:textColor="@android:color/white"
@@ -33,14 +33,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="OCTOBER"
-            android:textSize="45sp"
+            android:textSize="35sp"
             android:textColor="@color/black"
             android:textStyle="bold"
             android:fontFamily="@font/nanumfont"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            android:layout_marginTop="88dp" />
+            android:layout_marginTop="45dp" />
 
         <Button
             android:id="@+id/prevMonthButton"
@@ -53,7 +53,7 @@
             android:background="@android:color/transparent"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:layout_marginTop="84dp" />
+            android:layout_marginTop="35dp" />
 
         <Button
             android:id="@+id/nextMonthButton"
@@ -64,7 +64,7 @@
             android:background="@android:color/transparent"
             android:textColor="@color/black"
             android:textSize="25dp"
-            android:layout_marginTop="84dp"
+            android:layout_marginTop="35dp"
             app:layout_constraintStart_toEndOf="@+id/monthText"
             android:layout_marginStart="16dp" />
 
@@ -78,7 +78,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:padding="8dp"
-            android:layout_marginTop="60dp">
+            android:layout_marginTop="40dp">
 
             <!-- 요일 텍스트들 -->
             <TextView
@@ -177,13 +177,14 @@
             app:layout_constraintVertical_bias="0.15">
 
             <ImageView
-                android:layout_width="375dp"
-                android:layout_height="275dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:src="@drawable/calendar_line"
+                android:layout_width="340dp"
+                android:layout_height="270dp"
+                android:src="@drawable/calendar_stroke"
                 android:scaleType="centerCrop"
-                android:contentDescription="Calendar Background Image" />
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="8dp"
+                android:contentDescription="Diary Background" />
+
             <!-- 날짜를 표시할 GridLayout -->
             <GridLayout
                 android:id="@+id/calendarGrid"

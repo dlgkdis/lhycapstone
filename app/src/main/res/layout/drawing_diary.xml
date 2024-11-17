@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fillViewport="true">
+<androidx.constraintlayout.widget.ConstraintLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@drawable/totalbackground">
 
 
@@ -18,14 +23,14 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintHorizontal_bias="0.555"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
-        android:layout_marginBottom="2dp" />
+        app:layout_constraintHorizontal_bias="0.545"
+        app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
+        android:layout_marginBottom="50dp" />
 
     <FrameLayout
         android:id="@+id/drawingFrame"
-        android:layout_width="360dp"
-        android:layout_height="270dp"
+        android:layout_width="320dp"
+        android:layout_height="240dp"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="10dp"
         app:layout_constraintRight_toRightOf="parent"
@@ -60,7 +65,7 @@
             android:gravity="center"
             android:fontFamily="@font/nanumfont"
             android:layout_gravity="center"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
         <!-- ImageButton 3개 -->
         <ImageButton
@@ -72,7 +77,7 @@
             android:layout_marginTop="34dp"
             android:layout_marginEnd="20dp"
             android:background="@android:color/transparent"
-            android:contentDescription="해"/>
+            android:contentDescription="해" />
 
         <!-- imageButton3 위에 빨간 동그라미 -->
         <View
@@ -94,7 +99,7 @@
             android:layout_marginTop="37dp"
             android:layout_marginEnd="65dp"
             android:background="@android:color/transparent"
-            android:contentDescription="구름"/>
+            android:contentDescription="구름" />
 
         <!-- imageButton 위에 빨간 동그라미 -->
         <View
@@ -116,7 +121,7 @@
             android:layout_marginTop="35dp"
             android:layout_marginEnd="110dp"
             android:background="@android:color/transparent"
-            android:contentDescription="비"/>
+            android:contentDescription="비" />
 
         <!-- imageButton2 위에 빨간 동그라미 -->
         <View
@@ -133,13 +138,14 @@
 
 
     <FrameLayout
-        android:layout_width="370dp"
-        android:layout_height="200dp"
+        android:layout_width="320dp"
+        android:layout_height="180dp"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/drawingFrame"
-        android:layout_marginTop="12dp">
+        android:layout_marginTop="12dp"
+        android:layout_marginRight="15dp">
 
         <View
             android:layout_width="match_parent"
@@ -149,6 +155,9 @@
             android:background="#20000000" />
 
         <!-- 배경 이미지 설정 -->
+
+        <!-- 투명 배경의 EditText -->
+
         <ImageView
             android:layout_width="367dp"
             android:layout_height="195dp"
@@ -156,7 +165,6 @@
             android:scaleType="centerCrop"
             android:contentDescription="배경 이미지" />
 
-        <!-- 투명 배경의 EditText -->
         <EditText
             android:id="@+id/diaryEditText"
             android:layout_width="match_parent"
@@ -204,9 +212,10 @@
         android:contentDescription="뒤로가기"
         app:layout_constraintEnd_toStartOf="@+id/dateTextView"
         android:layout_marginEnd="28dp"
-        app:layout_constraintBottom_toTopOf="@+id/saveButton"
-        android:layout_marginBottom="2dp"
-        android:background="@android:color/transparent"/>
+        app:layout_constraintBottom_toTopOf="@+id/drawingFrame"
+        android:layout_marginBottom="56dp"
+        android:background="@android:color/transparent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

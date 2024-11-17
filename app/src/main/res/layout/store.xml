@@ -28,7 +28,8 @@
         android:background="@null"
         android:contentDescription="뒤로가기"
         android:layout_marginTop="30dp"
-        app:layout_constraintHorizontal_bias="0.091" />
+        app:layout_constraintHorizontal_bias="0.091"
+        android:layout_marginStart="5dp"/>
 
     <ImageView
         android:id="@+id/imageView2"
@@ -56,17 +57,16 @@
 
     <!-- GridLayout for shop items with spacing -->
     <GridLayout
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:columnCount="4"
         app:layout_constraintTop_toBottomOf="@id/imageView2"
         android:layout_marginTop="20dp"
-        android:padding="8dp"
-        android:layout_gravity="center"
-        >
+        android:padding="5dp"
+        android:layout_gravity="center">
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -114,13 +114,13 @@
                     android:text="11"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -168,13 +168,13 @@
                     android:text="4"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -224,13 +224,13 @@
                     android:text="18"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -278,13 +278,13 @@
                     android:text="8"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -332,13 +332,13 @@
                     android:text="3"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -386,13 +386,13 @@
                     android:text="7"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -440,13 +440,13 @@
                     android:text="13"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -496,13 +496,13 @@
                     android:text="7"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -550,13 +550,13 @@
                     android:text="6"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -604,13 +604,13 @@
                     android:text="6"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -660,13 +660,13 @@
                     android:text="4"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
 
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -714,12 +714,13 @@
                     android:text="10"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
+
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -767,12 +768,13 @@
                     android:text="5"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
+
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -824,8 +826,9 @@
             </LinearLayout>
 
         </FrameLayout>
+
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -841,7 +844,7 @@
                 android:layout_gravity="top|center_horizontal"
                 android:contentDescription="Shop item 15"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true" />
 
             <ImageView
                 android:id="@+id/shop15_lock"
@@ -875,12 +878,13 @@
                     android:text="20"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>
+
         <FrameLayout
-            android:layout_width="80dp"
+            android:layout_width="70dp"
             android:layout_height="85dp"
             android:background="@drawable/box_background"
             android:layout_margin="8dp">
@@ -930,7 +934,7 @@
                     android:text="9"
                     android:textSize="30sp"
                     android:textColor="@android:color/black"
-                    android:fontFamily="@font/nanumfont"/>
+                    android:fontFamily="@font/nanumfont" />
             </LinearLayout>
 
         </FrameLayout>

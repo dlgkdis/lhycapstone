@@ -21,7 +21,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="452dp"
+            android:layout_marginTop="420dp"
             android:elevation="4dp"
             app:layout_constraintHorizontal_bias="0.344" />
 
@@ -33,7 +33,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="368dp"
+            android:layout_marginTop="336dp"
             android:elevation="4dp"
             app:layout_constraintHorizontal_bias="0.197" />
 
@@ -45,7 +45,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="304dp"
+            android:layout_marginTop="256dp"
             app:layout_constraintHorizontal_bias="0.561"
             android:elevation="4dp" />
 
@@ -56,20 +56,18 @@
             app:srcCompat="@drawable/myroom_basic"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="116dp"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_reward" />
 
         <ImageButton
             android:id="@+id/btn_store"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="store"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/store"
             app:layout_constraintStart_toEndOf="@+id/btn_bell" />
@@ -84,27 +82,25 @@
             tools:ignore="MissingConstraints"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginLeft="268dp"
-            android:layout_marginTop="24dp" />
+            android:layout_marginLeft="220dp"
+            android:layout_marginTop="15dp" />
 
         <ImageButton
             android:id="@+id/btn_reward"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="reward"
-            app:layout_constraintHorizontal_bias="0.459"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/reward" />
+            app:srcCompat="@drawable/reward"
+            app:layout_constraintStart_toEndOf="@+id/btn_profile" />
 
         <ImageButton
             android:id="@+id/btn_bell"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="bell"
             app:layout_constraintHorizontal_bias="0.044"
@@ -117,14 +113,12 @@
             android:id="@+id/btn_profile"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="20dp"
             android:background="@android:color/transparent"
             android:contentDescription="profile"
-            app:layout_constraintHorizontal_bias="0.321"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/person_main" />
+            app:srcCompat="@drawable/person_main"
+            app:layout_constraintStart_toEndOf="@+id/btn_store" />
 
         <TextView
             android:text="0"
@@ -145,8 +139,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="476dp"
-            app:layout_constraintHorizontal_bias="0.689"
+            android:layout_marginTop="404dp"
+            app:layout_constraintHorizontal_bias="0.698"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -160,11 +154,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="172dp"
+            android:layout_marginTop="136dp"
             app:layout_constraintHorizontal_bias="0.358"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:visibility="visible"/>
+            android:visibility="visible" />
+
 
         <ImageView
             android:id="@+id/img_shop3"
@@ -174,13 +169,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="468dp"
-            app:layout_constraintHorizontal_bias="0.049"
+            android:layout_marginTop="412dp"
+            app:layout_constraintHorizontal_bias="0.131"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
-            android:translationZ="15dp"/>
-
+            android:translationZ="15dp" />
 
         <ImageView
             android:id="@+id/img_shop4"
@@ -190,8 +184,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="116dp"
-            app:layout_constraintHorizontal_bias="0.046"
+            android:layout_marginTop="96dp"
+            app:layout_constraintHorizontal_bias="0.053"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible" />
@@ -204,7 +198,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="396dp"
+            android:layout_marginTop="356dp"
             app:layout_constraintHorizontal_bias="0.293"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -219,8 +213,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="204dp"
-            app:layout_constraintHorizontal_bias="0.272"
+            android:layout_marginTop="196dp"
+            app:layout_constraintHorizontal_bias="0.269"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible" />
@@ -233,8 +227,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="396dp"
-            app:layout_constraintHorizontal_bias="0.405"
+            android:layout_marginTop="376dp"
+            app:layout_constraintHorizontal_bias="0.454"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -248,7 +242,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="412dp"
+            android:layout_marginTop="372dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -263,8 +257,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="396dp"
-            app:layout_constraintHorizontal_bias="0.184"
+            android:layout_marginTop="360dp"
+            app:layout_constraintHorizontal_bias="0.176"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -278,8 +272,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="156dp"
-            app:layout_constraintHorizontal_bias="0.585"
+            android:layout_marginTop="120dp"
+            app:layout_constraintHorizontal_bias="0.512"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible" />
@@ -292,8 +286,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="336dp"
-            app:layout_constraintHorizontal_bias="0.828"
+            android:layout_marginTop="292dp"
+            app:layout_constraintHorizontal_bias="0.945"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -307,7 +301,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="476dp"
+            android:layout_marginTop="440dp"
             app:layout_constraintHorizontal_bias="0.952"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -321,7 +315,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="388dp"
+            android:layout_marginTop="344dp"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -335,8 +329,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="488dp"
-            app:layout_constraintHorizontal_bias="0.436"
+            android:layout_marginTop="444dp"
+            app:layout_constraintHorizontal_bias="0.51"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible" />
@@ -349,8 +343,8 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="276dp"
-            app:layout_constraintHorizontal_bias="0.498"
+            android:layout_marginTop="256dp"
+            app:layout_constraintHorizontal_bias="0.59"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:visibility="visible"
@@ -364,7 +358,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="116dp"
+            android:layout_marginTop="88dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
